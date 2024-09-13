@@ -1,0 +1,74 @@
+<div class="table-footer">
+	<ul class="up-pagination">
+		<li class="mr-10">
+			<select #dropdown style="border-radius: 23px;" [(ngModel)]="perPage"
+			        (change)="onChangePerPage()"
+			        placeholder="Sort By"
+			        class="paginate_button previous form-control perPage">
+				<option value="10">10 per page</option>
+				<option value="20">20 per page</option>
+				<option value="50">50 per page</option>
+				<option value="100">100 per page</option>
+				<option value="500">500 per page</option>
+				<!-- <option value="250">250 per page</option>
+				<option value="500">500 per page</option> -->
+			</select>
+		</li>
+		<!-- <li>
+			<a class="paginate_button previous"
+			   (click)="$event.target.classList.contains('disabled') || makePagination(1)"
+			   [ngClass]="{disabled:currentPage === 1}">First</a>
+		</li> -->
+		<li>
+			<a class="paginate_button previous"
+			   (click)="$event.target.classList.contains('disabled') || makePagination(currentPage - 1)"
+			   [ngClass]="{disabled:currentPage === 1}">Previous</a>
+		</li>
+		<li *ngIf="currentPage > 4">
+			<span class="pull-left"
+				  style="display: block; margin: 0 5px">...</span>
+		</li>
+		<li *ngIf="currentPage > 3">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage-3)">{{currentPage -3}}</a>
+		</li>
+		<li *ngIf="currentPage > 2">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage-2)">{{currentPage - 2}}</a>
+		</li>
+		<li *ngIf="currentPage > 1">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage-1)">{{currentPage - 1}}</a>
+		</li>
+		<li class="active">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage)">{{currentPage}}</a>
+		</li>
+		<li *ngIf="currentPage < totalPages">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage+1)">{{currentPage + 1}}</a>
+		</li>
+		<li *ngIf="currentPage + 1 < totalPages">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage+2)">{{currentPage + 2}}</a>
+		</li>
+		<li *ngIf="currentPage + 2 < totalPages">
+			<a class="paginate_button"
+			   (click)="makePagination(currentPage+3)">{{currentPage + 3}}</a>
+		</li>
+		<li *ngIf="currentPage + 3 < totalPages">
+			<span class="pull-left"
+				  style="display: block; margin: 0 5px">...</span>
+		</li>
+		<li>
+			<a class="paginate_button next"
+			   (click)="$event.target.classList.contains('disabled') || makePagination(currentPage + 1)"
+			   [ngClass]="{disabled:currentPage === totalPages}">Next</a>
+		</li>
+		<!-- <li>
+			<a class="paginate_button next"
+			   (click)="$event.target.classList.contains('disabled') || makePagination(totalPages)"
+			   [ngClass]="{disabled:currentPage === totalPages}">Last</a>
+		</li> -->
+	</ul>
+</div>

@@ -1,0 +1,257 @@
+<mat-card class="card"
+          style="min-height: 100vh;">
+  <form [formGroup]="Form"
+        (ngSubmit)="onSubmit()"
+        style="overflow: auto;">
+
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="15px"
+         class="top-heading text-bolder text-color">
+      Session Pricing
+
+      <button mat-button
+              class="editBtn"
+              (click)="goToEdit()"
+              *ngIf="type == 'view' && editPermit">
+        <mat-icon class="editIcon">edit</mat-icon>
+        Update Pricing
+      </button>
+
+    </div>
+
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start center"
+         fxLayoutGap="15px"
+         class="row-card-margins">
+      <div fxFlex.xl="20"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100"
+           class="text-small text-gray">
+        Session
+        <mat-form-field style="margin-top: 10px;">
+          <input matInput
+                 type="text"
+                 [ngModelOptions]="{standalone: true}"
+                 [disabled]="disableInput"
+                 [(ngModel)]="sessionName"
+                 readonly>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xl="23"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100"
+           class="text-small text-gray">
+        Effective From <span style="color:red">*</span>
+        <mat-form-field (click)="desired2.open()"
+                        style="margin-top: 10px;">
+          <input matInput
+                 readonly
+                 (dateChange)="setDateFormat(Form, 'sessionPricingEffectiveFrom', $event)"
+                 formControlName="mateffectiveFrom"
+                 [matDatepicker]="desired2"
+                 [required]="true"
+                 [disabled]="isDateDisabled"
+                 readonly>
+          <mat-error *ngIf="getField('mateffectiveFrom')">{{getErrorMessage('mateffectiveFrom')}}</mat-error>
+          <mat-icon matSuffix>
+            <img [src]="calendar"
+                 style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+          </mat-icon>
+          <mat-datepicker #desired2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="selected == 'standard'">
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="top-heading text-normal-bold">
+        Rate Configuration
+      </div>
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="row-span-margin">
+        <div fxFlex.xl="20"
+             fxFlex.lg="17"
+             fxFlex.md="17"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="text-small text-gray">
+          Age Band
+        </div>
+        <div fxFlex.xl="20"
+             fxFlex.lg="25"
+             fxFlex.md="25"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="text-small text-gray">
+          Daily Rate *
+        </div>
+        <div fxFlex.xl="20"
+             fxFlex.lg="25"
+             fxFlex.md="25"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="text-small text-gray">
+          Full Time Rate *
+        </div>
+      </div>
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="row-wrap-margins"
+           formArrayName="rates"
+           *ngFor="let rate of rates.controls; let i = index;">
+        <ng-container [formGroupName]="i">
+          <div fxFlex.xl="23"
+               fxFlex.lg="17"
+               fxFlex.md="17"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <span class="text-small text-gray1">{{rate.get('label').value}}
+            </span>
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label style="padding-left: 11px;">Enter Daily Rate</mat-label>
+              <input matInput
+                     formControlName="dailyTimeRate"
+                     min="0"
+                     type="number"
+                     (keypress)="isNegative($event)"
+                     class="ml-15"
+                     [specialCharacters]="[]"
+                     (blur)="onBlurEvent($event,rate,'dailyTimeRate')">
+              <mat-error *ngIf="getField('dailyTimeRate', rate) || rate.get('dailyTimeRate').errors?.digitError">
+                {{getErrorMessage('dailyTimeRate')}}</mat-error>
+              <span class="pound-left"
+                    style="top: 18px;font-size: 15px;"
+                    matSuffix>£&nbsp;</span>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label style="padding-left: 11px;">Enter Full-Time Rate</mat-label>
+              <input matInput
+                     class="ml-15"
+                     [specialCharacters]="[]"
+                     formControlName="fullTimeRate"
+                     type="number"
+                     (keypress)="isNegative($event)"
+                     min="0"
+                     (blur)="onBlurEvent($event,rate,'fullTimeRate')">
+              <mat-error *ngIf="getField('fullTimeRate', rate) || rate.get('fullTimeRate').errors?.digitError">
+                {{getErrorMessage('fullTimeRate')}}</mat-error>
+              <span class="pound-left"
+                    style="top: 18px;font-size: 15px;"
+                    matSuffix>£&nbsp;</span>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+    <div *ngIf="selected=='hourly'">
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="top-heading text-normal-bold">
+        Rate Configuration
+      </div>
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="row-span-margin">
+        <div fxFlex.xl="20"
+             fxFlex.lg="17"
+             fxFlex.md="17"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="text-small text-gray">
+          Age Band
+        </div>
+        <div fxFlex.xl="20"
+             fxFlex.lg="25"
+             fxFlex.md="25"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="text-small text-gray">
+          Hourly <span style="color:red">*</span>
+        </div>
+      </div>
+
+      <div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-wrap-margins"
+             formArrayName="rates"
+             *ngFor="let rate of rates.controls; let i = index;">
+          <ng-container [formGroupName]="i">
+            <div fxFlex.xl="23"
+                 fxFlex.lg="17"
+                 fxFlex.md="17"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100">
+              <span class="text-small text-gray1">{{rate.get('label').value}}
+              </span>
+            </div>
+            <div fxFlex.xl="23"
+                 fxFlex.lg="25"
+                 fxFlex.md="25"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100">
+              <mat-form-field>
+                <mat-label style="padding-left: 11px;">Enter Hourly Rate</mat-label>
+                <input matInput
+                       formControlName="hourlyTimeRate"
+                       min="0"
+                       type="number"
+                       (keypress)="isNegative($event)"
+                       class="ml-15"
+                       [specialCharacters]="[]"
+                       (blur)="onBlurEvent($event,rate,'hourlyTimeRate')">
+                <mat-error *ngIf="getField('hourlyTimeRate', rate) || rate.get('hourlyTimeRate').errors?.digitError">
+                  {{getErrorMessage('hourlyTimeRate')}}</mat-error>
+                <span class="pound-left"
+                      style="top: 18px;font-size: 15px;"
+                      matSuffix>£&nbsp;</span>
+              </mat-form-field>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <app-form-foooter *ngIf="type!='view'"
+                      (backEvent)="goBack()"
+                      [footerProps]="footerProps"></app-form-foooter>
+
+  </form>
+
+  <div *ngIf="showHistory" fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="top-heading text-normal-bold">
+        History
+      </div>
+
+  <app-session-rate-history *ngIf="showHistory"
+                            (isHistoryExists)="isHistoryExists($event)"
+                            (emitSessionPricing)="emitSessionPricing($event)"></app-session-rate-history>
+</mat-card>

@@ -1,0 +1,22 @@
+<mat-card class="row-margin-tb card-dark">
+<mat-card >
+  
+    <app-app-headers [headerProps]="buttonHeaderProps" 
+                     [showLegends]="true" 
+                     [legendLabel]="'Archived Children'" 
+                     [legendColor]="'rgb(255, 230, 230)'"></app-app-headers>
+
+    <mat-tab-group>
+      <mat-tab label="Active Booking">
+        <ng-template matTabContent>
+          <app-active-booking  [patternTosend]="patternKpi" [idToSend]="idToSend"></app-active-booking>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Archived Booking">
+        <ng-template matTabContent>
+          <app-archive-booking [idToSend]="idToSend"></app-archive-booking>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</mat-card>

@@ -1,0 +1,382 @@
+<mat-card class="card"
+          style="height: auto;">
+     <form [formGroup]="Form"
+           (ngSubmit)="onSubmit()">
+          <ng-container [formGroup]="staffContractDetail">
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="space-between center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-bolder text-color">
+                    Contract Settings
+                    <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+                         <mat-icon class="editIcon">edit</mat-icon>
+                         Edit
+                     </button>
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-small text-gray">
+                    Select Type
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px">
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field>
+                              <mat-label>Contract Type</mat-label>
+                              <mat-select formControlName="contractType" (ngModelChange)="setConditionsOnZeroHour()" required>
+                                   <mat-option value="termTime">Term Time</mat-option>
+                                   <mat-option value="fullTime">All Year</mat-option>
+                                   <mat-option value="zeroHour">Zero Hour</mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="getField('contractType', staffContractDetail)">{{getErrorMessage('contractType')}}</mat-error>
+                         </mat-form-field>
+                    </div>
+                    <div *ngIf="staffContractDetail.get('contractType').value == 'zeroHour'" 
+                         fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-checkbox formControlName="isBankStaff" (change)="onCheckBox($event)"
+                         class="example-margin">Bank Staff</mat-checkbox>
+                    </div>
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-small text-gray">
+                    Employment Date
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px">
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field (click)="desired.open()">
+                              <mat-label>Start Date</mat-label>
+                              <input matInput
+                                     
+                                   
+                                     (dateChange)="durationChange(staffProbationPeriodDetail.get('duration').value)"
+                                     formControlName="matemploymentStartDate"
+                                     [matDatepicker]="desired"
+                                     required>
+                                     <mat-error *ngIf="getField('matemploymentStartDate', staffContractDetail)">{{getErrorMessage('matemploymentStartDate')}}</mat-error>
+                                     <mat-icon matSuffix>
+                                        <img [src]="calendar"
+                                        style="margin-bottom: 0px;
+                                        margin-right: 10px; width: 16px; vertical-align: baseline;
+                                         cursor: pointer;">
+                                       </mat-icon>
+                              <mat-datepicker #desired></mat-datepicker>
+                         </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field (click)="desired1.open()">
+                              <mat-label>End Date</mat-label>
+                              <input matInput
+                                     
+                                     (dateChange)="setDateFormat(staffContractDetail,'employmentEndDate',$event)"
+                                     [min]="minDate"
+                                     formControlName="matemploymentEndDate"
+                                     [matDatepicker]="desired1">
+                                     <mat-error *ngIf="getField('matemploymentEndDate', staffContractDetail)">{{getErrorMessage('matemploymentEndDate')}}</mat-error>
+                                     <mat-icon matSuffix>
+                                        <img [src]="calendar"
+                                        style="margin-bottom: 0px;
+                                        margin-right: 10px; width: 16px; vertical-align: baseline;
+                                         cursor: pointer;">
+                                       </mat-icon>
+                              <mat-datepicker #desired1></mat-datepicker>
+                         </mat-form-field>
+                    </div>
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-small text-gray">
+                    Details
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px">
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <!-- <mat-form-field>
+                              <mat-label>Job Title</mat-label>
+                              <mat-select formControlName="jobTitle" required>
+                                   <mat-option value="nurseryManager">Nursery Manager</mat-option>
+                                   <mat-option value="roomLeader">Room Leader</mat-option>
+                                   <mat-option value="director">Director</mat-option>
+                                   <mat-option value="senior">Senior</mat-option>
+                                   <mat-option value="cook">Cook</mat-option>
+                                   <mat-option value="cleaner">Cleaner</mat-option>
+                                   <mat-option value="maintenanceWorker">Maintenance Worker</mat-option>
+                                   <mat-option value="careTaker">Care Taker</mat-option>
+                                   <mat-option value="seniorManager">Senior Manager</mat-option>
+                                   <mat-option value="trainingManager">Training Manager</mat-option>
+                                   <mat-option value="deputyManager">Deputy Manager</mat-option>
+                                   <mat-option value="adminAssistant">Admin Assistant</mat-option>
+                                   <mat-option value="accountsAssistant">Account Assistant</mat-option>
+                                   <mat-option value="iTSupportTechnician">IT Support Technician</mat-option>
+                                   <mat-option value="preSchoolManager">Pre School Manager</mat-option>
+                                   <mat-option value="preSchoolDeputyManager">Pre School Deputy Manager</mat-option>
+                                   <mat-option value="nurseryAssistantUnqualified">Nursery Assistant Unqualified</mat-option>
+                                   <mat-option value="nurseryAssistantLevel2">Nursery Assistant Level 2</mat-option>
+                                   <mat-option value="nurseryPractitionerLevel3+">Nursery Practitioner Level 3+</mat-option>
+                                   <mat-option value="nurseryPractitionerLevel6">Nursery Practitioner Level 6</mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="getField('jobTitle', staffContractDetail)">{{getErrorMessage('jobTitle')}}</mat-error>
+                         </mat-form-field> -->
+
+                         <mat-form-field>
+                              <mat-label>Job Title</mat-label>
+                              <input type="text"
+                              aria-label="Number"
+                              matInput
+                              required
+                              [formControl]="Form.get('jobTitleLabel')"
+                              [matAutocomplete]="auto2">
+                              <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="setJobTitle()">
+                                <mat-option *ngFor="let option of filteredJobTitles" [value]="option.label">
+                                  {{option.label}}
+                                </mat-option>
+                              </mat-autocomplete>
+                              <mat-error *ngIf="getField('jobTitle', staffContractDetail)">{{getErrorMessage('jobTitle')}}</mat-error>
+                         </mat-form-field>
+
+                    </div>
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <!-- <mat-form-field>
+                              <mat-label>Primary Setting </mat-label>
+                              <mat-select formControlName="branchId" required>
+                                   <mat-option *ngFor="let option of branches"
+                                               [value]="option?.value" [disabled]="disableBranchForZeroHour">
+                                        {{option?.label}}
+                                   </mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="getField('branchId', staffContractDetail)">{{getErrorMessage('branchId')}}</mat-error>
+                         </mat-form-field> -->
+
+                         <mat-form-field>
+                              <mat-label>Primary Setting</mat-label>
+                              <input type="text"
+                              aria-label="Number"
+                              matInput
+                              required
+                              [formControl]="Form.get('branchLabel')"
+                              [matAutocomplete]="auto3">
+                              <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete" (optionSelected)="setBranchId()">
+                                <mat-option *ngFor="let option of filteredBranches" [disabled]="disableBranchForZeroHour" [value]="option.label">
+                                  {{option.label}}
+                                </mat-option>
+                              </mat-autocomplete>
+                              <mat-error *ngIf="getField('branchId', staffContractDetail)">{{getErrorMessage('branchId')}}</mat-error>
+                         </mat-form-field>
+                    </div>
+                    <div *ngIf="staffContractDetail.get('contractType').value != 'zeroHour'" fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field>
+                              <mat-label>Contract Hours</mat-label>
+                              <input matInput
+                                     type="text"
+                                     formControlName="contractHours"
+                                     min="1"
+                                     (blur)="onBlurEvent($event, 'contractHours')"
+                                     required />
+                                     <mat-error *ngIf="getField('contractHours', staffContractDetail)">{{getErrorMessage('contractHours')}}</mat-error>
+                         </mat-form-field>
+                    </div>
+
+                    <div fxFlex="100"
+                         fxLayoutGap="15px">
+                         <div fxFlex.xl="20"
+                              fxFlex.lg="25"
+                              fxFlex.md="25"
+                              fxFlex.sm="45"
+                              fxFlex.xs="100"
+                              class="col-flex-margins">
+                              <mat-form-field>
+                                   <mat-label>Payment mode</mat-label>
+                                   <mat-select formControlName="paymentMode"  required>
+                                        <mat-option value="salary" [disabled]="disableForZeroHour">Salary</mat-option>
+                                        <mat-option value="hourly" [disabled]="disableForZeroHour">Hourly</mat-option>
+                                   </mat-select>
+                                   <mat-error *ngIf="getField('paymentMode', staffContractDetail)">{{getErrorMessage('paymentMode')}}</mat-error>
+                              </mat-form-field>
+                         </div>
+                         <div *ngIf="staffContractDetail.get('contractType').value != 'zeroHour'" 
+                              fxFlex.xl="20"
+                              fxFlex.lg="25"
+                              fxFlex.md="25"
+                              fxFlex.sm="45"
+                              fxFlex.xs="100"
+                              class="col-flex-margins">
+                              <mat-form-field>
+                                   <mat-label>Contract Weeks</mat-label>
+                                   <input matInput
+                                          type="text"
+                                          formControlName="contractWeeks"
+                                          min="1"
+                                          required />
+                                          <mat-error *ngIf="getField('contractWeeks', staffContractDetail)">{{getErrorMessage('contractWeeks')}}</mat-error>
+                              </mat-form-field>
+                         </div>
+                         <div fxFlex.xl="20"
+                              fxFlex.lg="25"
+                              fxFlex.md="25"
+                              fxFlex.sm="45"
+                              fxFlex.xs="100"
+                              class="col-flex-margins">
+                              <mat-form-field>
+                                   <mat-label style="padding-left: 11px;">Hourly Rate</mat-label>
+                                   <input matInput
+                                          type="text"
+                                          class="ml-15"
+                                          formControlName="contractRate"
+                                          min="1"
+                                          (blur)="onBlurEvent($event, 'contractRate')"
+                                          required />
+                                          <mat-error *ngIf="getField('contractRate', staffContractDetail)">{{getErrorMessage('contractRate')}}</mat-error>
+                                          <span class="pound-left" style="top: 16px;" matSuffix>£&nbsp;</span>
+                              </mat-form-field>
+                         </div>
+                    </div>
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-small text-gray">
+                    Pay Cycle
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px">
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field>
+                              <mat-label>Pay Cycle</mat-label>
+                              <mat-select formControlName="payCycleId" required>
+                                   <mat-option 
+                                   *ngFor="let option of payCycles"
+                                               [value]="option?.value">
+                                               {{option?.label}}
+                                   </mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="getField('payCycleId', staffContractDetail)">{{getErrorMessage('payCycleId')}}</mat-error>
+                         </mat-form-field>
+                    </div>
+
+               </div>
+          </ng-container>
+          <ng-container [formGroup]="staffProbationPeriodDetail">
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-small text-gray">
+                    Probation Period
+               </div>
+               <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px">
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field>
+                              <mat-label>Select Duration</mat-label>
+                              <mat-select formControlName="duration"
+                                           required
+                                          (selectionChange)="durationChange($event.value)">
+                                   <mat-option value="3">3 Month</mat-option>
+                                   <mat-option value="6"> 6 Month</mat-option>
+                                   <mat-option value="12"> 12 Months</mat-option>
+                                   <mat-option value="custom"> Custom</mat-option>
+                              </mat-select>
+                              <mat-error *ngIf="getField('duration', staffProbationPeriodDetail)">{{getErrorMessage('duration')}}</mat-error>
+                         </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field (click)="desired2.open()">
+                              <mat-label>Start Date</mat-label>
+                              <input matInput
+                                     readonly
+                                     
+                                     formControlName="matStartDate"
+                                     [disabled]="disableInput || disableDate"
+                                     [matDatepicker]="desired2">
+                              <!-- <mat-icon matSuffix>today</mat-icon> -->
+                              <!-- <mat-error *ngIf="getField('startDate', staffProbationPeriodDetail)">{{getErrorMessage('startDate')}}</mat-error> -->
+                              <mat-icon matSuffix>
+                                   <img [src]="calendar"
+                                   style="margin-bottom: 0px;
+                                   margin-right: 10px; width: 16px; vertical-align: baseline;
+                                    cursor: pointer;">
+                                  </mat-icon>
+                              <mat-datepicker #desired2></mat-datepicker>
+                         </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xl="20"
+                         fxFlex.lg="25"
+                         fxFlex.md="25"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100">
+                         <mat-form-field (click)="desired3.open()">
+                              <mat-label>End Date</mat-label>
+                              <input matInput
+                                     readonly
+                                     [min]="minDate"
+                                     formControlName="matEndDate"
+                                     [disabled]="disableInput || disableDate"
+                                     [matDatepicker]="desired3">
+                                     <!-- <mat-error *ngIf="getField('endDate', staffProbationPeriodDetail)">{{getErrorMessage('endDate')}}</mat-error> -->
+                                     <mat-icon matSuffix>
+                                        <img [src]="calendar"
+                                        style="margin-bottom: 0px;
+                                        margin-right: 10px; width: 16px; vertical-align: baseline;
+                                         cursor: pointer;">
+                                       </mat-icon>
+                              <mat-datepicker #desired3></mat-datepicker>
+                         </mat-form-field>
+                    </div>
+               </div>
+          </ng-container>
+          <app-form-foooter *ngIf="type !== 'view'"
+                            (backEvent)="goBack()"
+                            [footerProps]="footerProps"></app-form-foooter>
+
+     </form>
+</mat-card>

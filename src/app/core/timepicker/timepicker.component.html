@@ -1,0 +1,25 @@
+<div class="time-picker">
+  <!-- <div class="tp-field" (click)="onTimePicker()" *ngIf="!time">
+    <label>{{label}} <span>*</span></label>
+    <mat-icon matSuffix>
+      <img [src]="icon" style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;">
+    </mat-icon>
+  </div> -->
+  <mat-form-field style="margin: 0;">
+    <mat-label>{{label}}</mat-label>
+    <input [ngClass]="disabled ? 'read-only' : ''"
+           matInput
+           [disabled]="disabled"
+           readonly
+           type="text"
+           (click)="onTimePicker()"
+           [required]="required"
+           [value]="getTimeLabel() | date : 'hh:mm a'">
+    <mat-error>{{label}} is required</mat-error>
+    <mat-icon matSuffix>
+      <img [src]="icon"
+           style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;">
+    </mat-icon>
+  </mat-form-field>
+  <label *ngIf="!time && required && showError && timePickerOpned">{{label}} is required</label>
+</div>

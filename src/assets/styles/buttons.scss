@@ -1,0 +1,231 @@
+@import "assets/styles/colors.scss";
+
+// .btn-default {
+//     border: 1px solid !important;
+//     border-radius: 100px !important;
+//     // background: $color-red;
+//     line-height: 22px !important;
+//     padding: 0 25px !important;
+//     min-width: 120px !important;
+//     font-size: 15px !important;
+//     height: 34px !important;
+
+// }
+
+// .btn-blue {
+//     border: 1px solid $color-blue !important;
+//     border-radius: 100px !important;
+//     background: $color-blue;
+//     color: $color-white;
+//     line-height: 22px !important;
+//     padding: 0 25px !important;
+//     min-width: 120px !important;
+//     font-size: 15px !important;
+//     height: 34px !important;
+// }
+
+// .btn-small-blue {
+//     border: 1px solid $color-blue !important;
+//     border-radius: 100px !important;
+//     background: $color-blue;
+//     color: $color-white;
+//     line-height: 22px !important;
+//     // padding: 0 25px !important;
+//     // min-width: 120px !important;
+//     font-size: 10px !important;
+//     // height: 34px !important;
+// }
+
+// .btn-dark-blue {
+//     border: 1px solid $color-dark-blue !important;
+//     border-radius: 100px !important;
+//     background: $color-dark-blue;
+//     color: $color-white;
+//     line-height: 22px !important;
+//     padding: 0 25px !important;
+//     min-width: 120px !important;
+//     font-size: 15px !important;
+//     height: 34px !important;
+// }
+
+// .btn-small-default {
+//     border: 1px solid !important;
+//     border-radius: 25px !important;
+//     // background: $color-red;
+//     line-height: 24px !important;
+//     // padding: 0 30px !important;
+//     // min-width: 160px !important;
+//     font-size: 10px !important;
+// }
+
+// .btn-full-default {
+//     border: 1px solid !important;
+//     border-radius: 25px !important;
+//     // background: $color-red;
+//     // line-height: 30px !important;
+//     padding: 0 30px !important;
+//     min-width: 120px !important;
+//     font-size: 15px !important;
+//     width: 100% !important;
+// }
+
+.btn-full-default-1 {
+    border: 1px solid #666666 !important;
+    // border-radius: 25px !important;
+    // background: $color-red;
+    // line-height: 30px !important;
+    padding: 0 30px !important;
+    min-width: 120px !important;
+    font-size: 15px !important;
+    width: 100% !important;
+    color: #666666;
+}
+
+.btn-full-default-2 {
+    border: 1px solid red !important;
+    // border-radius: 25px !important;
+    // background: $color-red;
+    // line-height: 30px !important;
+    padding: 0 30px !important;
+    min-width: 120px !important;
+    font-size: 15px !important;
+    width: 100% !important;
+    color: red;
+}
+
+.btn-blue {
+    background: #00509c !important;
+    border-color: #00509c !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 40px !important;
+    font-size: 15px !important;
+    color: #ffffff !important;
+    text-decoration: none solid rgb(255, 255, 255) !important;
+    text-align: center !important;
+    border-radius: 5px !important;
+    fill: #00509c !important;
+}
+
+.btn-red {
+    background: #EB3026 !important;
+    border-color: #EB3026 !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 40px !important;
+    font-size: 15px !important;
+    color: #ffffff !important;
+    text-decoration: none solid rgb(255, 255, 255) !important;
+    text-align: center !important;
+    border-radius: 5px !important;
+    fill: #EB3026 !important;
+}
+
+.btn-white {
+    background: white !important;
+    border-color: #00509c !important;
+    width: 150px !important;
+    min-width: 150px !important;
+    height: 40px !important;
+    font-size: 15px !important;
+    color: #00509c !important;
+    text-decoration: none solid rgb(255, 255, 255) !important;
+    text-align: center !important;
+    border-radius: 5px !important;
+    fill: 00509c !important;
+    border: 1px solid !important;
+}
+
+.header-button {
+    background:#455FFF;
+    border-radius: 12px !important;
+    float: right;
+    color: #FFFFFF;
+    font: normal normal 500 16px/23px Poppins !important;
+    height: 40px;
+    margin-top: 20px !important;
+    letter-spacing: 0px;
+    margin-right: 20px;
+    border: 2px solid;
+}
+
+.btn-custom {
+    // background: transparent linear-gradient(259deg, #242F68 0%, #2E4095 100%) 0% 0% no-repeat padding-box;
+    background: #E2AF2A 0% 0% no-repeat padding-box;;
+    color: #fff;
+    width: 125px;
+    height: 40px;
+    border-radius: 10px !important;
+    font: normal normal 600 16px/32px Poppins;
+}
+
+.btn-custom-form {
+    color: #fff;
+    width: 149px;
+    height: 44px;
+    background: #00AFBB;
+    border-radius: 10px !important;
+    border-color: #00AFBB;
+    font: normal normal bold 14px Poppins;
+    opacity: 1;
+}
+.btn-custom-form-small {
+    color: #fff;
+    width: 120px;
+    height: 44px;
+    background: #00AFBB;
+    border-radius: 10px !important;
+    border-color: #00AFBB;
+    font: normal normal bold 14px Poppins;
+    opacity: 1;
+}
+.mat-button.mat-button-disabled.mat-button-disabled {
+    background: #E8E8E8 0% 0% no-repeat padding-box;
+    color: #FFFFFF;
+}
+.btn-custom-day {
+    color: #fff;
+    width: 100%;
+    height: 44px;
+    background: #00AFBB;
+    border-radius: 10px !important;
+    border-color: #00AFBB;
+    font: normal normal medium 14px/23px Poppins;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+.btn-custom-day-friday {
+    color: #00AFBB;
+    width: 100%;
+    height: 44px;
+    background: #FFFFFF;
+    border-radius: 10px !important;
+    border: 2px solid #00AFBB !important;
+    font: normal normal 600 14px/23px Poppins;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+.btn-year-border {
+    color: #FF9F10;
+    width: 100%;
+    height: 44px;
+    background: #FFFFFF;
+    border-radius: 10px !important;
+    border: 2px solid #FF9F10 !important;
+    font: normal normal 600 14px/23px Poppins;
+    letter-spacing: 0px;
+    opacity: 1;
+}
+.btn-custom-year {
+    color: #fff;
+    width: 100%;
+    height: 44px;
+    background: #FF9F10;
+    border-radius: 10px !important;
+    border-color: #FF9F10;
+    font: normal normal bold 14px Poppins;
+    opacity: 1;
+}
+.btn:focus {
+    box-shadow: none !important;
+}

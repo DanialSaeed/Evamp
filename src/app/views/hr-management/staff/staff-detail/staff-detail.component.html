@@ -1,0 +1,265 @@
+<mat-card  class="row-margin-tb card-dark">
+    <form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+    <ng-container>
+        <mat-card class="card">
+            <app-app-headers [headerProps]="genericHeadingProps('Staff Details','text-bolder text-color','15px')"></app-app-headers>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Surname</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="name"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Known as</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="reg"
+                               minlength="4"
+                               maxlength="16"
+                               required>
+                        <!-- <mat-error *ngIf="getField('nameEn')">{{getErrorMessage('nameEn')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Contact Number</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="phone"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field>
+                        <mat-label>Email Address</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="phone"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="66"
+                     fxFlex.md="66"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Home Address</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="address"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                       
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Nationality</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Gender</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Sexual Oreintation</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Religion</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Ethnic Origin</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>First Language</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="96"
+                     fxFlex.md="96"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <p class="form-text">
+                            To satisfy the strict guidelines issued by the Department of Health on the ratio of staff to children, Nursery Practitioners must be aged 17 years and over. Are you 17 years old or over?
+                        </p>
+                    </div>
+                    <div fxLayout="row wrap"
+                     fxLayoutAlign="start center">
+                    <mat-radio-group aria-label="Select an option"
+                                     formControlName="option">
+                        <mat-radio-button value="1">Yes</mat-radio-button>
+                        <mat-radio-button value="2">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div fxFlex="100"
+                     class="col-flex-margins">
+                    <p>
+                        If you are not yet 17, please tell us when you will reach that age
+                    </p>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="25"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     >
+                        <mat-form-field>
+                            <mat-label>Month</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                     fxFlex.lg="25"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     >
+                        <mat-form-field>
+                            <mat-label>Year</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>  
+                <div fxFlex="100"
+                     class="col-flex-margins">
+                    <p>
+                        Do you consider yourself to have a disability as defined by the Equality Act?
+                    </p>
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center">
+                    <mat-radio-group aria-label="Select an option"
+                                     formControlName="option">
+                        <mat-radio-button value="1">Yes</mat-radio-button>
+                        <mat-radio-button value="2">No</mat-radio-button>
+                        <mat-radio-button value="1">Don't Know</mat-radio-button>
+                        <mat-radio-button value="2">Prefer not to say</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+
+            <app-form-foooter [footerProps]="footerProps"></app-form-foooter>
+        </mat-card>
+    </ng-container>
+</form>
+</mat-card>

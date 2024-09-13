@@ -1,0 +1,351 @@
+<mat-card  class="row-margin-tb card-dark">
+    <form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+    <ng-container>
+        <mat-card class="card">
+            <app-app-headers [headerProps]="genericHeadingProps('Education & Trainings','text-bolder text-color','15px')"></app-app-headers>
+            <app-app-headers
+                             [headerProps]=" genericHeadingProps('Secondary Education','text-small text-gray','0px 15px')">
+            </app-app-headers>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                 <div fxFlex.xl="28"
+                 fxFlex.lg="32"
+                 fxFlex.md="32"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="col-flex-margins">
+                 <mat-form-field>
+                    <mat-label>School Name</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="phone"
+                           required>
+                    <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div fxFlex.xl="28"
+                 fxFlex.lg="66"
+                 fxFlex.md="66"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="col-flex-margins">
+                <mat-form-field>
+                    <mat-label>School Address</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="address"
+                           required>
+                    <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                   
+                </mat-form-field>
+            </div>
+            <div fxFlex.xl="100"
+                     fxFlex.lg="100"
+                     fxFlex.md="100"
+                     fxFlex.sm="100"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field>
+                        <mat-label>Subjects</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="name"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                    </mat-form-field>
+                    </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Grades</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field (click)="desired.open()">
+                        <mat-label>From</mat-label>
+                        <input matInput
+                               readonly
+                               [min]="minDate"
+                               [max]="currentDate"
+                               formControlName="startDate"
+                               [matDatepicker]="desired">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="desired"></mat-datepicker-toggle>
+                        <mat-datepicker #desired></mat-datepicker>
+                        <!-- <mat-error *ngIf="getField('startDate')">{{getErrorMessage('startDate')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field (click)="desired1.open()">
+                        <mat-label>To</mat-label>
+                        <input matInput
+                               readonly
+                               [min]="minDate"
+                               [max]="currentDate"
+                               formControlName="endDate"
+                               [matDatepicker]="desired1">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="desired1"></mat-datepicker-toggle>
+                        <mat-datepicker #desired1></mat-datepicker>
+                        <!-- <mat-error *ngIf="getField('endDate')">{{getErrorMessage('endDate')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+  
+            </div>
+
+            <app-app-headers
+                             [headerProps]=" genericHeadingProps('Further Education','text-small text-gray','0px 15px')">
+            </app-app-headers>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                 <div fxFlex.xl="28"
+                 fxFlex.lg="32"
+                 fxFlex.md="32"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="col-flex-margins">
+                 <mat-form-field>
+                    <mat-label>College/University Name</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="phone"
+                           required>
+                    <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div fxFlex.xl="28"
+                 fxFlex.lg="66"
+                 fxFlex.md="66"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="col-flex-margins">
+                <mat-form-field>
+                    <mat-label>College/University Address</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="address"
+                           required>
+                    <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                   
+                </mat-form-field>
+            </div>
+            <div fxFlex.xl="100"
+                     fxFlex.lg="100"
+                     fxFlex.md="100"
+                     fxFlex.sm="100"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field>
+                        <mat-label>Type of Course and Subjects</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="name"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                    </mat-form-field>
+                    </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Qualification/ Class of Degree</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field (click)="desired.open()">
+                        <mat-label>From</mat-label>
+                        <input matInput
+                               readonly
+                               [min]="minDate"
+                               [max]="currentDate"
+                               formControlName="startDate"
+                               [matDatepicker]="desired">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="desired"></mat-datepicker-toggle>
+                        <mat-datepicker #desired></mat-datepicker>
+                        <!-- <mat-error *ngIf="getField('startDate')">{{getErrorMessage('startDate')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field (click)="desired1.open()">
+                        <mat-label>To</mat-label>
+                        <input matInput
+                               readonly
+                               [min]="minDate"
+                               [max]="currentDate"
+                               formControlName="endDate"
+                               [matDatepicker]="desired1">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="desired1"></mat-datepicker-toggle>
+                        <mat-datepicker #desired1></mat-datepicker>
+                        <!-- <mat-error *ngIf="getField('endDate')">{{getErrorMessage('endDate')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+  
+            </div>
+
+            <app-app-headers
+                             [headerProps]=" genericHeadingProps('Professional, Technical and Occupational Training','text-small text-gray','0px 15px')">
+            </app-app-headers>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                 <div fxFlex.xl="28"
+                 fxFlex.lg="32"
+                 fxFlex.md="32"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="col-flex-margins">
+                 <mat-form-field>
+                    <mat-label>Employer or Institute Name</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="phone"
+                           required>
+                    <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div fxFlex.xl="28"
+                 fxFlex.lg="66"
+                 fxFlex.md="66"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="col-flex-margins">
+                <mat-form-field>
+                    <mat-label>Employer or Institute Address</mat-label>
+                    <input matInput
+                           type="text"
+                           formControlName="address"
+                           required>
+                    <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                   
+                </mat-form-field>
+            </div>
+            <div fxFlex.xl="100"
+                     fxFlex.lg="100"
+                     fxFlex.md="100"
+                     fxFlex.sm="100"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field>
+                        <mat-label>Details of Training and Subjects Studied</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="name"
+                               required>
+                        <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+                    </mat-form-field>
+                    </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Qualification Gained</mat-label>
+                            <mat-select class="height-40" 
+                            formControlName="age"
+                            >
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field (click)="desired.open()">
+                        <mat-label>From</mat-label>
+                        <input matInput
+                               readonly
+                               [min]="minDate"
+                               [max]="currentDate"
+                               formControlName="startDate"
+                               [matDatepicker]="desired">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="desired"></mat-datepicker-toggle>
+                        <mat-datepicker #desired></mat-datepicker>
+                        <!-- <mat-error *ngIf="getField('startDate')">{{getErrorMessage('startDate')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <mat-form-field (click)="desired1.open()">
+                        <mat-label>To</mat-label>
+                        <input matInput
+                               readonly
+                               [min]="minDate"
+                               [max]="currentDate"
+                               formControlName="endDate"
+                               [matDatepicker]="desired1">
+                        <mat-datepicker-toggle matSuffix
+                                               [for]="desired1"></mat-datepicker-toggle>
+                        <mat-datepicker #desired1></mat-datepicker>
+                        <!-- <mat-error *ngIf="getField('endDate')">{{getErrorMessage('endDate')}}</mat-error> -->
+                    </mat-form-field>
+                </div>
+  
+            </div>
+
+            <app-form-foooter [footerProps]="footerProps"></app-form-foooter>
+        </mat-card>
+    </ng-container>
+</form>
+</mat-card>
+

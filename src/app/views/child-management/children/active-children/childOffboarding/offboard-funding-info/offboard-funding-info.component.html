@@ -1,0 +1,62 @@
+<ng-container>
+  <mat-card class="card">
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="15px"
+         class="top-heading text-bolder text-color"
+         (click)="check()">
+      <div fxFlex>
+        Funding Information
+      </div>
+    </div>
+    <div class="top-heading text-bolder"
+         style="font-size: 15px;">
+      {{formDetail.firstName? formDetail.firstName : ''}} {{formDetail.lastName? formDetail.lastName : ''}}
+    </div>
+  </mat-card>
+</ng-container>
+
+<div>
+  <app-table-component *ngIf="this.fundingLogs.length > 0"
+                       height="auto"
+                       maxHeight="40vh"
+                       [editableDate]="editableDateProps"
+                       [props]="tableConfigAndProps"></app-table-component>
+  <div fxLayout="row wrap"
+       fxLayoutAlign="space-between center"
+       class="row-card-margins"
+       *ngIf="this.fundingLogs.length > 0">
+    <div fxFlex="100"
+         fxLayoutAlign="start start"
+         class="row-wrap-margins">
+      <div fxFlex="60"
+           fxFlex.md="60"
+           fxFlex.sm="60"
+           fxFlex.xs="100"
+           fxLayoutAlign="start start">
+        <span style="background-color: #00D100; cursor:pointer;"
+              class="slot-bar"></span>
+        <span class="slot-bar-text">These fundings will be ended on the offboarding date</span>
+      </div>
+      <div fxFlex="40"
+           fxFlex.md="40"
+           fxFlex.sm="40"
+           fxFlex.xs="100"
+           fxLayoutAlign="start start">
+        <span style="background-color: #F10000; cursor:pointer;"
+              class="slot-bar"></span>
+        <span class="slot-bar-text">These fundings will be deleted </span>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap"
+       fxLayoutAlign="space-between center"
+       class="row-card-margins"
+       *ngIf="this.fundingLogs.length == 0">
+    This child does not have any funding.
+  </div>
+  <app-form-foooter (backEvent)="goBack()"
+                    (cancelEvent)="onCancel()"
+                    (saveInfoEvent)="onNext()"
+                    [footerProps]="footerProps"></app-form-foooter>
+</div>

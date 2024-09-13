@@ -1,0 +1,9 @@
+<mat-card class="row-margin-tb card-dark">
+    <mat-card>
+        <app-app-headers (filnalFilters)="filnalFilters($event)"
+                         [headerProps]="buttonHeaderProps"></app-app-headers>
+    </mat-card>
+    <app-table-component (onPagination)="onPagination($event)"
+                         (selectedItem)="actionButtonOutput($event)"
+                         [props]="tableConfigAndProps"></app-table-component>
+</mat-card>

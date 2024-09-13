@@ -1,0 +1,81 @@
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     fxLayoutGap="10px"
+     style="margin:10px;height:100px"
+     *ngIf="activated">
+  <div fxFlex="150px"
+       *ngIf="activated && footerProps?.hasCancelButton">
+    <button type="button"
+            mat-button
+            class="btn-custom-form">
+      {{footerProps.hasCancelButtonLabel}}
+    </button>
+  </div>
+
+  <div fxFlex="150px"
+       *ngIf="activated && footerProps?.hasCancel">
+    <button type="button"
+            mat-button
+            [style.background-color]="'#C1BBB9'"
+            class="btn-custom-form" (click)="onCancel()">
+      {{footerProps.hasCancelLabel}}
+    </button>
+  </div>
+
+  <div fxFlex="150px"
+       *ngIf="footerProps?.hasbackButton">
+    <button (click)="footerProps.hasClearForm? clearNow() : onBack()"
+            type="button"
+            mat-button
+            [style.background-color]="'#C1BBB9'"
+            class="btn-custom-form">
+      {{footerProps.backButtonLabel}}
+    </button>
+  </div>
+  <div fxFlex="150px"
+       *ngIf="footerProps?.hasSubButton">
+    <button (click)="onSubButton()"
+            type="button"
+            mat-button
+            class="btn-custom-form"
+            [style.background-color]="footerProps?.color">
+      {{footerProps.subButtonLabel}}
+    </button>
+  </div>
+  <div fxFlex="150px"
+       *ngIf="activated && footerProps?.hasButton">
+    <button type="submit"
+            mat-button
+            class="btn-custom-form">
+      {{footerProps.buttonLabel}}
+    </button>
+  </div>
+  <!-- <div fxFlex="150px"
+         *ngIf="footerProps.hasbackButton">
+        <button (click)="onBack()"
+                type="button"
+                mat-button
+                class="btn-custom-form">
+            {{footerProps.backButtonLabel}}
+        </button>
+    </div> -->
+  <!-- <div fxFlex="150px"
+         *ngIf="footerProps.hasClearButton">
+        <button (click)="clearNow()"
+                type="button"
+                mat-button
+                class="btn-custom-form"
+                [style.background-color]="footerProps?.color">
+            {{footerProps.clearButtonLabel}}
+        </button>
+    </div> -->
+  <!-- <div fxFlex="150px"
+         *ngIf="activated">
+        <button type="button"
+                mat-button
+                (click)="clearNow()"
+                class="btn-custom-form">
+            {{cancel}}
+        </button>
+    </div> -->
+</div>

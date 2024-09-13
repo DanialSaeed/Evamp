@@ -1,0 +1,818 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "assets/styles/colors.scss";
+
+/* angular-cli file: src/styles.css */
+
+// @import "~ng-pick-datetime/assets/style/picker.min.css";
+// @import "assets/styles/indigo-pink.css";
+// @import "~@fortawesome/fontawesome-free/css/all.css";
+
+$font-family: 'Poppins';
+$font-weight: 600;
+
+html,
+body {
+    font-family: 'Poppins' !important;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+body {
+    margin: 0;
+}
+
+.mat-h1,
+.mat-headline,
+.mat-typography h1 {
+    font-family: 'Poppins' !important;
+    letter-spacing: normal;
+    margin: 0 0 16px;
+}
+
+
+@import "assets/styles/buttons.scss";
+@import "assets/styles/defaults.scss";
+@import "assets/styles/bootstrap.scss";
+// @import "~@fortawesome/fontawesome-free/css/all.css";
+
+
+// .custom-table-striped tbody tr:nth-of-type(odd) {
+//     background-color: #F8F8F8 !important;
+// }
+
+
+
+// .top-heading {
+//     margin:10px 25px;
+//     font-size: 24px;
+//     font-weight: 100;
+// }
+
+// .btn-custom {
+//     // background: transparent linear-gradient(259deg, #242F68 0%, #2E4095 100%) 0% 0% no-repeat padding-box;
+//     background: #E2AF2A 0% 0% no-repeat padding-box;;
+//     color: #fff;
+//     width: 125px;
+//     height: 40px;
+//     border-radius: 14px !important;
+//     font: normal normal 600 16px/32px Poppins;
+// }
+
+// .btn-custom-form {
+//     color: #fff;
+//     width: 149px;
+//     height: 44px;
+//     background: #00AFBB;
+//     border-radius: 14px !important;
+//     border-color: #00AFBB;
+//     font: normal normal bold 13px Poppins;
+//     opacity: 1;
+// }
+// .btn-custom-day {
+//     color: #fff;
+//     width: 100%;
+//     height: 44px;
+//     background: #00AFBB;
+//     border-radius: 14px !important;
+//     border-color: #00AFBB;
+//     font: normal normal medium 14px/23px Poppins;
+//     letter-spacing: 0px;
+//     opacity: 1;
+// }
+// .btn-custom-day-friday {
+//     color: #00AFBB;
+//     width: 100%;
+//     height: 44px;
+//     background: #FFFFFF;
+//     border-radius: 14px !important;
+//     border: 2px solid #00AFBB !important;
+//     font: normal normal 600 14px/23px Poppins;
+//     letter-spacing: 0px;
+//     opacity: 1;
+// }
+// .btn-year-border {
+//     color: #FF9F10;
+//     width: 100%;
+//     height: 44px;
+//     background: #FFFFFF;
+//     border-radius: 14px !important;
+//     border: 2px solid #FF9F10 !important;
+//     font: normal normal 600 14px/23px Poppins;
+//     letter-spacing: 0px;
+//     opacity: 1;
+// }
+// .btn-custom-year {
+//     color: #fff;
+//     width: 100%;
+//     height: 44px;
+//     background: #FF9F10;
+//     border-radius: 14px !important;
+//     border-color: #FF9F10;
+//     font: normal normal bold 15px Poppins;
+//     opacity: 1;
+// }
+// .btn:focus {
+//     box-shadow: none !important;
+// }
+
+
+
+.header-top-text-bolder {
+    font: bold bold bold 30px Poppins;
+}
+
+.header-top-text-bold {
+    font: normal normal normal 24px Poppins;
+}
+
+.date-head {
+    border: 1px solid lightgray;
+    padding: 7px;
+    width: max-content;
+    background: white;
+    border-radius: 7px;
+    box-shadow: 0px 2px 0px #E4E7E9 !important;
+}
+
+.main-logo-text {
+    font-size: 20px;
+    color: white;
+}
+
+@media only screen and (max-width: 600px) {
+    .header-top-text-bolder {
+        font-size: 20px;
+    }
+
+    .top-heading {
+        font-size: 20px;
+    }
+
+    .main-logo-text {
+        font-size: 15px;
+        color: white;
+    }
+
+}
+// ==================>>>>>>> Star Nursery Css<<<<<<<<<<<<<================
+.border-class
+{
+    border: 1px solid #CEEEF0;
+    &:hover {
+
+    border: 2px solid #CEEEF0;
+
+    }
+
+}
+.row-margin {
+    margin: 10px 20px;
+   }
+
+.row-wrap-margins {
+    margin: 10px !important
+}
+.row-span-margin
+{
+    // margin: 20px 0px 0px 25px;
+    margin: 20px 0px 0px 10px;
+}
+.row-card-margins{
+    // margin: 25px 10px;
+    margin: 25px 10px 0px 10px;
+}
+.row-card-shift{
+    // margin: 25px 10px;
+    margin: 20px 10px 0px 10px;
+}
+.row-radio-margins
+{
+    margin:10px 0px 20px 0px;
+}
+.top-heading {
+    margin:10px 10px;
+    font-size: 24px;
+    font-weight: 100;
+}
+.custom-text {
+    font: normal normal 14px Poppins;
+    font-weight: 600;
+    color: #131C24;
+    margin-bottom: 10px;
+  }
+
+.card {
+    // height: 110px;
+    // margin:10px 5px;
+    //width:185px;
+    border: 1px solid #E4E7E9 !important;
+    padding: 20px !important;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+}
+.text-color{
+    color: #00AFBB;
+}
+.text-gray{
+    color:#4A4A4A
+}
+.text-gray1{
+    color:#767676
+}
+.text-smaller{
+    font: normal normal 600 10px Poppins;
+}
+.text-small{
+    font: normal normal 12px Poppins;
+    font-weight: 600;
+}
+.text-normal{
+    font: normal normal  16px Poppins;font-weight: normal;
+}
+.text-normal-bold{
+    font: normal normal 600 16px Poppins;
+}
+.text-bold{
+    font-size: 18px;font-weight: 600;opacity: 1;font-family:Poppins;
+    ;
+}
+.text-bolder{
+    font: normal normal 600 20px Poppins;;
+}
+.day-name{
+    width: 100%;
+    height: 42px;
+    background-color:#00AFBB;
+    color: #FFFFFF;
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font: normal normal 14px Poppins;
+    cursor: pointer;
+}
+.mat-radio-button  {
+        margin-left: 10px;
+        background: #FDFDFD 0% 0% no-repeat padding-box;
+        border: 1px solid #CEEEF0;
+        border-radius: 14px;
+        opacity: 1;
+        height: 40px;
+        &:hover {
+
+            border: 1px solid transparent;
+
+            }
+}
+.mat-radio-label{
+    margin: 6px;
+    color: #767676;
+    font: normal normal 600 12px/26px Poppins;
+}
+.mat-radio-outer-circle {
+    border-color: #00AFBB;
+    top: 1px !important;
+    width: 18px !important;
+    height: 18px !important;
+    left: 2px !important;
+}
+.mat-radio-label-content{
+    padding-left: 12px !important;
+    padding-right: 68px !important;
+    width: 70px !important;
+}
+.mat-radio-inner-circle {
+height: 19px !important;
+left: 1px !important;
+top: 0.5px !important;
+}
+.mat-checkbox {
+margin-top: 10px !important;
+}
+.mat-checkbox-frame {
+    border-color: #E4E7E9;
+}
+.mat-checkbox-label {
+    font: normal normal medium 16px/29px Poppins;
+    color: #767676;
+}
+
+//side form selector scss
+.for-select-row{
+    cursor: pointer;
+}
+.form-select-icon{
+    float: left;
+    background: #00AFBB 0% 0% no-repeat padding-box;
+    border-radius: 14px;
+    opacity: 1;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: white;
+    font: normal normal bold 14px/21px Poppins;
+    margin-left: 5px;
+}
+.green-tick {
+    width: 20px;
+    height: 20px;
+}
+.form-select-label{
+    float: left;margin-left: 10px;
+    font: normal normal 600 14px/29px Poppins;
+
+}
+.form-menu-clicked{
+    background: #00AFBB;
+    border-radius: 14px;
+    height: 40px;
+    &:hover {
+        cursor: pointer;
+    }
+    .form-select-icon{
+     background: white;
+     color: #0061D1;
+
+    }
+    .form-select-label{
+        float: left;margin-left: 10px; color: white;
+
+    }
+}
+// ========= Year View Calender css
+.monthcontainer {
+    padding: 0px !important;
+    margin-bottom: 5px !important;
+
+}
+.flexdays  .day  {
+    margin:2px 0px !important;
+    // border-radius: 0% !important;
+}
+.flexdays  .day-top{
+    padding: 0px !important;
+    margin: 0px !important;
+    opacity: 0.7;
+
+}
+.flexdays .day:hover {
+    background: #E5E5E5 !important;
+    cursor: pointer;
+    border-radius: 50% !important;
+  }
+
+.hasEvents {
+    // background:  #fff !important;
+    border-radius: 0%;
+    color: var(--textcolor);
+    // border-top:  1px  solid !important;;
+    // border-bottom: 1px #A3A3A3 solid !important; ;
+     border-radius: 0% !important;
+  }
+  .radiusComplete{
+      border-radius: 25% !important;
+  }
+  .radiusStart
+  {
+    //   border: 1px #A3A3A3 solid !important;
+       border-right: 0px !important;
+      border-top-left-radius: 25% !important;
+      border-bottom-left-radius: 25% !important;
+      border-top-right-radius: 0% !important;
+      border-bottom-right-radius: 0% !important;
+  }
+  .radiusEnd
+  {
+    //    border: 1px #A3A3A3 solid !important;
+       border-left: 0px !important;
+      border-top-left-radius: 0% !important;
+      border-bottom-left-radius: 0% !important;
+      border-top-right-radius: 25% !important;
+      border-bottom-right-radius: 25% !important;
+  }
+
+.todayclass{
+    border-radius: 50% !important;
+    border:2px solid #00AFBB !important
+}
+// Month calendar scss
+.cal-month-view .cal-day-cell {
+    min-height: 70px !important;
+}
+.cal-month-view .cal-days .cal-cell-row {
+     border-bottom: 0px !important;
+}
+.cal-month-view .cal-day-number {
+float: left !important;
+margin-left: 15px !important;
+}
+.cal-month-view .cal-day-cell.cal-today {
+    background-color: #F5F5F5 !important;
+}
+.calbutton{
+    border-radius: 10px !important;
+    color: #767676 !important;
+    border: 1px solid #767676 !important;
+    font: normal normal medium 14px/23px Poppins !important;
+
+    &.active{
+        color: #00AFBB !important;
+        border-color: #00AFBB !important;
+    }
+}
+.caltitle {
+    color: #666666 !important;
+    margin-top: 15px !important;
+    font-weight: 700 !important;
+}
+.calendarbar {
+    margin-left: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #4A4A4A;
+}
+.cal-month-view .cal-day-cell.cal-in-month.cal-has-events {
+    cursor: pointer !important;
+    // border: 0.5px solid #E0E0E0 !important;
+ }
+    .cal-month-view .cal-day-number {
+
+        color: #666666 !important;
+        font: normal normal 20px Poppins;
+        opacity: 0.9;
+        // margin-top: 15px !important;
+        // margin-right: 15px !important;
+        // margin-bottom: 10px !important;
+        margin-left: 10px !important;
+    }
+    .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+        // background: #BBFBFF !important;
+        // border-radius: 100% !important;
+        // border: 2px solid #00AFBB !important;
+        width: 28px !important;
+        height: 28px !important;
+        text-align: center !important;
+        font-weight: bold !important;
+        font-size: 25px !important;
+    }
+    .cal-month-view .cal-days {
+        border: 0.5px solid #E0E0E0 !important; }
+      .cal-month-view .cal-day-cell:not(:last-child) {
+        border-right-color: 0.5px solid #E0E0E0 !important; }
+
+        .cal-month-view .cal-day-cell.cal-out-month
+        {
+            background-color: white !important;
+            border: 0px solid #E0E0E0 !important;
+        }
+// calender top bar
+.topbarCalender{
+    width: 20px; height: 20px;border-radius: 100%;
+}
+.cdk-overlay-container {
+    z-index: 500 !important;
+}
+// MATERIAL OLD ====================================
+
+
+// .mat-drawer-inner-container {
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden !important;
+//     -webkit-overflow-scrolling: touch;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-outline-start {
+//     border-radius: 25px 0 0 25px !important;
+//     border-right-style: none;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-outline-end {
+//     border-radius: 0 25px 25px 0 !important;
+//     border-left-style: none;
+//     flex-grow: 1;
+// }
+
+// .input-rtl {
+//     direction: rtl;
+
+//     .mat-form-field-appearance-outline .mat-form-field-outline-start {
+//         border-radius: 0 25px 25px 0 !important;
+//         border-right-style: none;
+//     }
+
+//     .mat-form-field-appearance-outline .mat-form-field-outline-end {
+//         border-radius: 25px 0 0 25px !important;
+//         border-left-style: none;
+//         flex-grow: 1;
+//     }
+
+//     .mat-form-field-appearance-outline .mat-form-field-infix {
+//         margin-right: 10px !important;
+//         height: 12px;
+//     }
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-infix {
+//     margin-left: 10px !important;
+//     height: 12px;
+// }
+mat-card {
+    background: #FFFFFF 0% 0% no-repeat padding-box !important;
+    box-shadow: 0px 16px 40px #7090B01A !important;
+    // border-radius: 10px !important;
+}
+//TIME PICKER STYLE CUSTOM
+.timepicker {
+
+    .timepicker__header {
+      background-color: #00AFBB !important;
+    }
+
+    .clock-face__clock-hand {
+      background-color: #00AFBB !important;
+
+      &::after {
+        background-color: #00AFBB !important;
+      }
+
+      &::before {
+        border-color: #A5AEB626 !important;
+      }
+    }
+
+    .clock-face__number {
+      > span.active {
+        background-color: #00AFBB !important;
+      }
+    }
+
+    button:not(.timepicker-dial__item) {
+      color: #00AFBB !important;
+    }
+  }
+  .slot-bar{
+    width: 18px; height: 18px;
+  }
+  .slot-bar-text{
+    margin-left: 15px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0px;
+    color: #767676;
+    margin-top: -2px;
+  }
+
+  .preloader {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    left: calc(50% - 75px);
+    top: calc(50% - 40px);
+    z-index: 5;
+  }
+
+  .one {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.0s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.0s;
+  }
+
+  .two {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.2s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.2s;
+  }
+
+  .three {
+    opacity: 0;
+    -webkit-animation: dot 1.3s infinite;
+    -webkit-animation-delay: 0.3s;
+    animation: dot 1.3s infinite;
+    animation-delay: 0.3s;
+  }
+
+  @-webkit-keyframes dot {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes dot {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+// mat-form-field {
+//     width: 100% !important;
+// }
+
+// .mat-form-field-infix {
+//     padding: 4px 0 11px 0 !important;
+// }
+
+// // .mat-form-field-infix {
+// //     padding: 6px 0 14px 0 !important;
+// // }
+
+// .mat-form-field-label {
+//     font-size: 14px !important;
+// }
+
+// .mat-form-field-label-wrapper {
+//     top: -1.084375em !important;
+//     padding-top: 0.84375em;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-prefix {
+//     top: 5px !important;
+// }
+
+mat-error {
+  white-space: nowrap;
+    color: red;
+    margin-top: 8px;
+}
+
+.removeAddress {
+    position: absolute;
+    right: 0px;
+    top: 35px;
+    font-size: 12px;
+    color: #00AFBB;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ml-15 {
+  padding-left: 15px !important;
+}
+
+.pound-left {
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    font-size: 19px;
+    // position: relative;
+    // bottom: 5px;
+    // padding-left: 3px;
+}
+
+.cp {
+    cursor: pointer !important;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
+.mt-10 {
+    margin-top: 10px !important;
+}
+.mt-20 {
+    margin-top: 20px !important;
+}
+.mt-30 {
+    margin-top: 30px !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.mb-30 {
+    margin-bottom: 30px !important;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.inline {
+    display: flex;
+}
+
+.editIcon {
+    font-size: 18px;
+    margin-top: 4px;
+}
+
+.editBtn {
+    background-color: rgb(226, 175, 42);
+    color: white;
+    font-size: 16px;
+    border-radius: 8px !important;
+    //padding-left: 10px !important;
+}
+
+.subheader {
+    background-color: #ffffff26 !important; 
+    border: 0px !important;
+}
+
+.subheaderLabel {
+    color: #4A4A4A; 
+    line-height: 8px; 
+    margin-bottom: -5px !important;
+}
+
+.grey-txt {
+   color: #767676 !important;
+   font-weight: bolder;
+}
+
+.text-center {
+ text-align: center;
+}
+
+.mat-tooltip {
+    background: white !important;
+    color: black !important;
+    font-weight: 300;
+    font-size: 11px;
+    border: 0.5px solid lightgray;
+    max-width: 250px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;
+}
+
+// .mat-form-field-appearance-outline .mat-form-field-suffix {
+//     position: initial;
+//     top: 5px !important;
+// }
+
+// .mat-form-field-can-float .mat-input-server:focus+.mat-form-field-label-wrapper .mat-form-field-label,
+// .mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+//     transform: translateY(-1.34375em) scale(0.75) !important;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-wrapper {
+//     margin: 0 !important;
+// }
+
+// .mat-form-field-wrapper {
+//     padding-bottom: 1em !important;
+// }
+
+// .mat-sort-header-container {
+//     justify-content: center !important;
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-outline-start,
+// .mat-form-field-appearance-outline .mat-form-field-outline-end {
+//     border: 1px solid currentColor;
+//     min-width: 18px !important;
+// }
+
+// .mat-expansion-panel-body {
+//     padding: 0 !important;
+// }
+
+// mat-card {
+//     padding: 15px !important;
+
+//     &.p-30 {
+//         padding: 30px !important;
+//     }
+// }
+
+// .mat-form-field-appearance-outline .mat-form-field-outline {
+//     height: 40px !important;
+// }
+//  .mat-progress-bar-fill::after {
+//     background-color: #455FFF;
+// }
+// mat-progress-bar .mat-progress-bar-buffer {
+//     background: #E4E8EB;
+//   }
+
+//  .mat-progress-bar {
+//      height: 10px;
+//     border-radius: 2px;
+// }
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

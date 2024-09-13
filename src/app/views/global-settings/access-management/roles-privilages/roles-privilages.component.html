@@ -1,0 +1,151 @@
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     fxLayoutGap="15px"
+     style="background: #ECF2F2 !important;">
+
+  <div fxFlex="39">
+
+  </div>
+  <div fxFlex>
+    <p class="text-normal-bold"
+       style="    margin-top: 10px;">
+      Super Admin
+    </p>
+  </div>
+  <div fxFlex>
+    <p class="text-normal-bold"
+       style="    margin-top: 10px;">
+      Branch Manager
+    </p>
+  </div>
+  <div fxFlex>
+    <p class="text-normal-bold"
+       style="    margin-top: 10px;">
+      System User </p>
+  </div>
+</div>
+<mat-accordion>
+  <ng-container *ngFor="let menu of menus">
+    <mat-expansion-panel [hideToggle]="!menu.isParent"
+                         [togglePosition]="'before'">
+      <mat-expansion-panel-header>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="5px"
+             style="width: 100%;">
+          <div fxFlex="1"
+               *ngIf="!menu.isParent">
+
+          </div>
+          <div fxFlex="38">
+            <p [ngStyle]="{'margin-left':(!menu.isParent) ? '10px':'0px'}"
+               style="    margin-top: 15px;">
+              {{menu.name}}
+            </p>
+          </div>
+          <div fxFlex
+               (click)="$event.stopPropagation();">
+            <mat-checkbox [disabled]="true" (change)="onCheckBox(0, menu, $event.checked)"
+                          [(ngModel)]="menu.predefinedSystemRoles[0].predefinedSystemRolePriviledge.visibility"
+                          class="example-margin"></mat-checkbox>
+          </div>
+          <div fxFlex
+               (click)="$event.stopPropagation();">
+            <mat-checkbox (change)="onCheckBox(1, menu, $event.checked)"
+                          [(ngModel)]="menu.predefinedSystemRoles[1].predefinedSystemRolePriviledge.visibility"
+                          class="example-margin"></mat-checkbox>
+          </div>
+          <div fxFlex
+               (click)="$event.stopPropagation();">
+            <mat-checkbox (change)="onCheckBox(2, menu, $event.checked)"
+                          [(ngModel)]="menu.predefinedSystemRoles[2].predefinedSystemRolePriviledge.visibility"
+                          class="example-margin"></mat-checkbox>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+      <ng-container *ngIf="menu.isParent">
+        <ng-container *ngFor="let child of menu.children">
+
+          <mat-expansion-panel [hideToggle]="!child.isParent"
+                               [togglePosition]="'before'">
+            <mat-expansion-panel-header>
+              <div fxLayout="row wrap"
+                   fxLayoutAlign="start center"
+                   fxLayoutGap="5px"
+                   style="width: 100%;">
+                <div fxFlex="1"
+                     *ngIf="!child.isParent">
+
+                </div>
+                <div fxFlex="38">
+                  <p [ngStyle]="{'margin-left':(!child.isParent) ? '10px':'0px'}"
+                     style="    margin-top: 15px;">
+                    {{child.name}}
+                  </p>
+                </div>
+                <div fxFlex
+                     (click)="$event.stopPropagation();">
+                  <mat-checkbox [disabled]="true" (change)="onCheckBox(0, child, $event.checked)"
+                                [(ngModel)]="child.predefinedSystemRoles[0].predefinedSystemRolePriviledge.visibility"
+                                class="example-margin"></mat-checkbox>
+                </div>
+                <div fxFlex
+                     (click)="$event.stopPropagation();">
+                  <mat-checkbox (change)="onCheckBox(1, child, $event.checked)"
+                                [(ngModel)]="child.predefinedSystemRoles[1].predefinedSystemRolePriviledge.visibility"
+                                class="example-margin"></mat-checkbox>
+                </div>
+                <div fxFlex
+                     (click)="$event.stopPropagation();">
+                  <mat-checkbox (change)="onCheckBox(2, child, $event.checked)"
+                                [(ngModel)]="child.predefinedSystemRoles[2].predefinedSystemRolePriviledge.visibility"
+                                class="example-margin"></mat-checkbox>
+                </div>
+              </div>
+
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="child.isParent">
+              <ng-container *ngFor="let grandChild of child.children">
+
+                <mat-expansion-panel [hideToggle]="!grandChild.isParent"
+                                     [togglePosition]="'before'">
+                  <mat-expansion-panel-header>
+                    <div fxLayout="row wrap"
+                         fxLayoutAlign="start center"
+                         fxLayoutGap="5px"
+                         style="width: 100%;">
+                      <div fxFlex="1"
+                           *ngIf="!grandChild.isParent">
+
+                      </div>
+                      <div fxFlex="38">
+                        <p [ngStyle]="{'margin-left':(!grandChild.isParent) ? '10px':'0px'}"
+                           style="    margin-top: 15px;">
+                          {{grandChild.name}}
+                        </p>
+                      </div>
+                      <div fxFlex
+                           (click)="$event.stopPropagation();">
+                        <mat-checkbox class="example-margin"></mat-checkbox>
+                      </div>
+                      <div fxFlex
+                           (click)="$event.stopPropagation();">
+                        <mat-checkbox class="example-margin"></mat-checkbox>
+                      </div>
+                      <div fxFlex
+                           (click)="$event.stopPropagation();">
+                        <mat-checkbox class="example-margin"></mat-checkbox>
+                      </div>
+                    </div>
+
+                  </mat-expansion-panel-header>
+                </mat-expansion-panel>
+              </ng-container>
+            </ng-container>
+          </mat-expansion-panel>
+        </ng-container>
+      </ng-container>
+
+    </mat-expansion-panel>
+  </ng-container>
+</mat-accordion>

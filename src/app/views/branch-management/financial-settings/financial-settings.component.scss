@@ -1,0 +1,23 @@
+.head {
+    margin: 10px 10px;
+}
+
+strong {
+    color: #131C24;
+}
+
+
+.siblingLabel {
+    font-size: 14px;
+    position: relative;
+    top: 15px;
+}
+
+:host ::ng-deep mat-radio-button {
+    flex: 1;
+    max-width: 140px;
+}
+
+:host ::ng-deep mat-radio-group {
+    display: flex !important;
+}

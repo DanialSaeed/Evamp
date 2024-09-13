@@ -1,0 +1,39 @@
+<mat-card  class="row-margin-tb card-dark">
+    <form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+    <ng-container>
+        <mat-card class="card">
+            <app-app-headers [headerProps]="genericHeadingProps('Personal Statements','text-bolder text-color','15px')"></app-app-headers>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                 <div fxFlex="100">
+                    <p class="form-text">
+                        Please detail how you feel you meet the criteria for the role and provide any other information you consider
+                        relevant in support of your application. Please continue on a separate sheet if necessary.
+                    </p>
+                </div>
+                
+                <div fxFlex.xl="100"
+                     fxFlex.lg="98"
+                     fxFlex.md="98"
+                     fxFlex.sm="100"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                     <textarea
+                     placeholder="Write here...."
+                     formControlName="name"
+                     class="txtarea"
+                     required>
+                </textarea>
+                    </div>
+  
+            </div>
+
+            <app-form-foooter [footerProps]="footerProps"></app-form-foooter>
+        </mat-card>
+    </ng-container>
+</form>
+</mat-card>
+

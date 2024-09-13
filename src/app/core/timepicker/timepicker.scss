@@ -1,0 +1,58 @@
+.custom-timer-inputs {
+    width: 60px;
+    height: 45px;
+    font-size: 31px;
+    text-align: center;
+    // padding-left: 12px;
+    /* border-color: #00AFBB; */
+    border: 1px solid #a8dcdf;
+    border-radius: 4px;
+  }
+  
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+  
+  input[type=number]:focus {
+    outline: none;
+  }
+  
+  // input[type=number]::-webkit-inner-spin-button:before {
+  //   content: "\25B2";
+  //   color: #333;
+  //   font-size: 12px;
+  //   font-weight: bold;
+  // }
+  
+  // input[type=number]::-webkit-inner-spin-button:after {
+  //   content: "\25BC";
+  //   color: #333;
+  //   font-size: 12px;
+  //   font-weight: bold;
+  // }
+  
+  .ampm {
+    // padding: 5px;
+    width: 60px;
+    text-align: center;
+    border: 1;
+    border: 1px solid #a8dcdf;
+    border-radius: 4px;
+  }
+  
+  .am {
+    padding: 4px;
+    border-radius: 4px 4px 0px 0px;
+    border-bottom: 1px solid darkgray;
+  }
+  
+  .pm {
+    padding: 4px;
+    border-radius: 0px 0px 4px 4px;
+  }

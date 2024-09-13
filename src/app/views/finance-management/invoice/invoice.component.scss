@@ -1,0 +1,144 @@
+.edit {
+    float:right; 
+    background-color: rgb(226, 175, 42) !important;
+    margin-left: 10px !important;
+    padding-left: 10px !important;
+}
+
+.approve {
+    float:right; 
+    background-color: #00AFBB !important;
+    margin-left: 10px !important;
+}
+
+.view {
+    float:right; 
+    background-color: rgb(226, 175, 42) !important;
+    margin-left: 10px !important; 
+}
+
+.card-info {
+    // border: 2px solid #cad2da;
+    border: 2px solid #f2f3f4;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+.bold {}
+
+.heading {
+    font-weight: 600;
+    color: #575151;
+}
+
+.card-head {
+    color: rgb(64, 64, 64);
+    font-weight: bold;
+    font-size: 18px;
+    -webkit-text-stroke-width: thin;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    // padding: 8px;
+    // text-align: center;
+  }
+
+  th:not(:first-child),
+  td:not(:first-child) {
+    width: 18.4%;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+    text-align: center;
+    min-width: 75px;
+  }
+
+  td div {
+    min-height: 50px;
+  }
+
+  .infoSection {
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+
+  .totalSection {
+    border: 1px solid lightgray;
+    // border-top: none;
+    padding: 15px 8px;
+    font-size: 15px;
+  }
+
+  .totals {
+    .totalSection:first-child {
+      border-bottom: none;
+    }
+  }
+
+  .end {
+    text-align: end;
+  }
+
+  .stats td {
+    text-align: center;
+    font-size: 13px;
+    padding: 5px;
+  }
+
+  .left-header {
+    text-align: center;
+    font-size: 15px;
+  }
+
+  .left-header-stat {
+    text-align: center;
+    font-size: 13px;
+  }
+
+  .btn {
+    margin-top: 2px !important;
+    color: white;
+  }
+
+  .session-list-cell div {
+    padding: 10px;
+  }
+
+  .item-bar {
+    margin-top: 1px !important;
+    background-color: #f8f9fa;
+  }
+
+  .session-list-cell div:not(:last-child) {
+    border-bottom: 1px solid lightgray;
+    /* CSS styles for all div elements except the last child */
+  }
+
+  @media (max-width: 1427px) and (min-width: 1360px) {
+    /* Font size for screen width between 1360px and 1427px */
+    table {
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 1360px) and (min-width: 1291px) {
+    /* Font size for screen width between 1291px and 1360px */
+    table {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 1291px) and (min-width: 1226px) {
+    /* Font size for screen width between 1226px and 1291px */
+    table {
+      font-size: 11px;
+    }
+  }

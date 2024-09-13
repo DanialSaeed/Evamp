@@ -1,0 +1,6 @@
+<mat-tab-group (selectedTabChange)="setTabIndex($event)">
+  <mat-tab *ngFor="let booking of bookings;let i = index" [label]="booking?.joiningDate + ' to ' + (booking?.leavingDate == null ? 'Present' : booking?.leavingDate) ">
+    <app-table-component (selectedItem)="actionButtonOutput($event)"
+    [props]="getProps(booking)"></app-table-component>
+  </mat-tab>
+</mat-tab-group>

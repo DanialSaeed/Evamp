@@ -1,0 +1,325 @@
+<!-- <ng-container *ngIf="filterArray.length == 0">
+	<ng-container *ngIf="placeholder.includes('Search')">
+		<mat-form-field fxFlex>
+			<span matPrefix
+				  style="margin-right: 8px;">
+				<mat-icon style="height: 20px;">search</mat-icon>
+			</span>
+			<mat-label>{{placeholder}}</mat-label>
+			<mat-select style="height:30px !important"
+						(selectionChange)="optionSelected($event.value)">
+				<mat-option *ngFor="let option of options | keyvalue"
+							[value]="option.value">
+					{{option.key}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</ng-container>
+	<ng-container *ngIf="!placeholder.includes('Search')">
+
+		<mat-form-field fxFlex>
+			<span matPrefix
+				  style="margin-right: 8px;">
+				<mat-icon style="height: 20px;">
+					<img src="assets/images/ic_sort.png"
+						 style="margin-bottom: 6px;">
+				</mat-icon>
+			</span>
+			<mat-label>{{placeholder}}</mat-label>
+			<mat-select style="height:30px !important"
+						(selectionChange)="optionSelected($event.value)">
+				<mat-option *ngFor="let option of options1 | keyvalue"
+							[value]="option.value">
+					{{option.key}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</ng-container>
+</ng-container> -->
+
+
+<div fxLayout="row wrap"
+     [fxLayoutAlign]="layoutAlign"
+     fxLayoutGap="10px"
+     fxLayoutGap.sm=""
+     fxLayoutGap.xs=""
+     class="fil"
+     style="margin-top: 6px;">
+  <ng-container *ngIf="hasSearch">
+    <form fxFlex.md="40"
+          [fxFlex]="fxFlexInSearch"
+          fxFlex.sm="30"
+          fxFlex.xs="100"
+          [formGroup]="Form">
+      <mat-form-field [ngStyle]="whiteBackStyle"
+                      class="zeroPadding">
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-label [@.disabled]="true">{{searchConfig.label}}</mat-label>
+        <input matInput
+               (keyup)="onSearch()"
+               type="text"
+               formControlName="search">
+        <mat-error *ngIf="Form.get('search').hasError('whitespace')">No Whitespaces allowed</mat-error>
+      </mat-form-field>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="searchConfig?.extraControl">
+    <form [formGroup]="Form"
+          [fxFlex]="fxFlexInSearch"
+          fxFlex.md="40"
+          fxFlex.sm="30"
+          fxFlex.xs="100">
+      <mat-form-field [ngStyle]="whiteBackStyle"
+                      class="zeroPadding">
+        <mat-icon matPrefix>search</mat-icon>
+        <mat-label [@.disabled]="true">{{searchConfig?.extraControlLabel}}</mat-label>
+        <input matInput
+               (keyup)="onSearch('extra')"
+               type="text"
+               [formControlName]="searchConfig?.extraControl">
+               <mat-error *ngIf="Form.get(searchConfig.extraControl).hasError('whitespace')">No Whitespaces allowed</mat-error>
+      </mat-form-field>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="hasOnlyDate">
+    <form [formGroup]="FormTwo"
+          fxFlex.sm="30"
+          fxFlex.xs="100"
+          [ngClass]="{'custom-date-picker-present': hasCustomOnlyDate,'custom-date-picker-absent': !hasCustomOnlyDate}">
+      <div class="custom-datepicker-container">
+        <button *ngIf="hasCustomOnlyDate"
+                mat-icon-button
+                class="custom-datepicker-prev-button"
+                (click)="previousMonth(picker)"
+                [disabled]="!FormTwo.get('date').value"
+                [class.active]="isPreviousButtonActive">
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <mat-form-field [ngClass]="{'custom-date-picker': hasCustomOnlyDate}"
+                        fxFlex="170px"
+                        fxFlex.sm="30"
+                        fxFlex.xs="100">
+          <mat-label>Select Date</mat-label>
+          <input matInput
+                 (click)="picker.open()"
+                 (dateChange)="valueChanged()"
+                 placeholder="Select date"
+                 [min]="minDate"
+                 [max]="currentDate"
+                 formControlName="date"
+                 [matDatepicker]="picker"
+                 >
+          <mat-icon class="close-icon" style="cursor: pointer;"
+                    *ngIf="FormTwo.get('date').value"
+                    matSuffix
+                    (click)="onClear2()">close</mat-icon>
+          <mat-datepicker-toggle matPrefix
+                                 [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <button *ngIf="hasCustomOnlyDate"
+                mat-icon-button
+                class="custom-datepicker-next-button"
+                (click)="nextDay(picker)"
+                [disabled]="!FormTwo.get('date').value || isCurrentDateSelected"
+                [class.active]="isNextButtonActive">
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="hasTwoDateRanges">
+    <form [formGroup]="Form"
+          [fxFlex]="29">
+
+      <mat-form-field fxFlex="45"
+                      style="margin-right: 10px">
+        <mat-label>Start</mat-label>
+        <input matInput
+               (click)="picker1.open()"
+               (dateChange)="valueChanged2()"
+               placeholder="Select date"
+               [max]="Form.get('end').value"
+               formControlName="start"
+               [matDatepicker]="picker1">
+        <mat-icon style="cursor: pointer;"
+                  *ngIf="Form.get('start').value && Form.get('end').value"
+                  matSuffix
+                  (click)="onClear()">close</mat-icon>
+        <mat-datepicker-toggle matPrefix
+                               [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="45">
+        <mat-label>End</mat-label>
+        <input matInput
+               (click)="picker2.open()"
+               (dateChange)="valueChanged2()"
+               placeholder="Select date"
+               [min]="Form.get('start').value"
+               formControlName="end"
+               [matDatepicker]="picker2">
+        <mat-icon style="cursor: pointer;"
+                  *ngIf="Form.get('start').value && Form.get('end').value"
+                  matSuffix
+                  (click)="onClear()">close</mat-icon>
+        <mat-datepicker-toggle matPrefix
+                               [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+    </form>
+  </ng-container>
+
+
+  <ng-container *ngIf="filterArray.length > 0">
+    <ng-container *ngFor="let filter of filterArray">
+      <mat-form-field [fxFlex]="fxFlexInSort"
+                      fxFlex.md="40"
+                      fxFlex.sm="30"
+                      fxFlex.xs="100"
+                      [ngStyle]="whiteBackStyle"
+                      class="zeroPadding">
+        <span matPrefix
+              style="margin-right: 8px;">
+          <mat-icon style="height: 20px;">
+            <!-- <img [src]="getImage(filter)"
+								 style="margin-bottom: 6px;"> -->
+            <span *ngIf="filter.type != 'search'">sort</span>
+            <span *ngIf="filter.type == 'search'">search</span>
+          </mat-icon>
+        </span>
+        <mat-label>{{filter.label}}</mat-label>
+        <mat-select [(ngModel)]="filter.selected"
+                    [ngModelOptions]="{standalone: true}"
+                    style="height:30px !important"
+                    (selectionChange)="onChangeFilters()">
+          <mat-option *ngFor="let option of filter.options"
+                      [value]="option?.value">
+            {{option?.label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="hasDatePicker">
+    <form [formGroup]="Form"
+          [fxFlex]="rangeWidth"
+          fxFlex.md="40"
+          fxFlex.sm="30"
+          fxFlex.xs="100">
+      <mat-form-field [ngStyle]="whiteBackStyle"
+                      class="zeroPadding">
+        <mat-label>Select Date Range</mat-label>
+        <mat-date-range-input (click)="FormPicker.open()"
+                              [rangePicker]="FormPicker">
+          <input matStartDate
+                 readonly
+                 (dateChange)="valueChanged2()"
+                 placeholder="Start date"
+                 formControlName="start">
+          <input matEndDate
+                 readonly
+                 (dateChange)="valueChanged2()"
+                 placeholder="End date"
+                 formControlName="end">
+        </mat-date-range-input>
+        <mat-icon style="cursor: pointer;"
+                  *ngIf="Form.get('start').value && Form.get('end').value"
+                  matSuffix
+                  (click)="onClear()">close</mat-icon>
+        <mat-datepicker-toggle matPrefix
+                               [for]="FormPicker"></mat-datepicker-toggle>
+        <mat-date-range-picker (click)="chek()"
+                               (closed)="onClosed()"
+                               #FormPicker
+                               [calendarHeaderComponent]="presetsDateRange"></mat-date-range-picker>
+      </mat-form-field>
+    </form>
+  </ng-container>
+
+
+  <ng-container *ngIf="hasButton">
+    <div fxFlex="100px">
+      <button type="button"
+              mat-button
+              class="btn-custom-form"
+              style="margin-top: 20px; width: 100px;">
+        Search
+      </button>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="hasClearButton">
+    <div fxFlex="fit-content"
+         class="space">
+      <button type="button"
+              mat-button
+              class="btn-custom-form"
+              [style]="{background: isGreyBackground ? '#e8e8e8' : ''}"
+              (click)="onClear()"
+              style="margin-top: 20px; width: 100px;">
+        Clear
+      </button>
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="hasCustomButton">
+    <div fxFlex="fit-content"
+         class="space">
+      <button type="button"
+              mat-button
+              class="btn-custom-form"
+              [style]="{background: isGreyBackground ? '#e8e8e8' : '#e2af2a'}"
+              (click)="onButtonClicked()"
+              style="margin-top: 20px;width: fit-content;min-width: 95px;">
+        {{ customButtonLabel }}
+      </button>
+    </div>
+
+  </ng-container>
+</div>
+
+<div *ngIf="isTwoRows"
+     fxLayout="row wrap"
+     [fxLayoutAlign]="layoutAlign"
+     class="fil">
+
+  <!-- <ng-container *ngIf="screen == 'children-listing'">
+    <div fxFlex="30"
+         fxLayoutAlign="end start">
+      <mat-slide-toggle [(ngModel)]="switchValue"
+                        (ngModelChange)="onChangeFilters()">Discounted Children</mat-slide-toggle>
+    </div>
+  </ng-container> -->
+
+  <ng-container *ngIf="screen == 'staff-attendance'">
+
+    <div fxFlex
+         class="space">
+      <button type="button"
+              mat-button
+              class="btn-custom-form"
+              (click)="onButtonClicked()"
+              style="margin-top: 15px;width: fit-content;background-color: rgb(226, 175, 42);">
+        Add Attendance
+      </button>
+
+      <button type="button"
+              mat-button
+              class="btn-custom-form"
+              [style]="{background: searchConfig?.toggleValue ? '#00AFBB' : '#e67171' }"
+              (click)="emitToggleValue(searchConfig.toggleValue)"
+              style="margin-top: 15px;width: fit-content;margin-left: 10px;">
+        {{ searchConfig?.toggleValue ? searchConfig?.onLabel : searchConfig?.offLabel}}
+      </button>
+    </div>
+
+  </ng-container>
+</div>

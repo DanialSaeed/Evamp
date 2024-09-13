@@ -1,0 +1,5 @@
+  
+    <app-table-component (onPagination)="onPagination($event)"
+                         (selectedItem)="actionButtonOutput($event)"
+                         (emitColumnAction)="onEmitColumnAction($event)"
+                         [props]="tableConfigAndProps"></app-table-component>

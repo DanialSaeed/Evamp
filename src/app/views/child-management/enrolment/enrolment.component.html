@@ -1,0 +1,93 @@
+<mat-card class="row-margin-tb card-dark">
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start start"
+         fxLayoutGap="15px">
+        <!-- <div> -->
+        <!-- style="height: 100vh;" -->
+        <mat-card class="height" fxFlex="25"
+                  fxFlex.xs="100"
+                  fxFlex.sm="100"
+                  fxFlex.md="32"
+                  flexFill>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 class="col-flex-margins for-select-row"
+                 (click)="onFormClick(1)"
+                 [ngClass]="{'form-menu-clicked': formNo === 1}">
+                <span class="form-select-icon"> 1</span>
+                <!-- <span *ngIf="tickCheck('id',true)  && formNo!==1">
+
+                    <img src="assets/images/sdn/ic_tick_green.png" class="green-tick">
+                </span> -->
+                <span class="form-select-label">Basic Information</span>
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 class="col-flex-margins for-select-row"
+                 (click)="onFormClick(2)"
+                 [ngClass]="{'form-menu-clicked': formNo === 2}">
+                <span class="form-select-icon"> 2</span>
+                <!-- <span *ngIf="tickCheck('childGuardianDetails',false) && formNo!==2" >
+                      <img src="assets/images/sdn/ic_tick_green.png" class="green-tick">
+                </span> -->
+                <span class="form-select-label">Guardian Information</span>
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 class="col-flex-margins for-select-row"
+                 (click)="onFormClick(3)"
+                 [ngClass]="{'form-menu-clicked': formNo === 3}">
+                <span class="form-select-icon"> 3</span>
+                <!-- <span *ngIf="formDetail?.childDoctorDetail && formNo!==3">
+                      <img src="assets/images/sdn/ic_tick_green.png" class="green-tick">
+                </span> -->
+                <span class="form-select-label">Medical Information</span>
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 class="col-flex-margins for-select-row"
+                 (click)="onFormClick(4)"
+                 [ngClass]="{'form-menu-clicked': formNo === 4}">
+                 <span class="form-select-icon"> 4</span>
+                <!-- <span *ngIf="tickCheck('childEmergencyDetails',false) && formNo!==4"
+                      >
+                      <img src="assets/images/sdn/ic_tick_green.png" class="green-tick">
+                </span> -->
+                <!-- <mat-icon ngIf="formNo===4">tick</mat-icon> -->
+                <span class="form-select-label">Child Emergency Form</span>
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 class="col-flex-margins for-select-row"
+                 (click)="onFormClick(5)"
+                 [ngClass]="{'form-menu-clicked': formNo === 5}">
+                <span class="form-select-icon"> 5</span>
+                <!-- <span *ngIf="formDetail?.childFinanceDetail && formNo!==5"
+                      >
+                      <img src="assets/images/sdn/ic_tick_green.png" class="green-tick">
+                </span> -->
+                <span class="form-select-label">Funding</span>
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 class="col-flex-margins for-select-row"
+                 (click)="onFormClick(6)"
+                 [ngClass]="{'form-menu-clicked': formNo === 6}">
+                <span class="form-select-icon"> 6</span>
+                <span class="form-select-label">Room Management</span>
+            </div>
+        </mat-card>
+        <!-- </div> -->
+        <div fxFlex="73" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="62">
+            <!-- <router-outlet></router-outlet> -->
+            <app-basic-information *ngIf="formNo === 1" (sendchildId)="getId($event)" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()"></app-basic-information>
+            <app-guardians-childs *ngIf="formNo === 2" [childId]="guardianInfoId" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()"></app-guardians-childs>
+            <!-- <app-guardian-information *ngIf="formNo === 2" [childId]="guardianInfoId" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()"></app-guardian-information> -->
+            <app-medical-information *ngIf="formNo === 3" [childId]="medicalInfoId" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()"></app-medical-information>
+            <app-emergency-details *ngIf="formNo === 4" [childId]="emergencyDetailId" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()"></app-emergency-details>
+            <app-funding-information *ngIf="formNo === 5 && formDetail" [childId]="fundingId" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()" [childData]="formDetail"></app-funding-information>
+            <app-room-management *ngIf="formNo === 6" [childId]="roomManagementId" [parentId]="parentId" (emitFormData)="onEmitFormData($event)" (back)="onBack()"></app-room-management>
+
+        </div>
+    </div>
+</mat-card>

@@ -1,0 +1,33 @@
+<!-- <mat-card class="row-margin-tb card-dark">
+  <mat-card> -->
+
+    <app-app-headers (filnalFilters)="filnalFilters($event)"
+                     [headingLabelDivWidth]="10"
+                     [fxFlexInSortForFilter]="'150px'"
+                     [fxFlexInSearchForFilter]="'280px'"
+                     [isTwoRowsFilter]="true"
+                     [currentScreen]="'children-listing'"
+                     [headerProps]="buttonHeaderProps"></app-app-headers>
+    <div>
+    </div>
+
+    <div>
+      <div class="mt-10" fxLayout="row" fxLayoutAlign="end center">
+        <div fxFlex="30"
+             fxLayoutAlign="end start">
+        <mat-slide-toggle [(ngModel)]="switchValue"
+                          (ngModelChange)="onChangeDiscount()">Discounted Children</mat-slide-toggle>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- </mat-card> -->
+  <app-table-component (onPagination)="onPagination($event)"
+                       (selectedItem)="actionButtonOutput($event)"
+                       [isViewClick]="true"
+                       [hasToggle]="true"
+                       [sortFields]="sortFields"
+                       (emitColumnSortAction)="sortColumn($event)"
+                       [props]="tableConfigAndProps"></app-table-component>
+<!-- </mat-card> -->

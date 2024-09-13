@@ -1,0 +1,30 @@
+<mat-card class="row-margin-tb card-dark">
+  <mat-card >
+      <app-app-headers [headerProps]="buttonHeaderProps" (outPutHeaders)="onSaveasCsv()"></app-app-headers>
+    </mat-card>
+
+<mat-card style="background-color: #ffffff26 !important; border: 0px !important;">
+  <p class="text-normal" style="color: #4A4A4A; line-height: 8px; margin-bottom: -5px;">
+   <!-- {{headerProps.searchConfig.label}} -->
+  </p>
+   <filter-control
+       [hasButton]="true"
+       [hasClearButton]="true"
+       [layoutAlign]="layoutAlign"
+       (filnalFilters)="filnalFilters($event)"
+       [hasSearch]="true"
+       [hasDatePicker]="true"
+       [searchConfig]="headerProps?.searchConfig"
+       [builtInFilters]="headerProps?.builtInFilters"
+       [filterArray]="headerProps?.filterArray"></filter-control>
+ </mat-card>
+
+<app-table-component (onPagination)="onPagination($event)"
+                   (selectedItem)="actionButtonOutput($event)"
+                   [props]="tableConfigAndProps"
+                   (emitSelectedCheckBox)="onSelectedCheckBoxEmit($event)"
+                   (emitSelectedCheckBoxAll)="onSelectedCheckBoxAllEmit($event)"
+                   (emitHeaderCheckBoxValue)="onHeaderCheckBoxValueEmit($event)"
+                   [hasHeaderCheckBox]="true" [isViewClick]="true"></app-table-component>
+
+  </mat-card>

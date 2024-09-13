@@ -1,0 +1,50 @@
+<mat-card class="row-margin-tb card-dark">
+  <mat-card>
+    <div fxLayout="row"
+         fxLayoutAlign="end end"
+         *ngIf="selected == 0">
+      <app-app-headers [headerProps]="buttonHeaderProps"></app-app-headers>
+    </div>
+    <mat-tab-group [selectedIndex]="selected"
+                   (selectedIndexChange)="selectedIndex($event)">
+      <mat-tab *ngIf="getBranchesTabVisibility()" label="All Settings">
+        <ng-template matTabContent>
+          <app-all-settings (open)="open($event)"></app-all-settings>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Dashboard">
+        <ng-template matTabContent>
+          <app-dashboard></app-dashboard>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Global Dashboard">
+        <ng-template matTabContent>
+          <app-global-dashboard></app-global-dashboard>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</mat-card>
+
+<!-- <div style="position: relative;">
+  <mat-card class="row-margin-tb card-dark">
+  <mat-card>
+    <mat-tab-group [selectedIndex]="selected"
+                   (selectedIndexChange)="selectedIndex($event)">
+      <mat-tab label="All Settings">
+        <ng-template matTabContent>
+          <app-all-settings (open)="open($event)"></app-all-settings>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Dashboard">
+        <ng-template matTabContent>
+          <app-dashboard></app-dashboard>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+  <div style="position: absolute; top: 3vh; left: 65vw; z-index: 5;" *ngIf="selected == 0">
+    <app-app-headers [headerProps]="buttonHeaderProps"></app-app-headers>
+  </div>
+</mat-card>
+  </div> -->

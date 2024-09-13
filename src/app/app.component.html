@@ -1,0 +1,12 @@
+<!-- <mat-progress-spinner [mode]="'indeterminate'" *ngIf="loading$ | async"></mat-progress-spinner> -->
+
+<div *ngIf="loading$ | async" class="loader">
+    <img src="../assets/images/sdn/SDN loader-lg.gif">
+</div>
+
+<!-- <div class="preloader">
+<img src="assets/images/sdn/side-logo.png"
+        style="width: 150px">
+<p style="text-align: center; color: #00AFBB; font-weight: 600;">Loading<span class="one">.</span><span class="two">.</span><span class="three">.</span></p>
+</div> -->
+<router-outlet></router-outlet>

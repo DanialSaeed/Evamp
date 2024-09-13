@@ -1,0 +1,282 @@
+<mat-card class="row-margin-tb card-dark">
+  <form [formGroup]="Form"
+        (ngSubmit)="onSubmit()">
+    <ng-container>
+      <mat-card class="card">
+        <!-- <app-app-headers [headerProps]="genericHeadingProps('Add New Manager','text-bolder text-color','15px')"></app-app-headers> -->
+        <div fxLayout="row wrap"
+             fxLayoutAlign="space-between center"
+             fxLayoutGap="15px"
+             class="top-heading text-bolder text-color">
+          {{title}}
+
+          <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+          <mat-icon class="editIcon">edit</mat-icon>
+          Edit
+          </button>
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-wrap-margins">
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Branch Name</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="name"
+                     minlength="2"
+                     maxlength="36"
+                     required>
+              <mat-error *ngIf="getField('name')">{{getErrorMessage('name')}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Registration Number</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="registrationNumber"
+                     mask="9999999999999999"
+                     [specialCharacters]="['-']"
+                     minlength="4"
+                     maxlength="16"
+                     required>
+              <mat-error *ngIf="getField('registrationNumber')">{{getErrorMessage('registrationNumber')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Contact Number</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="contactNumber"
+                     minlength="9"
+                     maxlength="16"
+                     required>
+              <mat-error *ngIf="getField('contactNumber')">{{getErrorMessage('contactNumber')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Tracking Code</mat-label>
+              <input matInput
+                      type="text"
+                      formControlName="trackingCode"
+                      minlength="1"
+                      maxlength="6"
+                      required>
+              <mat-error *ngIf="getField('trackingCode')">{{getErrorMessage('trackingCode')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <!-- <div fxFlex.xl="20"
+               fxFlex.lg="24"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+
+          </div> -->
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <!-- <mat-form-field>
+                            <mat-label>Branch Opening Time</mat-label>
+                            <input matInput
+                                   readonly
+                                   [ngxTimepicker]="open"
+                                   type="text"
+                                  formControlName="matOpeningTime"
+                                   [disabled]="disableInput"
+                                   required>
+                            <ngx-material-timepicker #open></ngx-material-timepicker>
+                            <mat-error *ngIf="getField('openingTime')">{{getErrorMessage('openingTime')}}</mat-error>
+                            <mat-icon matSuffix>
+                                <img [src]="clock"
+                                     style="margin-bottom: 0px;
+                            margin-right: 10px; width: 16px; vertical-align: baseline;">
+                            </mat-icon>
+                        </mat-form-field> -->
+
+            <timepicker controlName="openingTime"
+                        (onSetTime)="onSetTime($event, 'matOpeningTime')"
+                        [disabled]="disableInput"
+                        [time]="Form.get('matOpeningTime').value"
+                        [max]="Form.get('matClosingTime').value"
+                        [showError]="Form.get('matOpeningTime').invalid"
+                        [required]="true"
+                        label="Branch Opening Time"></timepicker>
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <!-- <mat-form-field>
+              <mat-label>Branch Closing Time</mat-label>
+              <input matInput
+                     readonly
+                     [ngxTimepicker]="close"
+                     type="text"
+                     formControlName="matClosingTime"
+                     [disabled]="disableInput"
+                     required>
+              <ngx-material-timepicker #close></ngx-material-timepicker>
+              <mat-error *ngIf="getField('closingTime')">{{getErrorMessage('closingTime')}}</mat-error>
+              <mat-icon matSuffix>
+                <img [src]="clock"
+                     style="margin-bottom: 0px;
+                            margin-right: 10px; width: 16px; vertical-align: baseline;">
+              </mat-icon>
+            </mat-form-field> -->
+            <timepicker controlName="closingTime"
+                        (onSetTime)="onSetTime($event, 'matClosingTime')"
+                        [disabled]="disableInput"
+                        [time]="Form.get('matClosingTime').value"
+                        [min]="Form.get('matOpeningTime').value"
+                        [showError]="Form.get('matClosingTime').invalid"
+                        [required]="true"
+                        label="Branch Closing Time"></timepicker>
+          </div>
+          <div fxFlex.xl="45"
+               fxFlex.lg="48"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins mt"
+               >
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <input matInput
+                     type="text"
+                     (click)="openAddressDialog(Form)"
+                     formControlName="addressLabel"
+                     required
+                     readonly>
+              <mat-error *ngIf="getField('address')">{{getErrorMessage('address')}}</mat-error>
+              <span *ngIf="Form.get('address').value && !disableInput"
+                    (click)="removeAddress()" 
+                    class="removeAddress">Remove</span>
+              <mat-icon matSuffix>
+                <img [src]="location"
+                     style="margin-bottom: 0px;
+                            margin-right: 10px; width: 13px; vertical-align: middle;">
+              </mat-icon>
+            </mat-form-field>
+           
+          </div>
+          <!-- <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+          class="col-flex-margins">
+       <mat-form-field>
+         <mat-label>Operational Hours</mat-label>
+         <input matInput
+                type="number"
+                formControlName="operationalHours"
+                maxlength = "9999"
+                (blur)="onBlurEvent($event)"
+                >
+         <mat-error *ngIf="getField('operationalHours')">{{getErrorMessage('operationalHours')}}
+         </mat-error>
+         <mat-error *ngIf="Form.get('operationalHours').hasError('max')"> Maximum hours allowed upto 9999
+        </mat-error>
+       </mat-form-field>
+     </div> -->
+     <div fxFlex.xl="20"
+          fxFlex.lg="23"
+          fxFlex.md="32"
+          fxFlex.sm="45"
+          fxFlex.xs="100"
+          class="col-flex-margins">
+      <mat-form-field>
+        <mat-label>Operational Period</mat-label>
+        <mat-select required formControlName="operationalPeriod" (selectionChange)="changeOperationalPeriod($event)">
+          <mat-option value="all_year">All year</mat-option>
+          <mat-option value="term_time">Term-Time Only</mat-option>
+        </mat-select>
+        <mat-error *ngIf="getField('operationalPeriod')">{{getErrorMessage('operationalPeriod')}}</mat-error>
+      </mat-form-field>
+     </div>
+          <div fxFlex.xl="45"
+               fxFlex.lg="48"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins mt"
+          >
+          <mat-checkbox formControlName="isHeadOffice" 
+          class="example-margin">Head Office</mat-checkbox>
+        </div>
+          
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start end"
+             fxLayoutGap="15px"
+             class="row-margin"
+             *ngIf="type == 'view'">
+          <!-- <div fxFlex="150px">
+            <button (click)="changeRoute()"
+                    type="button"
+                    mat-button
+                    class="btn-custom-form" *ngIf="permissionsService.getPermissionsBySubModuleName('Branch Overview', 'Branch').update">
+              Edit
+            </button>
+          </div> -->
+          <div fxFlex="150px">
+            <button (click)="onDelete()"
+                    type="button"
+                    mat-button
+                    class="btn-custom-form"
+                    style="background-color: #E2AF2A;"
+                    *ngIf="permissionsService.getPermissionsBySubModuleName('Branch Overview', 'Branch').delete">
+              Delete Branch
+            </button>
+          </div>
+
+          <!-- <div fxFlex="150px">
+           <button type="button"
+                   mat-button
+                   (click)="onCancel()"
+                   class="btn-custom-form">
+             Back
+           </button>
+         </div> -->
+        </div>
+        <app-form-foooter *ngIf="type !=='view'"
+                          (clearEvent)="clearForm()"
+                          (backEvent)="goBack()"
+                          [footerProps]="footerProps"></app-form-foooter>
+      </mat-card>
+    </ng-container>
+  </form>
+</mat-card>

@@ -1,0 +1,8 @@
+:host ::ng-deep mat-radio-button {
+  flex: 1;
+  max-width: 240px;
+}
+
+:host ::ng-deep mat-radio-group {
+  display: flex !important;
+}

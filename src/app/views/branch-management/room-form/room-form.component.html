@@ -1,0 +1,199 @@
+<mat-card class="row-wrap-margins -tb card-dark">
+  <form [formGroup]="Form"
+        (ngSubmit)="onSubmit()">
+    <ng-container>
+      <mat-card class="card">
+        <div fxLayout="row wrap"
+             fxLayoutAlign="space-between center"
+             fxLayoutGap="15px"
+             class="top-heading text-bolder text-color">
+             {{title}}
+             <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+              <mat-icon class="editIcon">edit</mat-icon>
+              Edit
+          </button>
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-wrap-margins">
+          <div fxFlex.xl="20"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Room Name</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="name"
+                     minlength="2"
+							       maxlength="28"
+                     required />
+              <mat-error *ngIf="getField('name')">{{getErrorMessage('name')}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <!-- <mat-form-field>
+              <mat-label>Select Age Band</mat-label>
+              <mat-select formControlName="ageGroupId" required>
+                <mat-option value="1">Under 2 years</mat-option>
+                <mat-option value="2">Between 2 and 3 years</mat-option>
+                <mat-option value="3">3+ years</mat-option>
+                <mat-option value="4">5+ years</mat-option>
+              </mat-select>
+              <mat-error *ngIf="getField('ageGroupId')">{{getErrorMessage('ageGroupId')}}</mat-error>
+            </mat-form-field> -->
+
+            <mat-form-field>
+              <mat-label>Select Age Band</mat-label>
+              <input type="text"
+                    aria-label="Number"
+                    matInput
+                    required
+                    [formControl]="Form.get('ageLabel')"
+                    [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="setAgeId()">
+                <mat-option *ngFor="let option of filteredAgeBands" [value]="option.label">
+                  {{option.label}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="getField('ageGroupId')">{{getErrorMessage('ageGroupId')}}</mat-error>
+          </mat-form-field>
+          </div>
+        </div>
+        <!-- <app-app-headers
+                                 [headerProps]=" genericHeadingProps('Area (Square meters)','text-small text-gray','0px 15px')">
+                </app-app-headers> -->
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="top-heading text-small text-gray">
+          Area (Square meters)
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-wrap-margins">
+          <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>Area</mat-label>
+              <input matInput
+                     type="number"
+                     formControlName="area"
+                     oninput="if (this.value.includes('.')) {if(this.value.split('.')[1].length > 2){ this.value = this.value =  this.value.split('.')[0] + '.' + this.value.split('.')[1].slice(0,2)}}"
+                     min="0"/>
+              <mat-error *ngIf="getField('area')">{{getErrorMessage('area')}}</mat-error>
+            </mat-form-field>
+          </div>
+          <!-- <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>length</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="length"
+                     mask="9999999"
+                     [specialCharacters]="[]"
+                     [dropSpecialCharacters]="false"
+                     required />
+              <mat-error *ngIf="getField('length')">{{getErrorMessage('length')}}</mat-error>
+            </mat-form-field>
+          </div> -->
+          <!-- <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>width</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="width"
+                     mask="9999999"
+                     [specialCharacters]="[]"
+                     required />
+              <mat-error *ngIf="getField('width')">{{getErrorMessage('width')}}</mat-error>
+            </mat-form-field>
+          </div> -->
+        </div>
+        <!-- <app-app-headers [headerProps]=" genericHeadingProps('Capacity','text-small text-gray','0px 15px')">
+                </app-app-headers> -->
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="top-heading text-small text-gray">
+          Capacity
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-wrap-margins">
+          <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>Total</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="totalCapacity"
+                     mask="999999"
+                     [specialCharacters]="[]"
+                     required />
+              <!-- <mat-error *ngIf="getField('totalCapacity')">{{getErrorMessage('totalCapacity')}}</mat-error> -->
+            </mat-form-field>
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>Occupied (Read Only)</mat-label>
+              <input matInput
+                     readonly
+                     type="text"
+                     formControlName="occupiedCapacity"
+                     mask="9999999"
+                     [specialCharacters]="[]"
+                      />
+              <!-- <mat-error *ngIf="getField('nameEn')">{{getErrorMessage('nameEn')}}</mat-error> -->
+            </mat-form-field>
+          </div>
+          <!-- <div fxFlex.3l="28"
+               fxFlex.lg="25"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100">
+            <mat-form-field>
+              <mat-label>Operational Capacity</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="operationalCapacity"
+                     mask="9999999"
+                     required />
+              <mat-error *ngIf="getField('nameEn')">{{getErrorMessage('nameEn')}}</mat-error>
+            </mat-form-field>
+          </div> -->
+        </div>
+
+        <app-form-foooter *ngIf="type !== 'view'" (clearEvent)="clearForm()" (backEvent)="goBack()" [footerProps]="footerProps"></app-form-foooter>
+      </mat-card>
+    </ng-container>
+  </form>
+</mat-card>

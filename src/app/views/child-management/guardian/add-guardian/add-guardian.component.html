@@ -1,0 +1,320 @@
+<mat-card class="row-margin-tb card-dark">
+
+  <ng-container>
+    <mat-card class="card">
+      <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           fxLayoutGap="15px"
+           class="top-heading text-bolder text-color">
+        {{title}}
+        <div fxLayoutGap="15px">
+          <button mat-button
+                  class="editBtn"
+                  (click)="goToEdit()"
+                  *ngIf="type == 'view' && editPermit">
+            <mat-icon class="editIcon">edit</mat-icon>
+            Edit
+          </button>
+
+          <button mat-button
+                  class="editBtn"
+                  [disabled]="disabledOnAdd"
+                  (click)="linkChildToGuardian()">
+            <!-- <mat-icon class="editIcon">Link to Child</mat-icon> -->
+            Link to Child
+          </button>
+        </div>
+
+      </div>
+      <form [formGroup]="Form"
+            (ngSubmit)="onSubmit()">
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-wrap-margins">
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Account Type</mat-label>
+              <mat-select class="height-40"
+                          formControlName="type"
+                          (selectionChange)="onAccountTypeChange($event.value)"
+                          required>
+                <mat-option *ngFor="let option of relationShip"
+                            [value]="option.key">
+                  {{option.value}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="getField('type')">{{getErrorMessage('type')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value == 'other'">
+            <mat-form-field>
+              <mat-label>Organization Name<span style="color:red">*</span></mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="organizationName">
+              <mat-error *ngIf="getField('organizationName')">{{getErrorMessage('organizationName')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value != 'other'">
+            <mat-form-field>
+              <mat-label>Title<span style="color:red">*</span></mat-label>
+              <mat-select class="height-40"
+                          formControlName="title">
+                <mat-option value="mr">Mr.</mat-option>
+                <mat-option value="mrs">Mrs.</mat-option>
+                <mat-option value="ms">Ms.</mat-option>
+                <mat-option value="miss">Miss</mat-option>
+              </mat-select>
+              <mat-error *ngIf="getField('title')">{{getErrorMessage('title')}}</mat-error>
+
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value != 'other'">
+            <mat-form-field>
+              <mat-label>Name<span style="color:red">*</span></mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="name">
+              <mat-error *ngIf="getField('name')">{{getErrorMessage('name')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="23"
+               fxFlex.lg="23"
+               fxFlex.md="23"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="text-small text-gray"
+               *ngIf="Form.controls['type'].value != 'other'">
+
+            <mat-form-field (click)="desired2.open()"
+                            style="margin-top: 10px;">
+              <mat-label>Date of Birth</mat-label>
+              <input matInput
+
+                     (dateChange)="setDateFormat(Form, 'dateOfBirth', $event)"
+                     formControlName="dateOfBirth"
+                     [matDatepicker]="desired2">
+              <mat-error *ngIf="getField('dateOfBirth')">{{getErrorMessage('dateOfBirth')}}</mat-error>
+              <mat-icon matSuffix>
+                <img [src]="calendar"
+                     style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+              </mat-icon>
+              <mat-datepicker #desired2></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="45"
+               fxFlex.lg="48"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <input matInput
+                     type="text"
+                     (click)="openAddressDialog(Form)"
+                     formControlName="addressLabel"
+                     required
+                     readonly>
+              <mat-error *ngIf="getField('address')">{{getErrorMessage('address')}}</mat-error>
+              <span *ngIf="Form.get('address').value && !disableInput"
+                    (click)="removeAddress()"
+                    class="removeAddress">Remove</span>
+              <mat-icon matSuffix>
+                <img [src]="location"
+                     style="margin-bottom: 0px;
+                            margin-right: 10px; width: 13px; vertical-align: middle;">
+              </mat-icon>
+            </mat-form-field>
+
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value != 'other'">
+            <mat-form-field>
+              <mat-label>Primary Language</mat-label>
+              <input type="text"
+                     aria-label="Number"
+                     matInput
+                     [formControl]="Form.get('languageLabel')"
+                     [matAutocomplete]="auto3">
+              <mat-autocomplete autoActiveFirstOption
+                                #auto3="matAutocomplete"
+                                (optionSelected)="setLanguageId(Form)">
+                <mat-option *ngFor="let option of filteredLanguages"
+                            [value]="option.language">
+                  {{option.language}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error *ngIf="getField('firstLanguageId')">{{getErrorMessage('firstLanguage')}}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value != 'other'">
+            <mat-form-field>
+              <mat-label>National Insurance No.</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="nationalInsuranceNumber"
+                     placeholder="XX123456Q">
+              <mat-error *ngIf="getField('nationalInsuranceNumber')">{{getErrorMessage('nationalInsuranceNumber')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value != 'other'">
+            <mat-form-field>
+              <mat-label>Home Landline No.</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="homeLandLineNumber"
+                     mask="99999999999"
+                     minlength="8"
+                     maxlength="11">
+              <mat-error *ngIf="getField('homeLandLineNumber')">{{getErrorMessage('homeLandLineNumber')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Mobile No.<span style="color:red">*</span></mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="mobileNumber"
+                     mask="99999999999"
+                     minlength="8"
+                     maxlength="11">
+              <mat-error *ngIf="getField('mobileNumber')">{{getErrorMessage('mobileNumber')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="Form.controls['type'].value != 'other'">
+            <mat-form-field>
+              <mat-label>Work Telephone No.</mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="workTelephoneNumber"
+                     mask="99999999999"
+                     minlength="8"
+                     maxlength="11">
+              <mat-error *ngIf="getField('workTelephoneNumber')">{{getErrorMessage('workTelephoneNumber')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Email Address<span style="color:red">*</span></mat-label>
+              <input matInput
+                     type="text"
+                     formControlName="email">
+              <mat-error *ngIf="getField('email')">{{getErrorMessage('email')}}
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.xl="100"
+               fxFlex.lg="100"
+               fxFlex.md="100"
+               fxFlex.sm="100"
+               fxFlex.xs="100"
+               class="col-flex-margins"
+               *ngIf="showInvoiceCheckbox">
+            Invoicing Options <br><br>
+            <mat-checkbox formControlName="generateSeperateInvoice"
+                          class="example-margin"
+                          [disabled]="disabledOnAdd">Generate separate invoices for each child</mat-checkbox>
+          </div>
+
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start end"
+             fxLayoutGap="15px"
+             class="row-margin"
+             *ngIf="type == 'view'">
+
+        </div>
+        <app-form-foooter *ngIf="type !=='view'"
+                          (clearEvent)="clearForm()"
+                          [footerProps]="footerProps"></app-form-foooter>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="space-between center"
+             fxLayoutGap="15px"
+             class="top-heading text-bolder text-color"
+             *ngIf="type !=='new'">
+          Linked Children
+        </div>
+
+      </form>
+    </mat-card>
+  </ng-container>
+  <!-- <ng-container *ngIf="type !=='new' && relations.length > 0"> -->
+  <app-linked-children *ngIf="type !=='new'"
+                       (countForInvoice)="countForInvoice($event)"></app-linked-children>
+  <!-- </ng-container> -->
+</mat-card>

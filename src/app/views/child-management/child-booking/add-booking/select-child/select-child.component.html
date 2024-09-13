@@ -1,0 +1,53 @@
+<mat-card>
+  <div fxLayout="row wrap"
+       fxLayoutAlign="space-between center"
+       fxLayoutGap="15px"
+       class="top-heading text-bolder text-color">
+    <div>
+      Select Children
+    </div>
+    <div>
+        <button type="button"
+            mat-button
+            class="btn-custom-form"
+            [style]="{background: archiveBtnLabel == 'Archived Children' ? '#9a9a9a' : '#e2af2a'}"
+            (click)="onArchiveClick()"
+            style="width: fit-content;min-width: 95px;">
+          {{ archiveBtnLabel }}
+        </button>
+    </div>
+  </div>
+</mat-card>
+<mat-card style="background-color: #ffffff26 !important; border: 0px !important;">
+  <p class="text-normal"
+     style="color: #4A4A4A; line-height: 8px; margin-bottom: -5px;margin-top: 3px;">
+    Enter Child Name or Parent Name
+  </p>
+  <filter-control [hasButton]="true"
+                  [hasClearButton]="true"
+                  [layoutAlign]="layoutAlign"
+                  (filnalFilters)="filnalFilters($event)"
+                  [hasSearch]="true"
+                  [searchConfig]="headerProps?.searchConfig"
+                  [builtInFilters]="headerProps?.builtInFilters"
+                  [fxFlexInSearch]="headerProps?.fxFlexInSearch"
+                  [filterArray]="headerProps?.filterArray"
+                  [hasCustomButton]="true"
+                  [customButtonLabel]="customBtnLabel"
+                  (buttonClickEvent)="openBookingTypeDialog()"
+                  (archiveBtnClickEvent)="onArchiveClick()"></filter-control>
+</mat-card>
+<app-table-component (onPagination)="onPagination($event)"
+                     (selectedItem)="actionButtonOutput($event)"
+                     (emitSelectedCheckBox)="selectedCheckBox($event)"
+                     [isCheckboxRowClick]="true"
+                     [props]="tableConfigAndProps"></app-table-component>
+
+<mat-card style="border-radius: 0px !important;">
+  <app-form-foooter (saveInfoEvent)="openBookingTypeDialog()"
+                    (clearEvent)="clearForm()"
+                    (backEvent)="goBack()"
+                    [footerProps]="footerProps"
+                    [checkedBoxes]="checkedBoxes"></app-form-foooter>
+
+</mat-card>

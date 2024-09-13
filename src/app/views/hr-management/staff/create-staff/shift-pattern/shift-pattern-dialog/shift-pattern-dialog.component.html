@@ -1,0 +1,258 @@
+<form [formGroup]="Form">
+  <ng-container>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start center"
+         fxLayoutGap="15px"
+         class="top-heading text-bolder text-color row-margin">
+         {{type | titlecase}} Staff Shift Pattern Details
+    </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start center"
+         fxLayoutGap="15px"
+         class="row-margin">
+      <div fxFlex.xl="20"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100">
+        <mat-form-field>
+          <mat-label>Staff</mat-label>
+          <input matInput
+                 type="text"
+                 readonly=true
+                 [(ngModel)]="staffName"
+                 [ngModelOptions]="{standalone: true}"
+                 required>
+          <!-- <mat-error *ngIf="getField('stars')">{{getErrorMessage('id')}}</mat-error> -->
+        </mat-form-field>
+      </div>
+      <div fxFlex.xl="20"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100">
+           
+        <!-- <mat-form-field>
+          <mat-label>Select Room</mat-label>
+          <mat-select formControlName="roomId">
+            <mat-option *ngFor="let option of rooms"
+                        [value]="option?.value">
+              {{option?.label}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="getField('roomId')">{{getErrorMessage('roomId')}}</mat-error>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-label>Select Room</mat-label>
+          <input type="text"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="Form.get('roomLabel')"
+                 [matAutocomplete]="auto2">
+          <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete" (optionSelected)="setRoomId()">
+            <mat-option *ngFor="let option of filteredRooms" [value]="option.label">
+              {{option.label}}
+            </mat-option>
+          </mat-autocomplete>
+          <!-- <mat-error *ngIf="getField('roomId')">{{getErrorMessage('roomId')}}</mat-error> -->
+       </mat-form-field>
+
+      </div>
+      <div fxFlex.xl="20"
+      fxFlex.lg="20"
+      fxFlex.md="20"
+      fxFlex.sm="45"
+      fxFlex.xs="100">
+      <!-- <div style="margin-bottom: 21px;">
+        <span style="font-weight: bolder;">Start Date: </span>
+      <span style="margin-left: 5px;"> {{ data?.event?.startDate ? (data?.event?.startDate | date:'dd/LL/yy') : "N\\A" }} </span>
+      </div>   -->
+      <mat-form-field (click)="desired.open()">
+        <mat-label>Start Date</mat-label>
+        <input matInput
+               (dateChange)="dateChangeStatic(Form, 'joiningDate', $event)"
+               formControlName="matjoiningDate"
+               required
+               [matDatepicker]="desired">
+        <mat-icon matSuffix>
+          <img [src]="calendar"
+               style="margin-bottom: 0px;
+                        margin-right: 10px; width: 16px; vertical-align: baseline;
+                         cursor: pointer;">
+        </mat-icon>
+        <mat-datepicker #desired></mat-datepicker>
+      </mat-form-field>
+ </div>
+ <div fxFlex.xl="20"
+      fxFlex.lg="20"
+      fxFlex.md="20"
+      fxFlex.sm="45"
+      fxFlex.xs="100">
+      <!-- <div style="margin-bottom: 21px;">
+        <span style="font-weight: bolder;">End Date: </span>
+        <span style="margin-left: 5px;"> {{ data?.event?.endDate ? (data?.event?.endDate | date:'dd/LL/yy') : "N\\A" }} </span>
+      </div> -->
+      <mat-form-field (click)="desired1.open()">
+        <mat-label>Leave Date</mat-label>
+        <input matInput
+               [min]="Form.get('matjoiningDate').value"
+               [disabled]="!Form.get('matjoiningDate').value"
+               (dateChange)="dateChangeStatic(Form, 'leavingDate', $event)"
+               formControlName="matleaveDate"
+               [matDatepicker]="desired1">
+        <mat-icon matSuffix>
+          <img [src]="calendar"
+               style="margin-bottom: 0px;
+                        margin-right: 10px; width: 16px; vertical-align: baseline;
+                         cursor: pointer;">
+        </mat-icon>
+        <mat-datepicker #desired1></mat-datepicker>
+      </mat-form-field>
+ </div>
+
+    </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start center"
+         fxLayoutGap="15px"
+         class="top-heading text-bolder text-color row-margin">
+      Shift Details
+    </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start center"
+         fxLayoutGap="15px"
+         class="row-margin">
+      <div fxFlex="100"
+           fxLayoutAlign="center center"
+           style="margin-top: 30px; background-color: #F5F5F5; line-height: 40px;">
+        <div fxFlex="35"
+             fxLayoutAlign="center center">
+          <span style="background-color: #00D100; cursor:pointer;"
+                class="topbarCalender"></span>
+          <span class="calendarbar">Scheduled Hours: {{patternKpi?.scheduledHours}} hrs.</span>
+        </div>
+        <div fxFlex="35"
+             fxLayoutAlign="center center">
+          <span style="background-color: #FF9F10; cursor:pointer;"
+                class="topbarCalender"></span>
+          <span class="calendarbar">Contracted Hours: {{patternKpi?.contractedHours}} hrs.</span>
+        </div>
+        <div fxFlex="35"
+             fxLayoutAlign="center center">
+          <span style="background-color: #00AFBB; cursor:pointer;"
+                class="topbarCalender"></span>
+          <span class="calendarbar">Remaining Hours: {{patternKpi?.remainingHours}} hrs.</span>
+        </div>
+      </div>
+    </div>
+    <div fxLayout="row"
+         fxLayoutAlign="start center"
+         fxLayoutGap="10px"
+         formArrayName="patterns"
+         *ngFor="let pattern of patterns.controls; let i = index;">
+      <ng-container [formGroupName]="i">
+        <div fxFlex.xl="20"
+             fxFlex.lg="23"
+             fxFlex.md="20"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="row-margin">
+          <div [ngStyle]="pattern.controls['disable'].value === true ? {'background-color': 'white', 'color': '#00AFBB', 'border': '1px solid #00AFBB'} : {'background-color': '#00AFBB'}"
+               class="day-name"
+               (click)="disableForm(pattern)">
+            <p style="text-transform: capitalize; line-height: 42px;">{{pattern.controls['day'].value}}</p>
+          </div>
+        </div>
+        <div fxFlex.xl="20"
+             fxFlex.lg="23"
+             fxFlex.md="23"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="row-margin">
+          <div style="margin: 0 0 25px 0;">
+            <timepicker controlName="matStartTime"
+                        (onSetTime)="onSetTime($event, i)"
+                        [disabled]="pattern.controls['disable'].value"
+                        [time]="pattern.controls['matStartTime'].value"
+                        [max]="pattern.controls['matEndTime'].value"
+                        [showError]="pattern.controls['matStartTime'].invalid"
+                        [required]="true"
+                        label="Start"></timepicker>
+
+          </div>
+        </div>
+        <div fxFlex.xl="20"
+             fxFlex.lg="23"
+             fxFlex.md="23"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="row-margin">
+            <div style="margin: 0 0 25px 0;">
+              <timepicker controlName="matEndTime"
+                          (onSetTime)="onSetTime($event, i)"
+                          [disabled]="pattern.controls['disable'].value"
+                          [time]="pattern.controls['matEndTime'].value"
+                          [min]="pattern.controls['matStartTime'].value"
+                          [showError]="pattern.controls['matEndTime'].invalid"
+                          [required]="true"
+                          label="End"></timepicker>
+            </div>
+        </div>
+        <div fxFlex.xl="20"
+             fxFlex.lg="23"
+             fxFlex.md="25"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="row-margin">
+          <mat-form-field>
+            <mat-label>Break Deduction</mat-label>
+              <mat-select formControlName="breakDeduction">
+                <mat-option value="0">No Break</mat-option>
+                <mat-option value="15">15 minutes</mat-option>
+                <mat-option value="20">20 minutes</mat-option>
+                <mat-option value="30"> 30 minutes</mat-option>
+                <mat-option value="45">45 minutes</mat-option>
+                <mat-option value="60">60 minutes</mat-option>
+                <!-- <mat-option value="0"> Custom</mat-option> -->
+              </mat-select>
+            <mat-error *ngIf="getField('breakDeduction', pattern)">{{getErrorMessage('breakDeduction')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </ng-container>
+    </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="end end"
+         fxLayoutGap="15px"
+         class="row-margin">
+      <div fxFlex="150px"
+           *ngIf="footerProps?.hasSubButton">
+        <button (click)="onEndShift()"
+                type="button"
+                mat-button
+                class="btn-custom-form"
+                style="background-color: #E2AF2A;"
+                [style.background-color]="footerProps?.color">
+          {{footerProps?.subButtonLabel}}
+        </button>
+      </div>
+      <div fxFlex="150px">
+        <button type="button"
+                mat-button
+                (click)="onCancel()"
+                [style.background-color]="footerProps?.backColor"
+                class="btn-custom-form">
+          Back
+        </button>
+      </div>
+      <div fxFlex="150px"
+           *ngIf="!disableInput">
+        <button (click)="onSubmit()"
+                type="button"
+                mat-button
+                class="btn-custom-form">
+          {{this.footerProps?.buttonLabel}}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</form>

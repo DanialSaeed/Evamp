@@ -1,0 +1,16 @@
+:host ::ng-deep mat-error {
+  font-size: 11px !important;
+}
+
+.edit {
+  float:right; 
+  background-color: rgb(226, 175, 42) !important;
+  margin-left: 10px !important;
+  padding-left: 10px !important;
+}
+
+.approve {
+  float:right; 
+  background-color: #00AFBB !important;
+  margin-left: 10px !important;
+}
