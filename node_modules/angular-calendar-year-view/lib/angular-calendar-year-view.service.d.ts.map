@@ -1,1 +1,0 @@
-{"version":3,"file":"angular-calendar-year-view.service.d.ts","sources":["angular-calendar-year-view.service.d.ts"],"names":[],"mappings":";AAAA;AACA;;;AACA","sourcesContent":["export declare class AngularCalendarYearViewService {\r\n    constructor();\r\n}\r\n"]}

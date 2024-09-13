@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing NVM and Node.js
+      - sudo yum update -y
+  pre_build:
+    commands:
+      - echo Entered the pre_build phase...
+  
+  build:
+    commands:
+      - echo No build step required
+artifacts:
+  files:
+    - '**/*'
+  base-directory: '.'  # Assuming the code is at the root of the project  
+  
