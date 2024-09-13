@@ -1,0 +1,77 @@
+/* Using SCSS variables to store breakpoints */
+$breakpoint-tablet: 768px;
+
+.border-t-1 {
+  border-top: 1px solid;
+}
+
+.border-b-1 {
+  border-bottom: 1px solid;
+}
+
+.border-blue-1 {
+  border: 1px solid $color-light-blue !important;
+}
+
+.fs-10 {
+  font-size: 10px;
+}
+
+.fs-12 {
+  font-size: 12px;
+}
+
+.fs-13 {
+  font-size: 13px;
+}
+
+.fs-14 {
+  font-size: 14px;
+}
+
+.fs-15 {
+  font-size: 15px;
+}
+
+.fs-20 {
+  font-size: 20px;
+}
+
+.fs-22 {
+  font-size: 22px;
+}
+
+.fs-22-resp {
+  font-size: 22px;
+}
+
+.text-normal {
+  color: $color-light-blue;
+}
+.text-normal-blue {
+  color: $color-normal-blue;
+}
+.text-dark-blue {
+  color: $color-dark-blue;
+}
+.text-white {
+  color: $color-white;
+}
+
+.text-light-grey {
+  color: $color-light-grey;
+}
+
+.text-normal-grey {
+  color: $color-normal-grey;
+}
+
+.text-dark-grey {
+  color: $color-dark-grey;
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .fs-22-resp {
+    font-size: 40px;
+  }
+}

@@ -1,0 +1,47 @@
+<mat-card class="row-margin-tb card-dark">
+	<div fxLayout="row wrap"
+		 fxLayoutAlign="start start"
+		 fxLayoutGap="15px">
+
+		<mat-card class="height" fxFlex="25"
+		          fxFlex.xs="100"
+				  fxFlex.sm="100"
+				  fxFlex.md="32"		
+				  flexFill>
+			<ng-container *ngFor="let fL of childFormLabels">
+				<div *ngIf="!fL.hide"
+				     fxLayout="row wrap"
+					 fxLayoutAlign="start center"
+					 class="col-flex-margins for-select-row"
+					 (click)="onFormClick(fL.value)"
+					 [ngClass]="{'form-menu-clicked': formNo === fL.value}">
+					<span class="form-select-icon"> {{fL.value}}</span>
+					<span class="form-select-label">{{fL.label}}</span>
+		        </div>
+			</ng-container>
+				  	  
+		</mat-card>
+
+		<div fxFlex="73"
+		     fxFlex.xs="100"
+		     fxFlex.sm="100"
+			 fxFlex.md="62">
+
+			<app-personal-details *ngIf="formNo === 1"
+								  [parentId]="parentId"
+								  (emitFormData)="onEmitFormData($event)"
+								  (back)="onBack()"></app-personal-details>
+
+			<app-contract-settings *ngIf="formNo === 2"
+								   [parentId]="parentId"
+								   [childId]="staffContractDetailId"
+								   (emitFormData)="onEmitFormData($event)"
+								   (back)="onBack()"></app-contract-settings>
+
+			<app-shift-pattern *ngIf="formNo === 3"
+							   [parentId]="parentId"
+							   [type]="type"
+							   (back)="onBack()"></app-shift-pattern>
+		</div>
+	</div>
+</mat-card>

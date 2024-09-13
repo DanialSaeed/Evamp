@@ -1,0 +1,215 @@
+<form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+    <mat-card class="card">
+        <ng-container formArrayName="emergencyDetails"
+                      *ngFor="let item of Form.get('emergencyDetails')['controls']; let i = index;">
+            <ng-container [formGroupName]="i">
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="space-between center"
+                     fxLayoutGap="15px"
+                     class="top-heading text-bolder text-color">
+                    Emergency Details
+                    <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+                        <mat-icon class="editIcon">edit</mat-icon>
+                        Edit
+                    </button>
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="space-between center"
+                     class="row-wrap-margins">
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Name</mat-label>
+                            <input matInput
+                                   type="text"
+                                   formControlName="name"
+                                   minlength="2"
+                                   maxlength="36"
+                                   required>
+                            <mat-error *ngIf="getField('name', item)">{{getErrorMessage('name', item)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                       
+                        <!-- <mat-form-field>
+                            <mat-label>Relationship to the child</mat-label>
+                            <mat-select formControlName="relationToChild">
+                                <mat-option value="father">Father</mat-option>
+                                <mat-option value="mother">Mother</mat-option>
+                                <mat-option value="grandFather">Grandfather</mat-option>
+                                <mat-option value="grandMother">Grandmother</mat-option>
+                                <mat-option value="sibling">Sibling</mat-option>
+                                <mat-option value="uncle">Uncle</mat-option>
+                                <mat-option value="aunt">Aunt</mat-option>
+                                <mat-option value="cousin">Cousin</mat-option>
+                                <mat-option value="other">Other</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="getField('relationToChild', item)">{{getErrorMessage('relationToChild', item)}}</mat-error>
+                        </mat-form-field> -->
+
+                        <mat-form-field>
+                            <mat-label>Relationship to the child</mat-label>
+                            <input type="text"
+                                  aria-label="Number"
+                                  matInput
+                                  required
+                                  [formControl]="item.get('relationLabel')"
+                                  [matAutocomplete]="auto">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="setRelationValue(item)">
+                              <mat-option *ngFor="let option of item.get('filteredRelations').value" [value]="option.label">
+                                {{option.label}}
+                              </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="getField('relationToChild', item)">{{getErrorMessage('relationToChild', item)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Home Landline No.</mat-label>
+                            <input matInput
+                                   type="text"
+                                   mask="99999999999"
+                                   minlength="8"
+                                   maxlength="11"
+                                   formControlName="homeLandLineNumber"
+                                   >
+                                   <!-- <mat-error *ngIf="this.item.get('homeLandLineNumber').errors?.pattern">Home Landline No is invalid.</mat-error> -->
+                                   <mat-error *ngIf="getField('homeLandLineNumber', item)">{{getErrorMessage('homeLandLineNumber', item)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Mobile No.</mat-label>
+                            <input matInput
+                                   type="text"
+                                   mask="99999999999"
+                                   minlength="8"
+                                   maxlength="11"
+                                   formControlName="mobileNumber"
+                                   required>
+                                   <mat-error *ngIf="getField('mobileNumber', item)">{{getErrorMessage('mobileNumber', item)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Work Telephone No.</mat-label>
+                            <input matInput
+                                   type="text"
+                                   formControlName="workTelephoneNumber"
+                                   mask="99999999999"
+                                   minlength="8"
+                                   maxlength="11"
+                                   >
+                                   <mat-error *ngIf="getField('workTelephoneNumber', item)">{{getErrorMessage('workTelephoneNumber', item)}}</mat-error>
+                                   <!-- <mat-error *ngIf="this.item.get('workTelephoneNumber').errors?.pattern">Work Telephone No is invalid.</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Email Address</mat-label>
+                            <input matInput
+                                   type="text"
+                                   formControlName="email"
+                                   >
+                                   <mat-error *ngIf="getField('email', item)">{{getErrorMessage('email', item)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="28"
+                         fxFlex.lg="32"
+                         fxFlex.md="32"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                       
+                        <mat-form-field>
+                            <mat-label>Place of work</mat-label>
+                            <input matInput
+                                   type="text"
+                                   formControlName="placeOfWork"
+                                   >
+                                   <mat-error *ngIf="getField('placeOfWork', item)">{{getErrorMessage('placeOfWork', item)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxFlex.xl="56"
+                         fxFlex.lg="66"
+                         fxFlex.md="64"
+                         fxFlex.sm="45"
+                         fxFlex.xs="100"
+                         class="col-flex-margins">
+                        <mat-form-field>
+                            <mat-label>Address</mat-label>
+                            <input matInput
+                                   readonly
+                                   type="text"
+                                   (click)="openAddressDialog(item)"
+                                   formControlName="addressLabel">
+                            <mat-icon matSuffix>
+                                <img [src]="location"
+                                     style="margin-bottom: 0px;
+                              margin-right: 10px; width: 14px; vertical-align: baseline;">
+                            </mat-icon>
+                            <mat-error *ngIf="getField('address', item)">{{getErrorMessage('address', item)}}</mat-error>
+                            <span *ngIf="item.get('address').value && !disableInput"
+                                  (click)="removeAddress(item)" 
+                                  class="removeAddress">Remove</span>
+                        </mat-form-field>
+                    </div>
+                </div>
+            
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     style="gap:3px"
+                     class="top-heading text-small text-gray">
+                    Is this person authorised to collect the child? <span style="color: red">*</span>
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="row-radio-margins">
+                    <mat-radio-group aria-label="Select an option"
+                                     formControlName="authorisedToCollectTheChild">
+                        <mat-radio-button [value]=true>Yes</mat-radio-button>
+                        <mat-radio-button [value]=false>No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+            </ng-container>
+        </ng-container>
+        <app-form-foooter *ngIf="type!='view'"
+                          (saveInfoEvent)="addMore()"
+                          (backEvent)="goBack()"
+                          [footerProps]="footerProps"></app-form-foooter>
+    </mat-card>
+
+</form>

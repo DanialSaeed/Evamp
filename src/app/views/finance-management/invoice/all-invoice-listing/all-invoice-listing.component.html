@@ -1,0 +1,25 @@
+<mat-card class="row-margin-tb card-dark">
+  <mat-card >
+
+      <app-app-headers [headerProps]="buttonHeaderProps" (outPutHeaders)="headerOutputAction($event)"></app-app-headers>
+
+      <mat-tab-group [selectedIndex]="tabIndex" (selectedTabChange)="setTabIndex($event.index,true)">
+        <mat-tab label="All">
+          <!-- <app-archive-booking [idToSend]="1"></app-archive-booking> -->
+          <app-invoice-table *ngIf="tabIndex == 0" [tab]="'all'"></app-invoice-table>
+        </mat-tab>
+
+        <mat-tab label="Draft">
+          <app-invoice-table *ngIf="tabIndex == 1" [tab]="'drafts'" (selectedInvoices)="getSelectedInvoices($event)" (invoiceTab)="getUpdatedTab($event)"></app-invoice-table>
+        </mat-tab>
+
+        <mat-tab label="Approved">
+          <app-invoice-table *ngIf="tabIndex == 2" [tab]="'approved'" (selectedInvoices)="getSelectedInvoices($event)"></app-invoice-table>
+        </mat-tab>
+
+        <mat-tab label="Published">
+          <app-invoice-table *ngIf="tabIndex == 3" [tab]="'published'" (selectedInvoices)="getSelectedInvoices($event)"></app-invoice-table>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </mat-card>

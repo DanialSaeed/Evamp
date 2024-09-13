@@ -1,0 +1,8 @@
+<div class="top-heading text-bolder mt-5">
+  Booked
+  <app-table-component (selectedItem)="actionButtonOutput($event)"
+                       [props]="tableConfigAndProps"
+                       [isViewClick]="true"
+                       height="auto"
+                       maxHeight="25vh"></app-table-component>
+</div>

@@ -1,0 +1,8 @@
+<mat-icon (click)="close()" class="close cp">close</mat-icon>
+<mat-tab-group (selectedTabChange)="setTabIndex($event)">
+  <mat-tab *ngFor="let booking of bookings;let i = index" [label]="(booking?.joiningDate | date:'dd/LL/yy') + ' to ' + (booking?.leavingDate == null ? 'Recurring' : (booking?.leavingDate | date:'dd/LL/yy'))  ">
+    <!-- <app-table-component (selectedItem)="actionButtonOutput($event)"
+    [props]="getProps(booking)"></app-table-component> -->
+    <app-booking-detail [bookingDatafromInvoice]="booking" [isPopup]="true" ></app-booking-detail>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,80 @@
+mat-progress-spinner {
+  width: 75px;
+  height: 75px;
+  position: absolute;
+  left: calc(50% - 50px);
+  top: calc(50% - 50px);
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+}
+
+.loader {
+  width: 75px;
+  height: 75px;
+  position: absolute;
+  left: calc(54% - 50px);
+  top: calc(50% - 50px);
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+}
+
+.preloader {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  left: calc(50% - 75px);
+  top: calc(50% - 40px);
+  z-index: 5;
+}
+
+.one {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.0s;
+  animation: dot 1.3s infinite;
+  animation-delay: 0.0s;
+}
+
+.two {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.2s;
+  animation: dot 1.3s infinite;
+  animation-delay: 0.2s;
+}
+
+.three {
+  opacity: 0;
+  -webkit-animation: dot 1.3s infinite;
+  -webkit-animation-delay: 0.3s;
+  animation: dot 1.3s infinite;
+  animation-delay: 0.3s;
+}
+
+@-webkit-keyframes dot {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dot {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

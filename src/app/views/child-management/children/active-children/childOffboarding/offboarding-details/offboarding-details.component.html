@@ -1,0 +1,108 @@
+<form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+  <ng-container>
+    <mat-card class="card">
+      <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           fxLayoutGap="15px"
+           class="top-heading text-bolder text-color">
+        Offboarding Details
+
+        <button mat-button
+                class="editBtn"
+                (click)="goToEdit()"
+                *ngIf="newType == 'view' && editPermit && !formDetail?.childOffboardingStatus">
+          <mat-icon class="editIcon">edit</mat-icon>
+          Edit
+        </button>
+      </div>
+      <div class="top-heading text-bolder"
+           style="font-size: 15px;">
+        {{formDetail.firstName? formDetail.firstName : ''}} {{formDetail.lastName? formDetail.lastName : ''}}
+      </div>
+      <div class="mt-4 mb-2 top-heading text-bolder"
+           style="font-size: 16px;">
+        Offboarding
+      </div>
+
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px"
+           class="row-wrap-margins">
+        <div fxFlex.xl="25"
+             fxFlex.lg="30"
+             fxFlex.md="30"
+             fxFlex.sm="45"
+             fxFlex.xs="100">
+          <mat-form-field (click)="desired3.open()">
+            <mat-label>Leave Date</mat-label>
+            <input matInput
+                   required
+                   [min]="todayDate"
+                   (dateChange)="dateChangeStatic(Form, 'leaveDate', $event)"
+                   formControlName="leaveDate"
+                   [matDatepicker]="desired3">
+            <mat-icon matSuffix>
+              <img [src]="calendar"
+                   style="margin-bottom: 0px;
+                              margin-right: 10px; width: 16px; vertical-align: baseline;
+                               cursor: pointer;">
+            </mat-icon>
+            <mat-datepicker #desired3></mat-datepicker>
+            <mat-error *ngIf="getField('leaveDate')">{{getErrorMessage('leaveDate')}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xl="25"
+             fxFlex.lg="30"
+             fxFlex.md="30"
+             fxFlex.sm="45"
+             fxFlex.xs="100">
+          <mat-form-field (click)="desired4.open()">
+            <mat-label>Notice Given</mat-label>
+            <input matInput
+                   required
+                   [max]="Form.controls.leaveDate.value"
+                   [min]="todayDate"
+                   [disabled]="!Form.controls.leaveDate.value"
+                   (dateChange)="setDateFormat(Form, 'noticeGiven', $event)"
+                   formControlName="noticeGiven"
+                   [matDatepicker]="desired4">
+            <mat-icon matSuffix>
+              <img [src]="calendar"
+                   style="margin-bottom: 0px;
+                         margin-right: 10px; width: 16px; vertical-align: baseline;
+                          cursor: pointer;">
+            </mat-icon>
+            <mat-datepicker #desired4></mat-datepicker>
+            <mat-error *ngIf="getField('noticeGiven')">{{getErrorMessage('noticeGiven')}}</mat-error>
+          </mat-form-field>
+        </div>
+
+      </div>
+      <div fxLayout="row wrap"
+      fxLayoutAlign="start center"
+      fxLayoutGap="15px"
+      class="row-wrap-margins">
+        <div fxFlex.xl="100"
+        fxFlex.lg="100"
+        fxFlex.md="100"
+        fxFlex.sm="100"
+        fxFlex.xs="100">
+     <mat-form-field>
+       <mat-label>Reason</mat-label>
+              <textarea matInput
+              type="text"
+              required
+              formControlName="reason">
+        </textarea>
+       <mat-error *ngIf="getField('reason')">{{getErrorMessage('reason')}}</mat-error>
+     </mat-form-field>
+   </div>
+      </div>
+      <app-form-foooter *ngIf="newType != 'view' && !formDetail?.childOffboardingStatus"
+                        (cancelEvent)="onCancel()"
+                        (backEvent)="goBack()"
+                        [footerProps]="footerProps"></app-form-foooter>
+    </mat-card>
+  </ng-container>
+</form>

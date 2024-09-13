@@ -1,0 +1,33 @@
+.counttype {
+    font-size: 25px;
+    font-weight: bold;
+    color: #111e6c;
+    display: inline-block;
+}
+
+.card {
+    // height: 110px;
+    margin: 5px 0px !important;
+    //width:185px;
+    padding: 10px !important;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12) !important;
+}
+
+.heading {
+    color: #242F68;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: inherit;
+    margin-left: 8px;
+}
+
+.number {
+    font: normal normal bold 28px/42px Poppins;
+    color: #2C77FF;
+    margin-right: 20px;
+}
+
+.image {
+    margin-left: 15px;
+    margin-top: 5px;
+}

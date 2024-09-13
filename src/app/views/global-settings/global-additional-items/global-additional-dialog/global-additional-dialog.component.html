@@ -1,0 +1,123 @@
+<form [formGroup]="Form">
+  <mat-card>
+       <div fxLayout="row wrap"
+            fxLayoutAlign="space-between center"
+            fxLayoutGap="15px"
+            class="top-heading text-bolder text-color">
+            {{title}}
+
+            <!-- <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+                 <mat-icon class="editIcon">edit</mat-icon>
+                 Edit
+             </button> -->
+       </div>
+       <div fxLayout="row wrap"
+            fxLayoutAlign="start center"
+            fxLayoutGap="15px"
+            class="row-card-margins">
+            <div fxFlex.xl="20"
+                 fxFlex.lg="25"
+                 fxFlex.md="25"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="text-small text-gray">
+                 Select Item
+                 <mat-form-field style="margin-top: 10px;">
+                      <!-- <mat-label>Gender</mat-label> -->
+                      <mat-select placeholder="Select Any Item"
+                                  formControlName="item">
+                        <mat-option value="birthdayCake">Birthday Cake</mat-option>
+                        <mat-option value="lateCollectionFee">Late Collection Fee</mat-option>
+                        <mat-option value="lunch">Lunch</mat-option>
+                        <mat-option value="nappyChange">Nappy Change</mat-option>
+                        <mat-option value="registrationFee">Registration Fee</mat-option>
+                        <mat-option value="tea">Tea</mat-option>
+                        <mat-option value="sunCream">Sun Cream</mat-option>
+                        <mat-option value="costume">Costume</mat-option>
+                        <mat-option value="breakage">Breakage</mat-option>
+                        <mat-option value="latePaymentCharge">Late Payment Charge</mat-option>
+                        <mat-option value="packedMeal">Packed Meal</mat-option>
+                      </mat-select>
+                      <!-- <mat-error *ngIf="getField('gender')">{{getErrorMessage('gender')}}</mat-error> -->
+                    </mat-form-field>
+            </div>
+            <div fxFlex.xl="23"
+                 fxFlex.lg="25"
+                 fxFlex.md="25"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="text-small text-gray">
+                 Select Date
+                 <mat-form-field (click)="desired2.open()"
+                                 style="margin-top: 10px;">
+                      <input matInput
+                             readonly
+                             [matDatepicker]="desired2"
+                             (dateChange)="dateChange(Form,'date',$event)"
+                             formControlName="matDate"
+                             required>
+                      <mat-icon matSuffix>
+                           <img [src]="calendar"
+                                style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+                      </mat-icon>
+                      <mat-datepicker #desired2></mat-datepicker>
+                 </mat-form-field>
+            </div>
+            <div fxFlex.xl="20"
+                 fxFlex.lg="25"
+                 fxFlex.md="25"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100">
+            </div>
+            <div fxFlex.xl="20"
+                 fxFlex.lg="26"
+                 fxFlex.md="26"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100"
+                 class="text-small text-gray">
+                 Amount
+                 <mat-form-field style="margin-top: 10px;">
+                      <input matInput
+                             type="number"
+                             class="ml-15"
+                             formControlName="matRate"
+                             (blur)="onBlurEvent($event)"
+                             maxlength = "999999"
+                             required>
+                      <!-- <mat-error *ngIf="getField('gender')">{{getErrorMessage('gender')}}</mat-error> -->
+                      <mat-error *ngIf="Form.get('matRate').hasError('max')"> Maximum rate allowed upto 999999</mat-error>
+                      <span class="pound-left" matSuffix>£&nbsp;</span>
+                 </mat-form-field>
+            </div>
+            <div fxFlex.xl="20"
+                 fxFlex.lg="25"
+                 fxFlex.md="25"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100">
+                 <button (click)="onCancel()"
+                         type="button"
+                         *ngIf="type != 'view'"
+                         mat-button
+                         style="margin-top: 10px;"
+                         [style.background-color]="'#C1BBB9'"
+                         class="btn-custom-form">
+                      Cancel
+                 </button>
+            </div>
+            <div *ngIf="type!=='view'"
+                 fxFlex.xl="20"
+                 fxFlex.lg="25"
+                 fxFlex.md="25"
+                 fxFlex.sm="45"
+                 fxFlex.xs="100">
+                 <button (click)="onSubmit()"
+                         type="button"
+                         mat-button
+                         style="margin-top: 10px; margin-right: 20px;"
+                         class="btn-custom-form">
+                      Update
+                 </button>
+            </div>
+       </div>
+  </mat-card>
+</form>

@@ -1,0 +1,29 @@
+<div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px"
+             fxLayoutGap.sm=""
+             fxLayoutGap.xs=""
+             style="margin-top: 30px;">
+            <div fxFlex.xl="30"
+                 fxFlex.lg="30"
+                 fxFlex.md="30"
+                 fxFlex.sm="40"
+                 fxFlex.xs="100"
+                 class="row-margin"
+                 *ngFor="let branch of branches">
+                 <mat-card class="setting-card"
+                 [ngStyle]="branchId == branch.value ? {'border': '2px solid #00AFBB'} : {'border': '1px solid #E4E7E9'}">
+                     <div fxLayout="row" fxLayoutAlign="space-between center" (click)="onClick(branch)">
+                         <div fxFlex="20">
+                            <img [src]="branch.image" width="40px">
+                         </div>
+                         <div fxFlex="70">
+                             <span class="branch-label">{{branch.label}}</span>
+                         </div>
+                         <div fxFlex="10" fxLayoutAlign="end end">
+                            <img src="assets/images/sdn/ic_expand_more_24px.svg" width="12px">
+                         </div>
+                     </div>
+                 </mat-card>
+            </div>
+        </div>

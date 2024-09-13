@@ -1,0 +1,308 @@
+<!-- <form [formGroup]="Form">
+    <mat-card class="card">
+
+      <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           fxLayoutGap="15px"
+           class="top-heading text-bolder text-color" (click)="check()">
+           Booking Details
+
+          <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+            <mat-icon class="editIcon">edit</mat-icon>
+            Edit
+          </button>
+      </div> -->
+
+      <!-- <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           fxLayoutGap="15px"
+           class="top-heading text-bold "
+           style="margin-top: 13px">
+
+          <div fxFlex> {{childName}}</div>
+          <div fxFlex>
+              <div style="display: flex; gap: 15px; place-content: end;font-weight: 600;">
+                <div class="inline">
+                  <div class="tool">
+                    <button style="pointer-events: none;" mat-button class="btn-custom-form">
+                      {{ ageYear }} yrs {{ ageMonth }} months
+                      <mat-icon class="editIcon">info</mat-icon>
+                    </button>
+                    <div style="display:none" class="showToolTip">
+                      {{ ageYear + 1 }} yrs - {{ futureDate1 }} <br>
+                      {{ ageYear + 2 }} yrs - {{ futureDate2 }}
+                    </div>
+                  </div>  
+                </div>
+              </div>
+          </div>
+       </div> -->
+
+       <!-- <div fxLayout="row wrap"
+            fxLayoutAlign="start center"
+            fxLayoutGap="10px"
+            class="row-wrap-margins">
+          <div fxFlex.xl="30"
+              fxFlex.lg="30"
+              fxFlex.md="45"
+              fxFlex.sm="45"
+              fxFlex.xs="100"
+              class="col-flex-margins">
+                <mat-form-field>
+                  <mat-label>Branch</mat-label>
+                  <input matInput
+                        readonly
+                        type="text"
+                        readonly
+                        formControlName="branchName"
+                        required>
+                </mat-form-field>
+          </div>
+          <div fxFlex.xl="30"
+              fxFlex.lg="30"
+              fxFlex.md="45"
+              fxFlex.sm="45"
+              fxFlex.xs="100"
+              class="col-flex-margins">
+            <mat-form-field>
+              <mat-label>Select Room</mat-label>
+              <mat-select class="height-40"
+                          required
+                          formControlName="roomId"
+                          (selectionChange)="onRoomChange($event)">
+                <mat-option *ngFor="let option of rooms"
+                            [value]="option?.value">
+                  {{option?.label}} ({{option?.ageLabel}})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div> -->
+
+        <div class="top-heading text-bolder text-color mb-20"> 
+          Create Sessions
+        </div>
+
+        <div class="ml-10">
+            <div class="month-view-navigate">
+              <div (click)="navigateYear('previous')">
+                <button type="button" class="mat-icon-button" mat-button>
+                  <mat-icon>first_page</mat-icon>
+                </button>
+              </div>
+              <div class="nav-arrow left-arrow" (click)="navigateMonth('previous')">
+                <button type="button" class="mat-icon-button" mat-button>
+                  <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+              </div>
+              <div class="month-label">{{ monthLabel }}</div>
+              <div class="nav-arrow right-arrow" (click)="navigateMonth('next')">
+                <button type="button" class="mat-icon-button" mat-button>
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+              </div>
+              <div (click)="navigateYear('next')">
+                <button type="button" class="mat-icon-button" mat-button>
+                  <mat-icon>last_page</mat-icon>
+                </button>
+              </div>
+            </div>
+
+              <table class="month-view-table mt-20">
+                <thead>
+                  <!-- <tr>
+                    <th colspan="7">{{ month }} {{ year }}</th>
+                  </tr> -->
+                  <tr>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let week of weeks">
+                    <tr>
+                      <ng-container *ngFor="let day of week">
+                        <td>
+                          <button type="button" [ngClass]="{'selected': isDateSelected(day), 'today': isToday(day), 'notCurrent' : isCurrentMonth(day)}" (click)="toggleDateSelection(day)">
+                            {{ day.getDate() }}
+                          </button>
+                        </td>
+                      </ng-container>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+        </div>
+
+        <div class="mt-10" style="margin-left: 20px;" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+          <div fxFlex="10">
+            <button *ngIf="selectedDates.length !== 0"
+                     (click)="addToSessionArray()"
+                     class="btn-custom-form"
+                     style="width: 100%;"
+                     type="button"
+                     mat-raised-button>Add</button>
+          </div>
+          <div fxFlex="10">
+            <button *ngIf="selectedDates.length !== 0"
+                     (click)="clearSelectedDates()"
+                     class="btn-custom-form"
+                     style="opacity: 0.6;width: 100%;"
+                     mat-raised-button>Clear</button>
+          </div>
+        </div>
+
+
+        <div fxLayout="row"
+             fxLayoutAlign="space-between center"
+             class="row-card-margins"
+             style="margin-top: 2.5rem;">
+
+            <div class="top-heading text-bolder text-color" fxFlex="15" fxFlex.md="10">
+              Session List
+            </div>
+
+            <div fxFlex="60"
+                fxFlex.md="65"
+                  fxLayoutAlign="start start"
+                  class="row-wrap-margins">
+                  <div class="legends">
+                      <div>
+                      <span style="background-color: #00D100; cursor:pointer;"
+                            class="slot-bar"></span>
+                      <span class="slot-bar-text">Available Slots</span>
+                    </div>
+                    <div>
+                      <span style=" background-color: #FF9F10; cursor:pointer;"
+                            class="slot-bar"></span>
+                      <span class="slot-bar-text">Limited Slots Available</span>
+                    </div>
+                    <div>
+                      <span style="background-color: #F10000; cursor:pointer;"
+                            class="slot-bar"></span>
+                      <span class="slot-bar-text">No Available Slots</span>
+                    </div>
+                  </div>
+
+            </div>
+
+            <div fxFlex="20">
+              <button style="background-color: rgb(226, 175, 42);"
+                      class="header-button approve"
+                      type="button"
+                      (click)="openAdvanceSetting()"
+                      [disabled]="isAllSessionEmpty() || sessionDetailArr.length == 0"
+                      mat-raised-button>Advanced Settings</button>
+            </div>
+        </div>
+  
+        <div appHorizontalScroll *ngIf="sessionDetailArr.length !== 0" [formGroup]="formGroup" style="overflow-x: auto;" class="mt-30">
+
+
+            <table formArrayName="sessionDetail" class="mat-elevation-z8 mat">
+        
+              <thead class="table-head">
+                <th>Day</th>
+                <th>Room</th>
+                <th>Session</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Occupancy</th>
+                <th>Action</th>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let element of sessionList;let i = index" [formGroupName]="i">
+                  <td style="font-weight: 700;text-align: center;font-size: 14px;" class="cell">
+                    {{ element.day | titlecase }} <br> ({{element.sessionDate | date: 'dd MMM yyyy'}})
+                  </td>
+                  <td class="cell">
+                    <mat-form-field style="padding-bottom: 4px !important;" class="mt-10">
+                      <mat-label><span style="color: red">*</span> Room</mat-label>
+                      <mat-select formControlName="roomId" (selectionChange)="onRoomChange($event,element)" required>
+                        <mat-option *ngFor="let option of rooms" [value]="option?.value">
+                             {{option?.label}} ({{option?.ageLabel}})
+                        </mat-option>
+                      </mat-select>
+                   </mat-form-field> 
+                  </td>
+                  <td class="cell">
+                      <mat-form-field style="padding-bottom: 4px !important;" class="mt-10">
+                          <mat-label><span style="color: red">*</span> Select Session</mat-label>
+                          <mat-select formControlName="sessionId" (selectionChange)="onSessionChange($event, i)" required>
+                            <mat-option *ngFor="let option of sessions"
+                                        [value]="option?.id">
+                                        {{option?.name}}
+                            </mat-option>
+                          </mat-select>
+                      </mat-form-field> 
+                  </td>
+                  <td class="cell">
+                    <!-- [min]="element.matStartTime"
+                    [max]="element.matEndTime" -->
+                    <timepicker controlName="startTime"
+                                [time]="element.matStartTime"
+                                [startTime]="element.matStartTime"
+                                [endTime]="element.matEndTime"
+                                [disabled]="element.disable || element.category == 'standard' || element.category == null"
+                                (onSetTime)="onSetTime($event,i, 'matStartTime')"
+                                [required]="true"
+                                [isStartEnd]="true"
+                                label="Start time"></timepicker> 
+                  </td>
+                  <td class="cell">
+                    <timepicker controlName="endTime"
+                                [time]="element.matEndTime"
+                                [startTime]="element.matStartTime"
+                                [endTime]="element.matEndTime"
+                                [disabled]="element.disable || element.category == 'standard' || element.category == null"
+                                (onSetTime)="onSetTime($event,i, 'matEndTime')"
+                                [required]="true"
+                                [isStartEnd]="true"
+                                label="End time"></timepicker>  
+                  </td>
+                  <td class="cell">
+                    <div style="display: flex; cursor: pointer;">
+                      <div class="hour-box"
+                          [ngClass]="[i === 0 ? 'hour-box-start' : i === getSlotList(element).length - 1 ? 'hour-box-end' : 'hour-box-mid',
+                      getOccupencyColor(slot, element.roomId)]"
+                          *ngFor="let slot of getSlotList(element) ; let i = index;"
+                          [matTooltip]="getTooltip(slot, element.roomId)"></div>
+                    </div>
+
+                    <div style="display: flex; cursor: pointer;"
+                        *ngIf="getSlotList(element).length == 0">
+                        <div class="hour-box hour-box-start hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-mid hour-box-disabled"></div>
+                        <div class="hour-box hour-box-end hour-box-disabled"></div>
+                    </div>
+                  </td>
+                  <td class="cell" style="min-width: 120px;max-width: 120px;text-align: center;">
+                    <mat-icon (click)="deleteRow(i)"
+                              class="cp"
+                              style="width: 12px;position: relative;color: red;right: 7px;">delete</mat-icon>
+                  </td>
+                </tr>
+              </tbody>
+
+          </table>
+        </div>
+
+    <!-- </mat-card>
+</form> -->
+<!-- <h1 (click)="check()"> click me</h1> -->
+
+

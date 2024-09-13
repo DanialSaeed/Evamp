@@ -1,0 +1,184 @@
+<form [formGroup]="Form">
+  <ng-container>
+    <!-- <app-app-headers [headerProps]="
+        genericHeadingProps('Postal Address', 'text-bolder text-color', '15px')
+      ">
+    </app-app-headers> -->
+    <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-bolder text-color row-margin">
+                    Address
+               </div>
+
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between start"
+         class="row-margin">
+      <div fxFlex.xl="100"
+           fxFlex.lg="100"
+           fxFlex.md="100"
+           fxFlex.sm="100"
+           fxFlex.xs="100">
+        <mat-form-field>
+          <mat-label>Find Address</mat-label>
+          <input matInput
+                 [value]="searchAddress"
+                 matGoogleMapsAutocomplete
+                 (change)="setCustomAddress($event)"
+                 (onAutocompleteSelected)="onAutocompleteSelected($event)"
+                 (onLocationSelected)="onLocationSelected($event)" />
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- <app-app-headers [headerProps]="
+        genericHeadingProps(
+          'Street Address or PO Box',
+          'text-small text-gray',
+          '0px 15px'
+        )
+      ">
+    </app-app-headers> -->
+    <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    style="gap: 4px;"
+                    class="top-heading text-small text-gray row-margin">
+                    Main Address <span style="color:red;">*</span>
+               </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between start"
+         class="row-margin">
+      <div fxFlex.xl="50"
+           fxFlex.lg="98"
+           fxFlex.md="98"
+           fxFlex.sm="100"
+           fxFlex.xs="100">
+        <mat-form-field>
+          <!-- <mat-label>Street Address or PO Box</mat-label> -->
+          <textarea matInput
+                    placeholder="Address here"
+                    formControlName="streetNumber"
+                    [required]="addressRequire">
+        </textarea>
+        <mat-error *ngIf="getField('streetNumber')">{{getErrorMessage('streetNumber')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    class="top-heading text-small text-gray row-margin">
+                    Street Address
+               </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between start"
+         class="row-margin">
+      <div fxFlex.xl="50"
+           fxFlex.lg="98"
+           fxFlex.md="98"
+           fxFlex.sm="100"
+           fxFlex.xs="100">
+        <mat-form-field>
+          <!-- <mat-label>Street Address or PO Box</mat-label> -->
+          <textarea matInput
+                    placeholder="Street Address"
+                    formControlName="streetAddress"
+                    >
+        </textarea>
+        <mat-error *ngIf="getField('streetAddress')">{{getErrorMessage('streetAddress')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>    
+
+    <!-- <app-app-headers [headerProps]="
+        genericHeadingProps('Town/ City', 'text-small text-gray', '0px 15px')
+      ">
+    </app-app-headers> -->
+    <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    style="gap: 4px;"
+                    class="top-heading text-small text-gray row-margin">
+                    Town/City <span style="color:red;">*</span>
+               </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between start"
+         class="row-margin">
+      <div fxFlex.xl="50"
+           fxFlex.lg="98"
+           fxFlex.md="98"
+           fxFlex.sm="100"
+           fxFlex.xs="100">
+        <mat-form-field>
+          <!-- <mat-label>Town/ City</mat-label> -->
+          <textarea matInput
+                    placeholder="Town/City"
+                    formControlName="city"
+                    [required]="addressRequire">
+      </textarea>
+      <mat-error *ngIf="getField('city')">{{getErrorMessage('city')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- <app-app-headers [headerProps]="
+        genericHeadingProps(
+          'Postal/ Zip Code',
+          'text-small text-gray',
+          '0px 15px'
+        )
+      ">
+    </app-app-headers> -->
+    <div fxLayout="row wrap"
+                    fxLayoutAlign="start center"
+                    fxLayoutGap="15px"
+                    style="gap: 4px;"
+                    class="top-heading text-small text-gray row-margin">
+                    Postal/Zip Code <span style="color:red;">*</span>
+               </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between start"
+         class="row-margin">
+      <div fxFlex.xl="50"
+           fxFlex.lg="98"
+           fxFlex.md="98"
+           fxFlex.sm="100"
+           fxFlex.xs="100">
+        <mat-form-field>
+          <!-- <mat-label>Postal/ Zip Code</mat-label> -->
+          <textarea matInput
+                    placeholder="Postal/Zip Code"
+                    formControlName="postalCode"
+                    [required]="addressRequire">
+                </textarea>
+                <mat-error *ngIf="getField('postalCode')">{{getErrorMessage('postalCode')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex
+           fxLayoutAlign="end end">
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px"
+             style="margin: 20px; height: 100px">
+          <div fxFlex="150px">
+            <button type="button"
+                    mat-button
+                    (click)="onCancel()"
+                    class="btn-custom-form">
+              Cancel
+            </button>
+          </div>
+          <div fxFlex="150px">
+            <button (click)="onSubmitAddress()"
+                    type="button"
+                    mat-button
+                    class="btn-custom-form">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</form>

@@ -1,0 +1,100 @@
+<div fxLayout="row wrap"
+     fxLayoutAlign="space-between center"
+     class="top-div"
+     fxFlexFill
+     style="background-image: url(assets/images/sdn/background.png)">
+     <div fxFlex></div>
+     <div fxFlex.xl="35"
+          fxFlex.lg="35"
+          fxFlex.md="40"
+          fxFlex.sm="60">
+          <div style="text-align: center;">
+               <img class="logoImage"
+                    src="assets/images/sdn/logo.png">
+          </div>
+          <form [formGroup]="Form">
+               <mat-card style="border-radius: 10px !important;">
+                    <div fxLayout="column"
+                         fxLayoutAlign="space-around center"
+                         class="form-group ">
+                         <div fxFlex="100"
+                              [ngStyle.xs]="{'font-size.px': 20}"
+                              [ngStyle.sm]="{'font-size.px': 25}"
+                              style="margin:10px 0px 10px"
+                              class="bolder-text">
+                              <b>
+                                   {{bolderText}}
+                              </b>
+                         </div>
+                         <div fxFlex
+                              class="lighter-text">
+                              {{lighterText2}}
+                         </div>
+                    </div>
+                    <div fxLayout="row wrap"
+                         fxLayoutAlign="center center"
+                         style="margin-top: 10px;">
+                         <div fxFlex.lg="80"
+                              fxFlex.sm="100">
+                              <mat-form-field style="width: 100%;">
+                                   <mat-label style="margin-right: 10px;">Email Address <span class="required_steric">*</span></mat-label>
+                                   <input matInput
+                                          type="text"
+                                          formControlName="email"
+                                          >
+                                   <mat-icon matPrefix>
+                                        <img [src]="emailIcon"
+                                             style="margin-bottom: 12px;margin-right: 10px; width: 16px;">
+                                   </mat-icon>
+                                   <mat-error *ngIf="getField('email')">{{getErrorMessage('email')}}</mat-error>
+                              </mat-form-field>
+                         </div>
+                         <div fxFlex.lg="80"
+                              fxFlex.sm="100"
+                              class="col-flex-margins">
+                              <mat-form-field style="width: 100%;">
+                                   <mat-label style="margin-right: 10px;">Password <span class="required_steric">*</span></mat-label>
+                                   <input matInput
+                                          class="input-margin"
+                                          type="password"
+                                          formControlName="password"
+                                          (keydown)="onLogin($event)"
+
+                                          >
+                                   <mat-icon matPrefix>
+                                        <img src="assets/images/sdn/ic_https_24px.png"
+                                             style="margin-bottom: 12px;margin-right: 10px; width: 14px;">
+                                   </mat-icon>
+                                   <mat-error *ngIf="getField('password')">{{getErrorMessage('password')}}</mat-error>
+                              </mat-form-field>
+                         </div>
+                    </div>
+
+                    <div class="row wrap">
+                         <div fxFlex="100%"
+                              fxLayoutAlign="center end"
+                              style="margin: 14px 0px 22px 0px;">
+                              <button type="button"
+                                      mat-button
+                                      (click)="onSubmit()"
+                                      class="btn-custom"
+                                      style="width: 76%;">{{buttonLabel}}</button>
+                         </div>
+                    </div>
+
+                    <div class="row wrap">
+                         <div fxFlex="100%"
+                              fxLayoutAlign="center end"
+                              style="margin: 14px 0px 22px 0px;">
+                              <button type="button"
+                                      mat-button
+                                      (click)="onBtnLogin()"
+                                      class="btn-custom"
+                                      style="width: 76%;">Office 365</button>
+                         </div>
+                    </div>
+               </mat-card>
+          </form>
+     </div>
+     <div fxFlex></div>
+</div>

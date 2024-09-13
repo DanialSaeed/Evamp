@@ -1,0 +1,45 @@
+<ng-container>
+  <mat-card class="card" style="height: 130px;">
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="15px"
+         class="top-heading text-bolder text-color"
+         (click)="check()">
+      <div fxFlex>
+        Funding Information
+      </div>
+
+      <div fxFlex>
+        <div style="display: flex; gap: 15px; place-content: end;font-weight: 600;">
+          <div class="inline">
+            <button mat-button
+                    class="editBtn"
+                    (click)="openFundingInfo('new')">
+              {{buttonLabel}}
+            </button>
+          </div>
+          <div class="inline">
+            <div class="tool">
+              <button style="pointer-events: none;"
+                      mat-button
+                      class="btn-custom-form">
+                {{ ageYear }} yrs {{ ageMonth }} months
+                <mat-icon class="editIcon">info</mat-icon>
+              </button>
+              <div style="display:none"
+                   class="showToolTip">
+                {{ ageYear + 1 }} yrs - {{ futureDate1 }} <br>
+                {{ ageYear + 2 }} yrs - {{ futureDate2 }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</ng-container>
+
+<div>
+  <app-table-component height="auto" [props]="tableConfigAndProps"
+                       (selectedItem)="actionButtonOutput($event)"></app-table-component>
+</div>

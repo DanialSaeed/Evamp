@@ -1,0 +1,35 @@
+.hour-box {
+  width: 15px;
+  height: 15px;
+}
+
+.hour-box-start {
+  border-right: 1px solid #E4E7E9;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.hour-box-mid {
+  border-right: 1px solid #E4E7E9;
+}
+
+.hour-box-end {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.hour-box-disabled {
+  background-color: #E4E7E9;
+}
+
+.hour-box-available {
+    background-color: #00D100;
+}
+
+.hour-box-limited {
+    background-color: #FF9F10;
+}
+
+.hour-box-not-available {
+    background-color: #F10000;
+}

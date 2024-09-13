@@ -1,0 +1,129 @@
+<mat-dialog-content style="max-height: 80vh;">
+    <div style="width: 350px;">
+        <div fxLayout="row wrap"
+             fxLayoutAlign="center center"
+             fxLayoutGap="5px">
+            <div fxFlex="5">
+            </div>
+            <div fxFlex="90">
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     fxLayoutGap="5px"
+                     style="margin-top: 15px;">
+                    <div class="text-bold dark-blue-color row-margin">{{alertData.heading}} </div>
+                </div>
+                <div *ngIf="alertData.type !== 'approval'"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     style="margin-top: 20px;">
+                    <div fxFlex="100">
+                        <mat-form-field>
+                            <mat-label>{{alertData.heading}}</mat-label>
+                            <input matInput
+                                   type="text"
+                                   placeholder="Name here">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="alertData.type === 'approval'"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     style="margin-top: 20px;">
+                    <div fxFlex="100">
+                        <mat-form-field>
+                            <mat-label>Approval Level</mat-label>
+                            <mat-select class="height-40">
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="alertData.type === 'approval'"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     style="margin-top: 10px;">
+                    <div fxFlex="100">
+                        <mat-form-field>
+                            <mat-label>Amount From</mat-label>
+                            <mat-select class="height-40">
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="alertData.type === 'approval'"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     style="margin-top: 10px;">
+                    <div fxFlex="100">
+                        <mat-form-field>
+                            <mat-label>Amount To</mat-label>
+                            <mat-select class="height-40">
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div *ngIf="alertData.type === 'approval'"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     style="margin-top: 10px;">
+                    <div fxFlex="100">
+                        <mat-form-field>
+                            <mat-label>Approval To</mat-label>
+                            <mat-select class="height-40">
+                                <mat-option value="soil">Soil</mat-option>
+                                <mat-option value="plastic">Plastic</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div *ngIf="alertData.type !== 'approval'"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="center center">
+                    <mat-card fxFlex="100">
+                        <div fxLayout="row wrap"
+                             fxLayoutAlign="space-between center"
+                             fxLayoutGap="20px"
+                             *ngFor="let item of alertData.dataToSubmit">
+                            <div fxFlex>
+                                <span class="text-small"
+                                      style="margin-left: 10px;"> {{item.heading1}} </span>
+                            </div>
+                            <div fxFlex>
+                                <mat-icon>edit</mat-icon>
+                                <mat-icon>delete</mat-icon>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="center center"
+                     fxLayoutGap="5px"
+                     style="height:100px">
+                    <div fxFlex="150px">
+                        <button mat-button
+                                type="button"
+                                class="btn-custom-form"
+                                (click)="onCancelClick()">{{alertData.leftButton.text}}</button>
+                    </div>
+                    <div fxFlex="150px">
+                        <button mat-button
+                                class="btn-custom-form"
+                                type="button"
+                                (click)="onSubmitClick()">{{alertData.rightButton.text}}</button>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="5">
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+<!--    <div class="text-bold dark-blue-color">{{alertData.heading}} </div>
+     
+        </div> -->

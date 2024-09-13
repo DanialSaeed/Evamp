@@ -1,0 +1,30 @@
+.showToolTip {
+    display: none;
+}
+
+.tool {
+    position: relative;
+}
+
+.tool:hover {
+    
+    .showToolTip {
+        width: 150px;
+        padding: 7px;
+        position: absolute;
+        top: 55px;
+        font-size: 10px;
+        border: 1px solid black;
+        border-radius: 6px;
+        background: #fff9ed;
+        color: black;
+        display: block !important;
+    }
+}
+
+.row-margin {
+    margin: 0px 10px;
+}
+
+
+

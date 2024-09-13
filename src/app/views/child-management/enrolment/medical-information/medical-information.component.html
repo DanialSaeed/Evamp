@@ -1,0 +1,422 @@
+<form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+    <mat-card class="card">
+        <ng-container [formGroup]="childDoctorDetail">
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-bolder text-color">
+                GP Details
+                <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+                    <mat-icon class="editIcon">edit</mat-icon>
+                    Edit
+                </button>
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Doctor's Name</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="doctorName"
+                               minlength="2"
+                               maxlength="36"
+                               required
+                               >
+                        <mat-error *ngIf="getField('doctorName', childDoctorDetail)">{{getErrorMessage('doctorName', childDoctorDetail)}}</mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Telephone No</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="workTelephoneNumber"
+                               mask="99999999999"
+                               minlength="8"
+                               maxlength="11"
+                               required
+                               >
+                               <mat-error *ngIf="getField('workTelephoneNumber', childDoctorDetail)">{{getErrorMessage('workTelephoneNumber', childDoctorDetail)}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Surgery Name</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="surgeryName"
+                               >
+                               <mat-error *ngIf="getField('surgeryName', childDoctorDetail)">{{getErrorMessage('surgeryName', childDoctorDetail)}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="66"
+                     fxFlex.md="66"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Address</mat-label>
+                        <input matInput
+                               readonly
+                               type="text"
+                               (click)="openAddressDialog(childDoctorDetail)"
+                               formControlName="addressLabel"
+                               >
+                        <mat-icon matSuffix>
+                            <img [src]="location"
+                                 style="margin-bottom: 0px;
+                                margin-right: 10px; width: 14px; vertical-align: middle;">
+                        </mat-icon>
+                        <mat-error *ngIf="getField('address', childDoctorDetail)">{{getErrorMessage('address', childDoctorDetail)}}</mat-error>
+                        <span *ngIf="childDoctorDetail.get('address').value && !disableInput"
+                              (click)="removeAddress()" 
+                              class="removeAddress">Remove</span>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <ng-container [formGroup]="childMedicalInformation">
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="top-heading text-small text-gray">
+                    Does child have any special diet, health problems or allergies?
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="row-radio-margins">
+                    <mat-radio-group aria-label="Select an option"
+                                     formControlName="doesChildHaveAnySpecialDietOrHealthProblemOrAllergies">
+                        <mat-radio-button [value]="true">Yes</mat-radio-button>
+                        <mat-radio-button [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div *ngIf="childMedicalInformation.controls['doesChildHaveAnySpecialDietOrHealthProblemOrAllergies'].value==true"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="row-wrap-margins">
+                    <div fxFlex>
+                        <mat-form-field>
+                            <mat-label>Please enter those details here.</mat-label>
+                            <textarea matInput
+                                      placeholder="Add Details"
+                                      formControlName="doesChildHaveAnySpecialDietOrHealthProblemOrAllergiesDescription"
+                                     >
+                </textarea>
+                <!--  []="childMedicalInformation.controls['doesChildHaveAnySpecialDietOrHealthProblemOrAllergies'].value==true" -->
+                <mat-error *ngIf="getField('doesChildHaveAnySpecialDietOrHealthProblemOrAllergiesDescription', childMedicalInformation)">{{getErrorMessage('doesChildHaveAnySpecialDietOrHealthProblemOrAllergiesDescription', childMedicalInformation)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+               
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="top-heading text-small text-gray">
+                    Are there any professionals involved with the child?
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="row-radio-margins">
+                    <mat-radio-group aria-label="Select an option"
+                                     formControlName="areThereAnyProfessionalsInvolvedWithTheChild">
+                        <mat-radio-button [value]="true">Yes</mat-radio-button>
+                        <mat-radio-button [value]="false">No</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div *ngIf="childMedicalInformation.controls['areThereAnyProfessionalsInvolvedWithTheChild'].value==true"
+                     fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     fxLayoutGap="15px"
+                     class="row-wrap-margins">
+                    <div fxFlex>
+                        <mat-form-field>
+                            <mat-label>Please enter those details here.</mat-label>
+                            <textarea matInput
+                                      placeholder="Add Details"
+                                      formControlName="areThereAnyProfessionalsInvolvedWithTheChildDescription"
+                                      >
+                </textarea>
+                <mat-error *ngIf="getField('areThereAnyProfessionalsInvolvedWithTheChildDescription', childMedicalInformation)">{{getErrorMessage('areThereAnyProfessionalsInvolvedWithTheChildDescription', childMedicalInformation)}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-bolder text-color">
+                Medical Information
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="space-between center"
+                 class="row-wrap-margins">
+                <div fxFlex.xl="28"
+                     fxFlex.lg="32"
+                     fxFlex.md="32"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins">
+                    <mat-form-field>
+                        <mat-label>Health Visitor’s Name</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="healthVisitorName"
+                               minlength="2"
+                               maxlength="36"
+                               >
+                               <mat-error *ngIf="getField('healthVisitorName', childDoctorDetail)">{{getErrorMessage('healthVisitorName', childDoctorDetail)}}</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxFlex.xl="28"
+                     fxFlex.lg="66"
+                     fxFlex.md="66"
+                     fxFlex.sm="45"
+                     fxFlex.xs="100"
+                     class="col-flex-margins"
+                     [formGroup]="childMedicalInformation">
+                    <mat-form-field>
+                        <mat-label>Prescribed Medication Taken</mat-label>
+                        <input matInput
+                               type="text"
+                               formControlName="prescribedMedicationTokenDescription"
+                               >
+                               <mat-error *ngIf="getField('prescribedMedicationTokenDescription', childMedicalInformation)">{{getErrorMessage('prescribedMedicationTokenDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container [formGroup]="childMedicalInformation">
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-small text-gray">
+                Is the child being treated at a hospital?
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-radio-margins">
+                <mat-radio-group aria-label="Select an option"
+                                 formControlName="isTheChildBeingTreatedAtAHospital">
+                    <mat-radio-button [value]="true">Yes</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="childMedicalInformation.controls['isTheChildBeingTreatedAtAHospital'].value==true"
+                 fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-wrap-margins">
+                <div fxFlex>
+                    <mat-form-field>
+                        <mat-label>Please enter those details here.</mat-label>
+                        <textarea matInput
+                                  placeholder="Add Details"
+                                  formControlName="isTheChildBeingTreatedAtAHospitalDescription"
+                                  >
+                </textarea>
+                <mat-error *ngIf="getField('isTheChildBeingTreatedAtAHospitalDescription', childMedicalInformation)">{{getErrorMessage('isTheChildBeingTreatedAtAHospitalDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-small text-gray">
+                Are your Child’s immunisations up to date?
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-radio-margins">
+                <mat-radio-group aria-label="Select an option"
+                                 formControlName="areChildImmunitiesUpToDate">
+                    <mat-radio-button [value]="true">Yes</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="childMedicalInformation.controls['areChildImmunitiesUpToDate'].value==true"
+                 fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-wrap-margins">
+                <div fxFlex>
+                    <mat-form-field>
+                        <mat-label>Please enter those details here.</mat-label>
+                        <textarea matInput
+                                  placeholder="Add Details"
+                                  formControlName="areChildImmunitiesUpToDateDescription"
+                                  >
+                </textarea>
+                <mat-error *ngIf="getField('areChildImmunitiesUpToDateDescription', childMedicalInformation)">{{getErrorMessage('areChildImmunitiesUpToDateDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+           
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-small text-gray">
+                Does the child have Early Year’s action or support?
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-radio-margins">
+                <mat-radio-group aria-label="Select an option"
+                                 formControlName="doesTheChildHaveEarlyYearActionOrSupport">
+                    <mat-radio-button [value]="true">Yes</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="childMedicalInformation.controls['doesTheChildHaveEarlyYearActionOrSupport'].value==true"
+                 fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-wrap-margins">
+                <div fxFlex>
+                    <mat-form-field>
+                        <mat-label>Please enter those details here.</mat-label>
+                        <textarea matInput
+                                  placeholder="Add Details"
+                                  formControlName="doesTheChildHaveEarlyYearActionOrSupportDescription"
+                                  >
+                </textarea>
+                <mat-error *ngIf="getField('doesTheChildHaveEarlyYearActionOrSupportDescription', childMedicalInformation)">{{getErrorMessage('doesTheChildHaveEarlyYearActionOrSupportDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-small text-gray">
+                Does the child have any distinguishing marks e.g., birthmarks?
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-radio-margins">
+                <mat-radio-group aria-label="Select an option"
+                                 formControlName="doesTheChildHaveAnyDistinguishingMarks">
+                    <mat-radio-button [value]="true">Yes</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="childMedicalInformation.controls['doesTheChildHaveAnyDistinguishingMarks'].value==true"
+                 fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-wrap-margins">
+                <div fxFlex>
+                    <mat-form-field>
+                        <mat-label>Please enter those details here.</mat-label>
+                        <textarea matInput
+                                  placeholder="Add Details"
+                                  formControlName="doesTheChildHaveAnyDistinguishingMarksDescription"
+                                  >
+                </textarea>
+                <mat-error *ngIf="getField('doesTheChildHaveAnyDistinguishingMarksDescription', childMedicalInformation)">{{getErrorMessage('doesTheChildHaveAnyDistinguishingMarksDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-small text-gray">
+                Was the child born prematurely?
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-radio-margins">
+                <mat-radio-group aria-label="Select an option"
+                                 formControlName="wasTheChildBornPrematurely">
+                    <mat-radio-button [value]="true">Yes</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="childMedicalInformation.controls['wasTheChildBornPrematurely'].value==true"
+                 fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-wrap-margins">
+                <div fxFlex>
+                    <mat-form-field>
+                        <mat-label>Please enter those details here.</mat-label>
+                        <textarea matInput
+                                  placeholder="Add Details"
+                                  formControlName="wasTheChildBornPrematurelyDescription"
+                                  >
+                </textarea>
+                <mat-error *ngIf="getField('wasTheChildBornPrematurelyDescription', childMedicalInformation)">{{getErrorMessage('wasTheChildBornPrematurelyDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+           
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="top-heading text-small text-gray">
+                Do parents have any concerns over the child’s development?
+            </div>
+            <div fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-radio-margins">
+                <mat-radio-group aria-label="Select an option"
+                                 formControlName="doParentsHaveAnyConcernsOverTheChildDevelopment">
+                    <mat-radio-button [value]="true">Yes</mat-radio-button>
+                    <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div *ngIf="childMedicalInformation.controls['doParentsHaveAnyConcernsOverTheChildDevelopment'].value==true"
+                 fxLayout="row wrap"
+                 fxLayoutAlign="start center"
+                 fxLayoutGap="15px"
+                 class="row-wrap-margins">
+                <div fxFlex>
+                    <mat-form-field>
+                        <mat-label>Please Enter Details Here</mat-label>
+                        <textarea matInput
+                                  placeholder="Add Details"
+                                  formControlName="doParentsHaveAnyConcernsOverTheChildDevelopmentDescription">
+                </textarea>
+                <mat-error *ngIf="getField('doParentsHaveAnyConcernsOverTheChildDevelopmentDescription', childMedicalInformation)">{{getErrorMessage('doParentsHaveAnyConcernsOverTheChildDevelopmentDescription', childMedicalInformation)}}</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+            <app-form-foooter *ngIf="type !== 'view'" (backEvent)="goBack()"
+                              [footerProps]="footerProps"></app-form-foooter>
+        </ng-container>
+    </mat-card>
+</form>

@@ -1,0 +1,149 @@
+<ng-container>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px"
+    class="top-heading text-bolder text-color row-margin">
+    Set Permissions
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="15px" class="row-margin">
+    <div fxFlex.xl="20" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="45" fxFlex.xs="100">
+      <label>Select User</label>
+
+      <!-- <mat-form-field>
+        <mat-select (selectionChange)="staffChange($event.value)" [(value)]="userId">
+          <mat-option *ngFor="let option of staffList" [value]="option?.id">
+            {{option?.firstName}} {{option?.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+      <mat-form-field>
+        <mat-label>Select User</mat-label>
+        <input type="text"
+              aria-label="Number"
+              matInput
+              required
+              [formControl]="Form.get('staffLabel')"
+              [matAutocomplete]="auto">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="setStaffId()">
+          <mat-option *ngFor="let option of filteredStaff" [value]="option.name">
+            {{option.name}}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-error *ngIf="getField('staffLabel')">{{getErrorMessage('staffLabel')}}</mat-error>
+    </mat-form-field>
+
+
+    </div>
+    <div fxFlex.xl="20" fxFlex.lg="25" fxFlex.md="25" fxFlex.sm="45" fxFlex.xs="100">
+      <label>Select Level</label>
+      <mat-form-field>
+        <mat-select (selectionChange)="systemRoleChange($event.value)" [(value)]="roleId">
+          <mat-option *ngFor="let option of srList" [value]="option?.id"
+            [ngStyle]="{ display : option.name == 'Custom' ? 'none' : 'block' }">
+            {{option?.name}}
+          </mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="getField('roomId')">{{getErrorMessage('roomId')}}</mat-error> -->
+      </mat-form-field>
+    </div>
+
+  </div>
+  <!-- Permisisons -->
+  <div fxLayout="row wrap" fxLayoutAlign="start center" style="background: #ECF2F2 !important;">
+    <div fxFlex="30" class="text-normal-bold" style="vertical-align: middle; padding: 10px 0; text-align: center;"></div>
+    <div fxFlex="14" class="text-normal-bold" style="vertical-align: middle; padding: 10px 0; text-align: center;">Visibility</div>
+    <div fxFlex="14" class="text-normal-bold" style="vertical-align: middle; padding: 10px 0; text-align: center;">Create</div>
+    <div fxFlex="14" class="text-normal-bold" style="vertical-align: middle; padding: 10px 0; text-align: center;">Read/View</div>
+    <div fxFlex="14" class="text-normal-bold" style="vertical-align: middle; padding: 10px 0; text-align: center;">Update/Edit</div>
+    <div fxFlex="14" class="text-normal-bold" style="vertical-align: middle; padding: 10px 0; text-align: center;">Delete</div>
+  </div>
+  <mat-accordion>
+    <ng-container *ngFor="let menu of menus; let i = index">
+      <mat-expansion-panel [hideToggle]="!menu.isParent" [togglePosition]="'before'">
+        <mat-expansion-panel-header>
+          <div fxLayout="row wrap" fxLayoutAlign="start center" style="vertical-align: middle; width: 100%;">
+            <!-- <div fxFlex="1" *ngIf="!menu.isParent"></div> -->
+            <div fxFlex="28.8">
+              <p [ngStyle]="{'margin-left':(!menu.isParent) ? '10px':'0px'}" style="margin-top: 15px;">
+                {{menu.name}} 
+                <!-- <mat-icon [ngStyle]="{ 'color': (menu.visibility ? '#00AFBB' : '#c0c0c0') }" style="font-size: 12px; cursor: pointer; line-height: 12px; width: 12px; height:12px; vertical-align: middle;">{{menu.visibility ? 'visibility' : 'visibility_off'}}</mat-icon> -->
+              </p>
+            </div>
+            <div fxFlex="13.5" style="text-align: center;" (click)="$event.stopPropagation();">
+              <mat-checkbox (change)="onCheckBox('visibility', null, menu, $event.checked)" [(ngModel)]="menu.visibility"
+                class="example-margin"></mat-checkbox>
+            </div>
+            <div fxFlex="13.5" style="text-align: center;" (click)="$event.stopPropagation();">
+              <mat-checkbox (change)="onCheckBox('create', null, menu, $event.checked)" [(ngModel)]="menu.create"
+                class="example-margin"></mat-checkbox>
+            </div>
+            <div fxFlex="13.5" style="text-align: center;" (click)="$event.stopPropagation();">
+              <mat-checkbox (change)="onCheckBox('read', null, menu, $event.checked)" [(ngModel)]="menu.read"
+                class="example-margin"></mat-checkbox>
+            </div>
+            <div fxFlex="13.5" style="text-align: center;" (click)="$event.stopPropagation();">
+              <mat-checkbox (change)="onCheckBox('update', null, menu, $event.checked)" [(ngModel)]="menu.update"
+                class="example-margin"></mat-checkbox>
+            </div>
+            <div fxFlex="13.5" style="text-align: center;" (click)="$event.stopPropagation();">
+              <mat-checkbox (change)="onCheckBox('delete', null, menu, $event.checked)" [(ngModel)]="menu.delete"
+                class="example-margin"></mat-checkbox>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+        <ng-container *ngIf="menu.isParent">
+          <ng-container *ngFor="let child of menu.children">
+            <mat-expansion-panel [hideToggle]="!child.isParent" [togglePosition]="'before'">
+              <mat-expansion-panel-header>
+                <div fxLayout="row wrap"  fxLayoutAlign="start center" fxLayoutGap="0px" style="vertical-align: middle; width: 100%;">
+                  <div fxFlex="6" *ngIf="!child.isParent">
+                  </div>
+                  <div fxFlex="25">
+                    <p [ngStyle]="{'margin-left':(!child.isParent) ? '0px':'0px'}" style="margin-top: 15px;">
+                      {{child.name}} 
+                      <!-- <mat-icon [ngStyle]="{ 'color': (child.visibility ? '#00AFBB' : '#c0c0c0') }"  style="font-size: 12px; cursor: pointer; line-height: 12px; width: 12px; height:12px; vertical-align: middle;">{{child.visibility ? 'visibility' : 'visibility_off'}}</mat-icon> -->
+                    </p>
+                  </div>
+                  <div fxFlex="13" style="text-align: center" (click)="$event.stopPropagation();">
+                    <mat-checkbox (change)="onCheckBox('visibility', menu, child, $event.checked)"
+                      [(ngModel)]="child.visibility" class="example-margin"></mat-checkbox>
+                  </div>
+                  <div fxFlex="13" style="text-align: center" (click)="$event.stopPropagation();">
+                    <mat-checkbox (change)="onCheckBox('create', menu, child, $event.checked)"
+                      [(ngModel)]="child.create" class="example-margin"></mat-checkbox>
+                  </div>
+                  <div fxFlex="13" style="text-align: center;" (click)="$event.stopPropagation();">
+                    <mat-checkbox (change)="onCheckBox('read', menu, child, $event.checked)" [(ngModel)]="child.read"
+                      class="example-margin"></mat-checkbox>
+                  </div>
+                  <div fxFlex="13" style="text-align: center;" (click)="$event.stopPropagation();">
+                    <mat-checkbox (change)="onCheckBox('update', menu, child, $event.checked)"
+                      [(ngModel)]="child.update" class="example-margin"></mat-checkbox>
+                  </div>
+                  <div fxFlex="13" style="text-align: center;" (click)="$event.stopPropagation();">
+                    <mat-checkbox (change)="onCheckBox('delete', menu, child, $event.checked)"
+                      [(ngModel)]="child.delete" class="example-margin"></mat-checkbox>
+                  </div>
+                </div>
+              </mat-expansion-panel-header>
+            </mat-expansion-panel>
+          </ng-container>
+        </ng-container>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
+
+  <!-- Permisisons -->
+
+  <div fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="15px" class="row-margin">
+    <div fxFlex="150px">
+      <button (click)="onSubmit()" [disabled]="isApplyDisabled" type="button" mat-button class="btn-custom-form">
+        Apply
+      </button>
+    </div>
+    <div fxFlex="150px">
+      <button type="button" mat-button (click)="onCancel()" class="btn-custom-form">
+        Cancel
+      </button>
+    </div>
+  </div>
+</ng-container>

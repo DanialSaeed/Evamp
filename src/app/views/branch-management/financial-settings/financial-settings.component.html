@@ -1,0 +1,215 @@
+<mat-card class="row-margin-tb card-dark">
+
+    <mat-card>
+        <form [formGroup]="Form" (ngSubmit)="onSubmit()">
+
+            <div fxLayout="row wrap"
+                fxLayoutAlign="space-between center"
+                class="top-heading text-bolder text-color mb-30"  >
+                <div fxFlex>
+                Financial Settings
+                </div> 
+            </div>
+        
+            <p class="text-normal head mb-20">
+                <strong> Sibling Discount & Booking Surcharge </strong>
+            </p>
+            <div class="grey-txt head siblingLabel">
+                    Sibling Discount
+            </div>
+            <div fxLayout="row wrap"
+                fxLayoutAlign="start center"
+                style="gap: 10px;"
+                class="row-wrap-margins">
+            <div fxFlex="28"
+                 fxFlex.md="32"
+                class="col-flex-margins" style="padding-bottom: 18px;max-width: fit-content !important;">
+                <mat-radio-group aria-label="Select an option"
+                                (change)="onDiscountChange($event)"
+                                formControlName="siblingsDiscount">
+                <mat-radio-button [value]="true">Yes</mat-radio-button>
+                <mat-radio-button [value]="false">No</mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div fxFlex="20"
+                 fxFlex.md="15"
+                 *ngIf="showDiscount"
+                    class="col-flex-margins">
+            <mat-form-field class="discount">
+                <mat-label>Discount</mat-label>
+                <input matInput
+                        (keypress)="isNegative($event)"  
+                      type="number"
+                        required     
+                        formControlName="siblingDiscountPercentage"
+                        (blur)="onBlurEvent($event, 'siblingDiscountPercentage', Form)"
+                        step=".01"
+                        />
+
+                        <mat-error *ngIf="getField('siblingDiscountPercentage')">{{getErrorMessage('siblingDiscountPercentage')}}</mat-error>
+                <span matSuffix>%&nbsp;</span>
+                </mat-form-field>
+            </div>
+        
+            <div *ngIf="operationalPeriod != 'term_time'" fxFlex="28"
+                 fxFlex.md="32"
+                class="col-flex-margins" style="padding-bottom: 12px;">
+                <mat-label style="margin-left: 10px;" class="grey-txt">Booking Surcharge</mat-label>
+                <mat-checkbox style="margin-left: 10px;" formControlName="surcharge">
+                Surcharge on term time booking</mat-checkbox>
+            </div>
+            <div *ngIf="operationalPeriod != 'term_time' && showSurcharge" fxFlex="20"
+                 fxFlex.md="15">
+                <mat-form-field class="discount">
+                    <mat-label>Surcharge</mat-label>
+                    <input matInput
+                            (keypress)="isNegative($event)"   
+                            required    
+                            type="number"
+                            formControlName="surchargePercentage"
+                            (blur)="onBlurEvent($event, 'surchargePercentage', Form)"
+                            step=".01"
+                            />
+                            <mat-error *ngIf="getField('surchargePercentage')">{{getErrorMessage('surchargePercentage')}}</mat-error>
+                    <span matSuffix>%&nbsp;</span>
+                    </mat-form-field>
+            </div>
+        
+            </div>
+        
+            <div style="margin-left: 20px !important;" fxLayout="row" class="row-wrap-margins head" fxLayoutAlign="start start" fxLayoutGap="10px">
+                <div fxFlex="150px">
+                    <button (click)="onClear1()"
+                            type="button"
+                            mat-button
+                            [style.background-color]="'#C1BBB9'"
+                            class="btn-custom-form">
+                        Clear
+                    </button>
+                </div>
+                <div fxFlex="150px">
+                    <button 
+                    type="submit"
+                    mat-button
+                    class="btn-custom-form">
+                        Save Info
+                    </button>
+                </div>
+            </div>
+        
+        </form>
+
+        <!-- <hr width="95%" class="mt-30"> -->
+        
+        <form *ngIf="false" class="mt-30 head" [formGroup]="hourRateForm" (ngSubmit)="onHourRateSubmit()">
+
+        <p class="text-normal mb-20">
+            <strong> Special Hourly Rate </strong>
+        </p>
+    
+        <div>
+            <mat-checkbox formControlName="specialHoursRate">
+                Special Hourly Rate</mat-checkbox>
+        </div>
+    
+    
+        <div fxLayout="row"
+            fxLayoutAlign="start center">
+            <div fxFlex="25">
+                <mat-form-field>
+                    <mat-label style="padding-left: 11px;">Hourly Rate</mat-label>
+                    <input matInput
+                            formControlName="specialHourlyRate"
+                            min="0"
+                            class="ml-15"
+                            type="number"
+                            (keypress)="isNegative($event)"
+                            (blur)="onBlurEvent($event,'specialHourlyRate', hourRateForm, false)"
+                            >
+                            <!-- <mat-error *ngIf="getField('hourlyTimeRate', rate) || rate.get('hourlyTimeRate').errors?.digitError">{{getErrorMessage('hourlyTimeRate')}}</mat-error> -->
+                            <span class="pound-left" style="top: 18px;font-size: 15px;" matSuffix>£&nbsp;</span>
+                            </mat-form-field>
+            </div>
+    
+            <div fxFlex="25" class="row-wrap-margins">
+            <mat-form-field (click)="desired.open()">
+                <mat-label>Effective From</mat-label>
+                <!-- <mat-label>Effective From <span style="color: red">*</span></mat-label> -->
+                <input matInput readonly (dateChange)="dateChangeStatic(hourRateForm, 'effectiveFrom', $event)"
+                formControlName="matEffectiveFrom" [max]="hourRateForm.get('matEffectiveTo').value" [matDatepicker]="desired">
+                <!-- <mat-icon matSuffix>
+                <img [src]="calendar" style="margin-bottom: 0px;
+                                margin-right: 10px; width: 16px; vertical-align: baseline;
+                                cursor: pointer;">
+                </mat-icon> -->
+
+                <mat-icon matPrefix>
+                    <img [src]="calendar"
+                        style="margin-bottom: 4px; width: 16px; vertical-align: baseline;
+                                  cursor: pointer;">
+                </mat-icon>       
+
+                <mat-datepicker #desired></mat-datepicker>
+            </mat-form-field>
+            </div>
+    
+            <div fxFlex="25" class="row-wrap-margins">
+            <mat-form-field (click)="desired1.open()">
+                <mat-label>Effective To </mat-label>
+                <input matInput
+                       readonly
+                       (dateChange)="dateChangeStatic(hourRateForm, 'effectiveTo', $event)"
+                       formControlName="matEffectiveTo"
+                       [matDatepicker]="desired1"
+                       [disabled]="!hourRateForm.get('matEffectiveFrom').value"
+                       [min]="hourRateForm.get('matEffectiveFrom').value">
+                <!-- <mat-icon matSuffix>
+                <img [src]="calendar"
+                    style="margin-bottom: 0px;
+                                margin-right: 10px; width: 16px; vertical-align: baseline;
+                                cursor: pointer;">
+                </mat-icon> -->
+
+                <mat-icon matPrefix>
+                    <img [src]="calendar"
+                        style="margin-bottom: 4px; width: 16px; vertical-align: baseline;
+                                  cursor: pointer;">
+                </mat-icon>  
+                <mat-datepicker #desired1></mat-datepicker>
+            </mat-form-field>
+            </div>
+        </div>
+    
+        <!-- <app-form-foooter *ngIf="type !== 'view'" [footerProps]="footerProps"
+        (backEvent)="goBack()"></app-form-foooter> -->
+        <div fxLayout="row" class="row-wrap-margins mb-30" fxLayoutAlign="start start" fxLayoutGap="10px">
+            <div fxFlex="150px">
+                <button (click)="onClear2()"
+                        type="button"
+                        mat-button
+                        [style.background-color]="'#C1BBB9'"
+                        class="btn-custom-form">
+                    Clear
+                </button>
+            </div>
+            <div fxFlex="150px">
+                <button 
+                type="submit"
+                mat-button
+                class="btn-custom-form">
+                    Save Info
+                </button>
+            </div>
+        </div>
+        </form>
+        
+        <div *ngIf="false" class="mt-30">
+            <app-table-component [props]="tableConfigAndProps" 
+                                 (selectedItem)="actionButtonOutput($event)" 
+                                 height="auto"></app-table-component>
+        </div>
+    </mat-card>
+
+</mat-card>
+
+

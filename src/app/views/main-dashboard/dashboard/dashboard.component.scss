@@ -1,0 +1,48 @@
+:host ::ng-deep mat-card.rooms {
+    border-radius: 10px !important;
+    color: white;
+}
+
+:host ::ng-deep mat-card.rooms > div {
+      padding: 10px 5px 5px 5px;
+}
+
+.good {
+  // background: #47de4c !important;
+  // background: #d4f4e8 !important;
+  background: #72dab3 !important;
+
+  
+}
+
+.overUse {
+  // background: #e50909 !important;
+  // background: #ffdae5 !important;
+  background: #ff96b6 !important;
+
+
+}
+
+.underUse {
+  // background: #ffbf00 !important;
+  // background: #d4f4e8 !important;
+  background: #ffe27a !important;
+}
+
+.end {
+    text-align: end;
+}
+
+// .ms:before {
+//     z-index:-1;
+//     content:"";
+//     position: absolute;
+//     background:  radial-gradient(circle at 100% 0, transparent 15%, white calc(15%)) top right, radial-gradient(circle at 100% 100%, transparent 15%, white calc(15%)) bottom right;
+//     background-size: 50% 50%;
+//     background-repeat: no-repeat;
+//     width: 300px;
+//     height: 130px;
+//     left:-40px;
+//     top:-45px;
+//   }
+

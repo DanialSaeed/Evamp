@@ -1,0 +1,274 @@
+.mat-table {
+    // font-weight: bold;
+    font: normal normal normal 15px Poppins;
+}
+
+// mat-header-cell {
+//     background: black;
+// }
+
+::ng-deep th.mat-header-cell {
+    background: #eff0f2;
+}
+
+// tr.mat-header-row {
+//     height: 30px;
+
+// }
+
+tr.mat-row {
+    height: 55px;
+}
+
+// th.mat-header-cell {
+//     text-align: center;
+
+// }
+
+// .mat-header-cell {
+//     color: white;
+//     font-size: 12px;
+//     font-style: italic;
+// }
+
+.cell-buttons-margin {
+    margin: 0px 3px 2px;
+    display: table-cell;
+    line-height: 30px;
+    border-radius: 7px;
+}
+
+// SD Nursery
+.topbarCalender
+{
+    cursor:pointer;
+    margin-right: 10px,
+}
+tr.mat-header-row {
+    height: 40px;
+}
+.mat-cell, .mat-footer-cell {
+    font-size: 14px !important;
+}
+// .mat-cell,
+// .mat-footer-cell {
+//     font-size: 12px;
+// }
+
+
+// .cell-button-green {
+//     background-color: #00B52A;
+//     ;
+// }
+
+// .cell-button-orange {
+//     background-color: #FF6C00;
+//     ;
+// }
+
+// .cell-button-blue {
+//     background-color: #242F68;
+// }
+
+// //toggle on off button css here
+// .switch {
+//     position: relative;
+//     display: inline-block;
+//     width: 40px;
+//     height: 20px;
+//     margin: 0px 10px 0px;
+
+// }
+
+// .switch input {
+//     display: none;
+//     background-color: #ccc;
+// }
+
+// .slider {
+//     position: absolute;
+//     cursor: pointer;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     background-color: #b9b5b5;
+//     -webkit-transition: .4s;
+//     transition: .4s;
+// }
+
+// .slider::before {
+//     position: absolute;
+//     content: "";
+//     height: 15px;
+//     width: 15px;
+//     left: 0px;
+//     right: 0px;
+//     bottom: 3px;
+//     background-color: #fff;
+//     -webkit-transition: .4s;
+//     transition: .4s;
+// }
+
+// input:checked+.slider:before {
+//     -webkit-transform: translateX(20px);
+//     -ms-transform: translateX(20px);
+//     transform: translateX(20px);
+
+// }
+
+// input:checked+.slider {
+//     background-color: #0ac933;
+// }
+
+// /* Rounded sliders */
+// .slider.round {
+//     border-radius: 20px;
+// }
+
+// .slider.round:before {
+//     border-radius: 50%;
+// }
+
+th.mat-header-cell {
+    text-align: center;
+    // height: 40px;
+    border-left: 1px solid;
+    border-color: #E4E7E9;
+    // padding: 0px 10px !important;
+    white-space: nowrap;
+    font: normal normal bold 15px Poppins;
+    opacity: 1;
+}
+
+// td {
+//     white-space: nowrap;
+//     position: relative;
+
+// }
+mat-cell > span.ellipsis {
+    text-overflow: ellipsis;
+    max-width: 320px;
+    overflow: hidden;
+    white-space: nowrap;
+ }
+
+// .mat-header-cell {
+//     color: white;
+//     font-size: 14px;
+//     font-style: inherit;
+//     font-family: 'Poppins';
+// }
+
+table {
+    width: 100%;
+}
+
+mat-header-cell,
+mat-cell {
+    justify-content: center !important;
+}
+
+.mat-sort-header-container {
+    justify-content: center !important;
+}
+
+tr.example-detail-row {
+    height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+    // background: whitesmoke;
+}
+
+// tr.example-element-row:not(.example-expanded-row):active {
+//     background: #efefef;
+// }
+
+.example-element-row td {
+    border-bottom-width: 0;
+    border-left: 1px solid;
+    border-color: #E4E7E9;
+}
+
+.example-element-detail {
+    overflow: hidden;
+    display: flex;
+}
+
+.example-element-diagram {
+    min-width: 80px;
+    border: 2px solid black;
+    padding: 8px;
+    font-weight: lighter;
+    margin: 8px 0;
+    height: 104px;
+}
+
+.example-element-symbol {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: normal;
+}
+
+.example-element-description {
+    // padding: 16px;
+}
+
+.example-element-description-attribution {
+    opacity: 0.5;
+}
+
+// .expand_button {
+//     background-color: black;
+//     border-radius: 50%;
+//     background-image: url('/assets/images/ic_gardeners.png');
+
+// }
+
+.data-table {
+    max-width: 100%;
+    // height: auto;
+    overflow-x: auto;
+    overflow-y: auto;
+
+    table {
+        border-collapse: collapse;
+        border-color: #ffffff;
+        width: calc(100% - 1px);
+    }
+}
+
+th.mat-header-cell:last-of-type,
+td.mat-cell:last-of-type,
+td.mat-footer-cell:last-of-type {
+    padding-right: 0px !important;
+}
+// for holidays date table column
+.mat-column-date {
+  min-width: max-content !important;
+}
+.mat-column-memo {
+  // background-color: red !important;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  width: 350px;
+}
+.mat-column-description
+{
+  min-width: 450px !important
+}
+
+.viewMore {
+    cursor: pointer;
+    color: green;
+}
+
+td.mat-cell, td.mat-footer-cell {
+    padding: 0px !important;
+}
+
+.mat-cell.flex-start-important {
+    justify-content: flex-start !important;
+}
+

@@ -1,0 +1,95 @@
+<mat-card class="row-margin-tb card-dark">
+  <mat-card>
+
+    <!-- Generic Header -->
+    <app-app-headers *ngIf="attendanceType == 'child'" [headerProps]="buttonHeaderProps"></app-app-headers>
+
+    <!-- Custom made Header -->
+    <ng-container *ngIf="attendanceType == 'staff'">
+      <div style="margin: 10px;" fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="25">
+          <span class="text-bolder text-color">
+             Staff Attendance
+          </span>
+        </div>
+        <div fxFlex="50">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <div fxFlex>
+              <div class="inline">
+                <div style="border-radius: 50%;width: 20px;height: 20px;background: rgb(255, 230, 230);margin-top: 1px;"></div>
+                <div class="ml-10">
+                    <span> Undertime Discrepancy </span>
+                </div>
+              </div>
+            </div>
+            <div fxFlex>
+              <div class="inline">
+                <div style="border-radius: 50%;width: 20px;height: 20px;background: rgba(212, 244, 224, 1);margin-top: 1px;"></div>
+                <div class="ml-10">
+                    <span> Overtime Discrepancy </span>
+                </div>
+              </div> 
+            </div>
+          </div>
+        </div>
+        <div fxFlex="25" fxLayoutAlign="end end">
+          <span class="text-normal text-color" style="float: right;">
+           {{ buttonHeaderProps?.rightLabel }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+
+  </mat-card>
+
+  <mat-card style="background-color: #ffffff26 !important; border: 0px !important;">
+    <p class="text-normal"
+       style="color: #4A4A4A; line-height: 8px; margin-bottom: -5px;">
+      {{headerProps.searchConfig.label}}
+    </p>
+    <filter-control [hasButton]="true"
+                    [hasClearButton]="true"
+                    [layoutAlign]="layoutAlign"
+                    [hasSearch]="true"
+                    [hasDatePicker]="true"
+                    [screen]="'staff-attendance'"
+                    [isTwoRows]="attendanceType == 'staff'"
+                    [hasToggle]="hasToggle"
+                    [searchConfig]="headerProps?.searchConfig"
+                    [builtInFilters]="headerProps?.builtInFilters"
+                    [filterArray]="headerProps?.filterArray"
+                    (filnalFilters)="filnalFilters($event)"
+                    [whiteBackgroundInputs]="true"
+                    (buttonClickEvent)="openAddAttendanceDialog()"></filter-control>
+  </mat-card>
+
+  <ng-container *ngIf="attendanceType == 'child'">
+    <app-table-component (onPagination)="onPagination($event)"
+                         (selectedItem)="actionButtonOutput($event)"
+                         (emitColumnSortAction)="sortColumn($event)"
+                         [sortFields]="sortFields"
+                         [isExpandable]="isExpand"
+                         [nestedDataKey]="'secondaryData'"
+                         [nestedColumns]="attendanceHeaderStaff"
+                         [isCellWidthFixed]="true"
+                         [cellWidth]="'200px'"
+                         height="50vh"
+                         [props]="tableConfigAndProps"></app-table-component>
+  </ng-container>
+
+  <ng-container *ngIf="attendanceType == 'staff'">
+    <app-staff-attendance-table (onPagination)="onPagination($event)"
+                         (selectedItem)="actionButtonOutput($event)"
+                         (emitColumnSortAction)="sortColumn($event)"
+                         [sortFields]="sortFields"
+                         [isExpandable]="isExpand"
+                         [nestedDataKey]="'secondaryData'"
+                         [nestedColumns]="attendanceHeaderStaff"
+                         [isCellWidthFixed]="true"
+                         [cellWidth]="'200px'"
+                         [isViewClick]="true"
+                         height="50vh"
+                         [props]="tableConfigAndProps"></app-staff-attendance-table>
+  </ng-container>
+
+</mat-card>

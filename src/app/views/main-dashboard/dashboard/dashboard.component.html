@@ -1,0 +1,64 @@
+<div style="padding: 10px;">
+    <div *ngIf="role == 'Super Admin'" style="width: 22%;margin-top: 10px;">
+        <!-- <mat-form-field>
+         <mat-label>Select Branch</mat-label>
+            <mat-select [(ngModel)]="branchId" (selectionChange)="onBranchSelect($event.value)">
+                <mat-option *ngFor="let branch of branches" [value]="branch.id"> {{ branch.name }} </mat-option>
+            </mat-select>
+         </mat-form-field> -->
+
+         <mat-form-field>
+            <mat-label>Select Branch</mat-label>
+            <input type="text"
+                  aria-label="Number"
+                  matInput
+                  [formControl]="Form.get('branchLabel')"
+                  [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="setBranchId()">
+              <mat-option *ngFor="let option of filteredBranches" [value]="option.name">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <!-- <mat-error *ngIf="getField('nationalityId')">{{getErrorMessage('nationality')}}</mat-error> -->
+        </mat-form-field>
+    </div>
+    <mat-card style="box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px !important;">
+        <div fxLayout="row wrap"
+        fxLayoutGap="20px"
+        fxLayoutAlign="space-between center">
+        <card-widget [count]="kpiData?.roomsCount"
+            heading="Total Rooms"
+            icon="ic_rooms.svg"
+            fxFlex.xl="calc(25% - 20px)"
+            fxFlex.lg="calc(25% - 20px)"
+            fxFlex.md="calc(50% - 20px)"
+            fxFlex.sm="100"
+            fxFlex.xs="100"></card-widget>
+        <card-widget [count]="kpiData?.staffCount"
+            heading="Total Staff"
+            icon="ic_staff.svg"
+            fxFlex.xl="calc(25% - 20px)"
+            fxFlex.lg="calc(25% - 20px)"
+            fxFlex.md="calc(50% - 20px)"
+            fxFlex.sm="100"
+            fxFlex.xs="100"></card-widget>
+        <card-widget [count]="kpiData?.bookingsCount"
+            heading="Active Bookings"
+            icon="ic_active_bookings.svg"
+            fxFlex.xl="calc(25% - 20px)"
+            fxFlex.lg="calc(25% - 20px)"
+            fxFlex.md="calc(50% - 20px)"
+            fxFlex.sm="100"
+            fxFlex.xs="100"></card-widget>
+        <card-widget [count]="kpiData?.childrenCount"
+            heading="Total Children"
+            icon="ic_children.svg"
+            fxFlex.xl="calc(25% - 20px)"
+            fxFlex.lg="calc(25% - 20px)"
+            fxFlex.md="calc(50% - 20px)"
+            fxFlex.sm="100"
+            fxFlex.xs="100"></card-widget> 
+        </div>
+    </mat-card>
+
+</div>

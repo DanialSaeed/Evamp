@@ -1,0 +1,24 @@
+
+<mat-card style="background-color: #ffffff26 !important; border: 0px !important;">
+    <p class="text-normal" style="color: #4A4A4A; line-height: 1px; margin-bottom: -5px;">
+     Enter Child Name
+    </p>
+     <filter-control
+         [hasButton]="true"
+         [hasClearButton]="true"
+         [layoutAlign]="layoutAlign"
+         (filnalFilters)="filnalFilters($event)"
+         [hasSearch]="true"
+         [hasDatePicker]="true"
+         [searchConfig]="headerProps?.searchConfig"
+         [builtInFilters]="headerProps?.builtInFilters"
+         [fxFlexIn]="headerProps?.fxFlexIn"
+         [filterArray]="headerProps?.filterArray"></filter-control>
+   </mat-card>
+
+<app-table-component (onPagination)="onPagination($event)"
+                     (selectedItem)="actionButtonOutput($event)"
+                     (emitColumnSortAction)="sortColumn($event)"
+                     [sortFields]="sortFields"
+                     height="45vh"
+                     [props]="tableConfigAndProps" [isViewClick]="true"></app-table-component>

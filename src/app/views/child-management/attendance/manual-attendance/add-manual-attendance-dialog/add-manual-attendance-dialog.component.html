@@ -1,0 +1,276 @@
+<div id="wrapper">
+  <div fxLayout="row wrap"
+       fxLayoutAlign="space-between center"
+       fxLayoutGap="15px"
+       class="top-heading text-bolder text-color">
+
+    <div fxFlex>Add Attendance</div>
+    <div fxFlex
+         fxLayoutAlign="end center">
+      <button mat-button
+              class="editBtn"
+              style="background-color: #00AFBB;"
+              [ngStyle]="{'opacity': disabledMore ? 0.4 : 1 }"
+              (click)="addAttendanceRow('adhoc_attendance')"
+              [disabled]="disabledMore">
+        Adhoc Attendance
+      </button>
+    </div>
+  </div>
+  <form [formGroup]="FormTwo">
+    <div fxLayout="row"
+         fxLayoutAlign="start start"
+         fxLayoutGap="10px">
+
+      <div fxFlex="18">
+        <!-- <mat-form-field>
+          <mat-label>Select Child</mat-label>
+          <mat-select class="height-40"
+                      [(ngModel)]="childId"
+                      required
+                      (selectionChange)="changeChild($event.value)"
+                      [ngModelOptions]="{standalone: true}">
+            <mat-option *ngFor="let child of activeChildrens"
+                        [value]="child.id">
+              <ng-container>
+                {{child?.firstName}} {{child?.lastName}}
+              </ng-container>
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <mat-form-field>
+          <mat-label>Select Child<span style="color:red">*</span></mat-label>
+          <input type="text"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="Form.get('childName')"
+                 [matAutocomplete]="auto"
+                 [readonly]="disbaledFields"
+                 [matAutocompleteDisabled]="disbaledFields">
+
+          <mat-autocomplete autoActiveFirstOption
+                            #auto="matAutocomplete"
+                            (optionSelected)="setChildId()">
+            <mat-option *ngFor="let option of filteredChildrens"
+                        [value]="option.name">
+              <div>{{option.name}}</div>
+            </mat-option>
+            <mat-option *ngIf="filteredChildrens.length == 0"
+                        style="pointer-events: none;">
+              <span>no child found</span>
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+      </div>
+
+      <div fxFlex="18">
+        <mat-form-field (click)="desired2.open()">
+          <mat-label>Select date</mat-label>
+          <input matInput
+                 required
+                 (dateChange)="setDateFormat(FormTwo, 'dateValue', $event)"
+                 [matDatepicker]="desired2"
+                 formControlName="dateValue"
+                 [disabled]="disbaledFields">
+          <!-- <mat-error *ngIf="getField('matDateOfBirth')">{{getErrorMessage('matDateOfBirth')}}</mat-error> -->
+          <mat-icon matSuffix>
+            <img [src]="calendar"
+                 style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+          </mat-icon>
+          <mat-datepicker #desired2></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="18">
+        <mat-form-field>
+          <mat-label>Select Room</mat-label>
+          <mat-select class="height-40"
+                      required
+                      [(ngModel)]="roomId"
+                      (selectionChange)="changeRoom($event.value)"
+                      [ngModelOptions]="{standalone: true}">
+            <mat-option *ngFor="let option of rooms"
+                        [value]="option?.id">
+              {{option?.name}} ({{option?.label}})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+  </form>
+  <div fxLayout="row wrap"
+       fxLayoutAlign="start center"
+       class="top-heading text-bold">
+    {{subTitle}}
+  </div>
+
+  <div fxLayout="row wrap"
+       fxLayoutAlign="center center"
+       fxLayoutGap="15px"
+       style="background: #ECF2F2 !important;text-align: center;">
+
+    <div fxFlex="13">
+      <p class="text-normal-bold heading">
+        Session
+      </p>
+    </div>
+
+    <div fxFlex="15">
+      <p class="text-normal-bold heading">
+        Add ons
+      </p>
+    </div>
+
+    <div fxFlex="12">
+      <p class="text-normal-bold heading">
+        Sign In
+      </p>
+    </div>
+
+    <div fxFlex="12">
+      <p class="text-normal-bold heading"
+         style="margin-left: 4%;">
+        Sign Out
+      </p>
+    </div>
+    <div fxFlex="25">
+      <p class="text-normal-bold heading">
+        Note
+      </p>
+    </div>
+    <div fxFlex="8">
+      <div></div>
+    </div>
+    <div fxFlex="5">
+      <div></div>
+    </div>
+  </div>
+
+  <div>
+
+  </div>
+
+  <form [formGroup]="Form">
+    <mat-card style="padding-top: 0 !important;">
+
+      <div formArrayName="booked_attendance">
+
+        <ng-container [formGroupName]="i"
+                      *ngFor="let attendance of booked_attendance.controls; let i=index">
+          <div fxLayout="row wrap"
+               fxLayoutAlign="center center"
+               fxLayoutGap="15px"
+               style="border-bottom: 1px solid lightgrey;min-height: 75px;">
+
+            <div fxFlex="13">
+              <span>{{attendance.get('session').value}} <br>
+                <span style="font-size: 12px;">{{attendance.get('sessionTime').value}}</span></span>
+            </div>
+
+            <div fxFlex="15">
+              <span> {{getCommaSeparatedNames(attendance.get('addOns').value)}}</span>
+            </div>
+
+            <div fxFlex="12">
+              <timepicker controlName="timeIn"
+                          (onSetTime)="onSetTimeSignIn($event, attendance, i)"
+                          [disabled]="disableInput"
+                          [time]="attendance.get('matTimeIn').value"
+                          [max]="attendance.get('matTimeOut').value"
+                          [showError]="attendance.get('matTimeIn').invalid"
+                          [required]="true"
+                          label="Time In"
+                          [screen]="'session'"></timepicker>
+            </div>
+
+            <div fxFlex="12">
+              <timepicker controlName="timeOut"
+                          (onSetTime)="onSetTimeSignOut($event, attendance, i)"
+                          [disabled]="disableInput || !attendance.get('matTimeIn').value"
+                          [time]="attendance.get('matTimeOut').value"
+                          [min]="attendance.get('matTimeIn').value"
+                          [showError]="attendance.get('matTimeOut').invalid"
+                          label="Time Out"
+                          [screen]="'session'"></timepicker>
+            </div>
+
+            <div fxFlex="25">
+              <mat-form-field>
+                <mat-label>{{attendance.get('note').value ? 'Note':'Write a note here'}}</mat-label>
+                <input matInput
+                       formControlName="note"
+                       placeholder="Write a note here">
+
+              </mat-form-field>
+            </div>
+            <div fxFlex="8">
+              <button mat-icon-button
+                      mat-button
+                      class="btn-custom-form"
+                      style="background-color: #E2AF2A ;width: 100%;"
+                      (click)="onSubmit(i)">
+                {{attendance.get('previous').value == true && attendance.get('submitted').value && attendance.get('submitted').value ? 'Update' : 'Save'}}
+              </button>
+            </div>
+            <div fxFlex="5">
+              <button mat-icon-button
+                      class="sideOption"
+                      [matMenuTriggerFor]="menu"
+                      aria-label="Example icon-button with a menu"
+                      *ngIf="attendance.get('previous').value == false && !attendance.get('submitted').value">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button (click)="removeChildAttendance(i)"
+                        mat-menu-item>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </mat-card>
+  </form>
+
+  <div fxLayout="row wrap"
+       fxLayoutAlign="end center"
+       fxLayoutGap="15px"
+       style="margin-top: 10px;">
+    <div fxFlex.sm="39"
+         fxFlex.xs="100">
+      <button (click)="onCancel()"
+              type="button"
+              mat-button
+              style="margin-top: 10px;background: #00AFBB !important;"
+              class="btn-custom-form-small">
+        Close
+      </button>
+    </div>
+    <!-- <div fxFlex.sm="39"
+         fxFlex.xs="100">
+      <button [disabled]="isAddMoreDisable()"
+              mat-button
+              class="btn-custom-form"
+              [ngStyle]="{'opacity': isAddMoreDisable() ? 0.4 : 1 }"
+              style="background-color: #E2AF2A ;margin-top: 10px;"
+              (click)="addAttendanceRow()">
+        Add more
+      </button>
+    </div> -->
+    <!-- <div fxFlex.sm="39"
+         fxFlex.xs="100">
+      <button (click)="onSubmit()"
+              type="button"
+              mat-button
+              style="margin-top: 10px;"
+              class="btn-custom-form-small">
+        Save
+      </button>
+    </div> -->
+  </div>
+
+
+</div>

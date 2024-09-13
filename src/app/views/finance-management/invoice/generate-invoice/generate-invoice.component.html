@@ -1,0 +1,58 @@
+<mat-card class="row-margin-tb card-dark">
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start start"
+         fxLayoutGap="10px">
+        <div fxFlex="20"
+            fxFlex.xs="100"
+            fxFlex.sm="100"
+            fxFlex.md="32"
+             fxFill>
+            <mat-card
+               style="height: 100vh;"
+               class="card height">
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     class="col-flex-margins for-select-row"
+                     (click)="onFormClick(1)"
+                     [class.form-menu-clicked]="formNo===1">
+                    <span class="form-select-icon"> 1</span>
+                    <span class="form-select-label">Select Period</span>
+                </div>
+                <div fxLayout="row wrap"
+                     fxLayoutAlign="start center"
+                     class="col-flex-margins for-select-row"
+                     (click)="onFormClick(2)"
+                     [class.form-menu-clicked]="formNo===2">
+                    <span class="form-select-icon"> 2</span>
+                    <span class="form-select-label">Process Invoice</span>
+                </div>
+            </mat-card>
+
+        </div>
+        <div fxFlex="78" fxFlex.xs="100" fxFlex.sm="100" fxFlex.md="62">
+            <!-- First Form -->
+            <app-process-invoice *ngIf="formNo === 1"
+            [childIds]="selectedIds"
+            (emitSelectionDone)="onEmitSelectionDone($event)"
+            ></app-process-invoice>
+
+            <!-- Second Form -->
+            <app-select-child-invoice *ngIf="formNo === 2"
+            [invoiceData]="invoiceData"
+            [pageHeading]="pageHeading"
+            [filterHeading]="filterHeading"
+            [columnHeader]="columnHeader"
+            [footerProps]="footerProps"
+            [filters]="filters"
+            [headerProps]="headerProps"
+            [inputData]="inputData"
+            [hasHeaderCheckBox]="true"
+            [selectedItems]="selectedItems"
+            (emitSelectedItems)="onEmitSelectedItems($event)"
+
+            ></app-select-child-invoice>
+
+        </div>
+    </div>
+
+</mat-card>

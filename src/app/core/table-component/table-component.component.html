@@ -1,0 +1,574 @@
+<div [ngStyle]="{'height': parentHeight, 'max-height':parentMaxHeight}"
+     class="data-table"
+     (mouseenter)="onMouseEnter()"
+     (mouseleave)="onMouseLeave()"
+     appHorizontalScroll>
+  <table style="width: 100%;"
+         #table
+         mat-table
+         [dataSource]="props?.dataSource"
+         matSort
+         multiTemplateDataRows
+         class="mat-elevation-z8 custom-table-striped"
+         [class.sticky]="isSticky">
+
+    <ng-container [matColumnDef]="tableData"
+                  *ngFor="let tableData of objectKeys(columnHeader)">
+      <th (click)="sortColumn(tableData)"
+          class="cp"
+          [ngStyle]="{'border-top-right-radius': (columnHeader[tableData]==lastColumn)
+		                  && (roundedTable)? '10px' : '0',
+		   'border-top-left-radius': (columnHeader[tableData]==firstColumn)
+			 && (roundedTable)? '10px' : '0' ,
+			 'width':(columnHeader[tableData]=='Action')&&(lastColumn=='')?'100px':'0px'}"
+          mat-header-cell
+          mat-sort-header
+          mat-sticky-header
+          [disabled]="!sortheaders?.includes(tableData)"
+          *matHeaderCellDef>
+        <span>{{columnHeader[tableData]}}</span>
+        <mat-cell *ngIf="columnHeader[tableData] == '' && hasHeaderCheckBox"
+                  style="padding:0px !important">
+          <mat-checkbox (change)="onHeaderCheckBox($event.checked)"
+                        [(ngModel)]="headerCheckBoxValue"
+                        class="example-margin"></mat-checkbox>
+        </mat-cell>
+
+      </th>
+      <ng-container *matCellDef="let element; let index">
+        {{seeElement(tableData, element)}}
+
+        <td (click)="clickView(element,tableData,$event)"
+            [ngClass]="{'cp': isViewClick || isCheckboxRowClick}"
+            [ngStyle]="{'background': element['fillBackground']==true ? '#00AFBB17': '' }">
+
+          <mat-cell [ngStyle]="{'padding-left.px': isNameColumn(tableData) ? 10 : null }"
+                    [ngClass]="{'flex-start-important': isNameColumn(tableData)}"
+                    *ngIf="!showImage && !showActions && !hasDivs &&
+					!expandPanel && !hasCustomData && !hasimageDialog && !hasPreCircle && !hasCheckBox && tableData != 'actionStatusColumn' && tableData != 'expand'">
+            <!--
+               *****
+               Above Ngstyle and ngclass are for aligning text to left for any name-based columns
+               ***** -->
+            <ng-container *ngIf="!props.inputData.hasViewMore">
+              <span class="ellipsis"
+                    *ngIf="!hasTitle">
+
+                <span *ngIf="checkArray(element,tableData)">
+                  <div [ngStyle]="{'margin-top.px': i == 0 ? 15 : 3 }"
+                       *ngFor="let item of element[tableData]; let i = index">
+                    <span></span>
+                    {{item}}
+                  </div>
+                </span>
+                {{props.toolTip}}
+                <span *ngIf="!checkArray(element,tableData)">
+                  <span
+                        *ngIf="tableData != 'stretching' && tableData != 'discrepancyNote' && tableData != 'name' && tableData != 'seprateInvoice' && !hasDaySessionCols(tableData) && tableData != 'end'">
+                    {{ element[tableData]?.name || element[tableData]}}
+                  </span>
+                  <span *ngIf="hasDaySessionCols(tableData)">
+
+                    <ng-container *ngIf="element[tableData]?.sessionName !== ''">
+                      <span style="margin-left: 38%;">{{element[tableData]?.sessionName}}</span>
+                      <br>
+                      {{ element[tableData]?.day }}
+                    </ng-container>
+                    <ng-container *ngIf="element[tableData]?.sessionName == ''"> - </ng-container>
+
+                  </span>
+                  <span *ngIf="tableData == 'stretching'">
+                    <mat-icon *ngIf="element[tableData].stretch !== '-'"
+                              style="width: 24px;position: relative;color: #44a644;"
+                              matTooltipClass="custom-tooltip"
+                              [matTooltip]="element[tableData].tooltip">{{element[tableData].stretch}}</mat-icon>
+                    <ng-container *ngIf="element[tableData].stretch == '-'"> - </ng-container>
+                  </span>
+
+                  <span *ngIf="tableData == 'discrepancyNote' && element.longNote">
+                    <span style="position: relative;"
+                          matTooltipClass="custom-tooltip"
+                          [matTooltip]="element.showNote">
+                      {{element[tableData]}}
+                    </span>
+                  </span>
+                  <span *ngIf="tableData == 'discrepancyNote' && !element.longNote">
+                    {{element[tableData]}}
+                  </span>
+
+                  <span *ngIf="tableData == 'name' && !hyperLink">
+                    {{ element[tableData]?.name || element[tableData]}}
+                  </span>
+                  <span *ngIf="tableData == 'name' && hyperLink">
+                    <a class="hyper-link-td"
+                       (click)="hyperLinkClicked(element)">{{ element[tableData]?.name || element[tableData]}}</a>
+                  </span>
+
+                  <span *ngIf="tableData == 'end' && !editableDate?.editAble">
+                    {{ element[tableData]?.end || element[tableData]}}
+                  </span>
+                  <span *ngIf="tableData == 'end' && editableDate?.editAble">
+                    <div class="mt-2"
+                         style="width: 60%;
+                    margin: auto;">
+                      <mat-form-field (click)="desired4.open()">
+                        <input matInput
+                               readonly
+                               (dateChange)="updateDateFromColumn(element,$event)"
+                               [value]="element[tableData]"
+                               [matDatepicker]="desired4"
+                               [min]="element[tableData]"
+                               [disabled]="editableDate?.disabled">
+                        <mat-icon matSuffix>
+                          <!-- [value]="Form.get('notice').value" -->
+                          <img [src]="calendar"
+                               style="margin-bottom: 0px;
+                                   margin-right: 10px; width: 16px; vertical-align: baseline;
+                                    cursor: pointer;">
+                        </mat-icon>
+                        <mat-datepicker #desired4></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </span>
+                  <span *ngIf="tableData == 'seprateInvoice' && !element[tableData]">
+                    <!-- {{ element[tableData]?.seprateInvoice || element[tableData]}} -->
+                    -
+                  </span>
+                  <span *ngIf="tableData == 'seprateInvoice' && element[tableData]">
+                    <mat-checkbox
+                    (change)="onCheckBox(element, $event.checked,tableData)"
+                          [checked]="element['isSeparateInvoice']"
+                          class="example-margin"></mat-checkbox>
+                    </span>
+                </span>
+              </span>
+
+              <span class="ellipsis"
+                    *ngIf="hasTitle"
+                    [ngStyle]="{'white-space': nextLineText ? 'normal' : 'nowrap'}"
+                    [title]="element[tableData]?.name || element[tableData]">{{ element[tableData]?.name ||
+                element[tableData]}}</span>
+
+            </ng-container>
+
+            <ng-container *ngIf="props.inputData.hasViewMore">
+              <!-- <span class="ellipsis" [ngStyle]="{'text-overflow' : ellipse && !element.viewMore ? 'ellipsis': 'unset', 'white-space': ellipse && !element.viewMore ? 'nowrap': 'unset'}" *ngIf ="!hasTitle" >{{ getSmall(element[tableData]?.name) || getSmall(element[tableData])}} <span class="viewMore" *ngIf="props.inputData.viewMoreColumn == tableData && element[tableData]?.length > 30" (click)="toggle(element)"> {{ ellipse ? ' ...View More' : 'View Less' }}  </span></span> -->
+              <span class="ellipsis"
+                    *ngIf="!hasTitle">{{ getTrimmedText(element[tableData]?.name) ||
+                getTrimmedText(element[tableData])}} <span class="viewMore"
+                      *ngIf="props.inputData.viewMoreColumn == tableData && element[tableData]?.length > 30"
+                      (click)="openViewMore(element[tableData])"> {{ ellipse ? ' ...View More' : 'View Less' }}
+                </span></span>
+            </ng-container>
+
+          </mat-cell>
+          <mat-cell *ngIf="hasCheckBox"
+                    style="padding:0px !important">
+            <mat-checkbox (change)="onCheckBox(element, $event.checked, '', $event)"
+                          [checked]="element[tableData]"
+                          (click)="$event.stopPropagation()"
+                          class="example-margin"></mat-checkbox>
+          </mat-cell>
+
+          <mat-cell *ngIf="tableData == 'actionStatusColumn'"
+                    style="padding:0px !important">
+            <!-- <button style="border: 1px solid #D5D5D5; margin: 0 10px;"
+                    (click)="columnClick(element)"
+                    mat-button>{{element[tableData]}}</button> -->
+            <mat-slide-toggle [(ngModel)]="element.status"
+                              (click)="columnClick(element)"></mat-slide-toggle>
+          </mat-cell>
+          <mat-cell *ngIf="showImage && !hasimageDialog ">
+            <img style="height: 35px;
+						     width: 35px;border-radius: 50%;"
+                 src={{element.profilePicture}} />
+          </mat-cell>
+          <!-- <mat-cell *ngIf="tableData == 'stretch'">
+            <mat-icon>check_circle</mat-icon>
+          </mat-cell> -->
+
+          <mat-cell *ngIf="hasimageDialog">
+            <img (click)="openDialog(element.contractImage) "
+                 style="margin-bottom: 10px;width: 40px;
+							 height: 50px;"
+                 src="assets/images/viewImageICon.svg" />
+
+          </mat-cell>
+          <mat-cell *ngIf="tableData == 'expand'">
+            <!-- <mat-icon (click)="expandedElement = expandedElement === element.id ? null : element.id"
+                        style="width: 12px; color: #A5AEB6;" class="cp">
+                        {{ expandedElement === element.id ? 'expand_less' : 'expand_more' }}
+              </mat-icon> -->
+            <button mat-icon-button
+                    aria-label="expand row"
+                    (click)="(expandedElement = expandedElement === element ? null : element); $event.stopPropagation()">
+              <mat-icon *ngIf="expandedElement !== element">keyboard_arrow_down</mat-icon>
+              <mat-icon *ngIf="expandedElement === element">keyboard_arrow_up</mat-icon>
+            </button>
+          </mat-cell>
+          <mat-cell *ngIf="hasPreCircle"
+                    style="justify-content: left !important;">
+            <span [ngStyle]="{'background-color': element?.backColor,
+						'border-color': element?.borderColor}"
+                  class="topbarCalender"></span>
+            <span>{{element[tableData]}}</span>
+
+          </mat-cell>
+          <mat-cell [ngStyle]="{'padding-right': (lastColumn=='') ?'15px':'24px'}"
+                    *ngIf="showActions">
+            <!-- <ng-container *ngFor="let item of props?.ActionButtons"> -->
+            <!-- <button (click)="buttonClicked(element,item)"
+									class="cell-buttons-margin "
+									style="font-size:12px"
+									[disabled]="element.processingStatusEn == 'approved'||element.processingStatusEn == 'partaillyApproved'||element.processingStatusEn == 'rejected' ||element.processingStatusEn == 'cancelled'"
+									[style.background-color]="item.color"
+									mat-raised-button
+									color="primary">{{item.buttonLabel}}</button> -->
+            <ng-container *ngIf="!props.onlyDelete && !props.hasDownload && !props.hasTickIcon">
+              <button mat-button
+                      style="border: 1px solid #D5D5D5; margin-right: 10px;"
+                      [matMenuTriggerFor]="menu"
+                      [disableRipple]="true">More
+                <mat-icon style="width: 12px; color: #A5AEB6;">expand_more</mat-icon>
+              </button>
+
+              <mat-menu #menu="matMenu">
+                <ng-container *ngFor="let item of props?.ActionButtons">
+                  <button *ngIf="getCondition(item,element)"
+                          (click)="buttonClicked(element,item)"
+                          mat-menu-item
+                          [disabled]="!item.visibility">{{item.buttonLabel}}</button>
+                </ng-container>
+
+              </mat-menu>
+            </ng-container>
+
+            <div class="iconActions"
+                 *ngIf="props.onlyDelete || props.hasDownload || props.hasTickIcon || props.hasEdit">
+              <mat-icon *ngIf="props.hasApprove" matTooltip="Approve"
+                        (click)="iconAction(element,tableData, 'approve')"
+                        style="color: #e2af2a;" class="invoice-icons">check_circle</mat-icon>
+
+              <mat-icon *ngIf="props.hasView" matTooltip="View"
+                        (click)="iconAction(element,tableData, 'viewPdf')"
+                        style="color: #00AFBB;" class="invoice-icons">remove_red_eye</mat-icon>
+
+              <mat-icon *ngIf="props.hasEdit" matTooltip="Edit"
+                        (click)="iconAction(element,tableData, 'edit')"
+                        style="color: rgb(0, 175, 187);" class="invoice-icons">edit</mat-icon>
+
+              <mat-icon *ngIf="props.onlyDelete" matTooltip="Delete"
+                        (click)="iconAction(element,tableData, 'delete')"
+                        style="color: red" class="invoice-icons">delete</mat-icon>
+
+              <mat-icon *ngIf="props.hasDownload" matTooltip="Download"
+                        (click)="iconAction(element,tableData, 'download')"
+                        style="color: blue;" class="invoice-icons">save_alt</mat-icon>
+
+              <mat-icon *ngIf="['adhoc_items','bookings','all'].includes(element['toBeRegenerate']) && element['invoiceStatus'] == 'Draft'"
+                        (click)="iconAction(element,tableData, 'regenerate')" matTooltip="Regenerate"
+                        style="color: #2dadff;" class="invoice-icons">refresh</mat-icon>
+
+
+              <ng-container *ngIf="props.hasTickIcon">
+                <mat-icon *ngIf="element.stretch"
+                          (click)="iconAction(element,tableData, 'download')"
+                          style="width: 12px;position: relative;color: #44a644;">check_circle</mat-icon>
+                <span style="margin-left: 40%;"
+                      *ngIf="!element.stretch">-</span>
+
+              </ng-container>
+
+
+            </div>
+
+            <!-- </ng-container> -->
+
+            <ng-container *ngIf="hasSwitch">
+              <label class="switch ">
+                <input type="checkbox"
+                       (change)="statusChanged(element)"
+                       [(ngModel)]="element.status">
+                <span class="slider round"></span>
+              </label>
+            </ng-container>
+          </mat-cell>
+
+          <!-- <mat-cell *ngIf="expandPanel">
+						<ng-container *ngIf="expandButton">
+							<!-- <button (click)="expandedElement = expandedElement === element ? null : element"
+                            class="expand_button"
+ 							mat-raised-button
+							color="primary">
+							</button> -->
+          <!-- <img (click)="expandedElement = expandedElement === element ? null : element;expandClicked(element) "
+								 style="margin-left: 0px;"
+								 src={{getIcon(element.expanded)}} />
+						</ng-container>
+						<ng-container *ngIf="!expandButton">
+						</ng-container>
+					</mat-cell> -->
+
+          <!-- <mat-cell *ngIf="hasDivs">
+						<ng-container>
+							<div style="width: 50px;
+							height: 44px;"
+								 [style.background-color]=divColor>
+								<mat-icon style=" margin: 8px 12px 0px;color: white;">{{divIcon}}</mat-icon>
+							</div>
+						</ng-container>
+					</mat-cell> -->
+          <!--
+					<mat-cell *ngIf="hasCustomData">
+						<ng-container *ngIf="customData!==''">
+							{{customData}}
+						</ng-container>
+						<ng-container *ngIf="customData===''">
+							{{element.typeEn}}
+						</ng-container>
+
+					</mat-cell> -->
+        </td>
+      </ng-container>
+    </ng-container>
+    <!-- <ng-container matColumnDef="expandedDetail">
+			<td mat-cell
+				*matCellDef="let element"
+				[attr.colspan]="100">
+				<div fxLayout="row wrap"
+					 class="example-element-detail"
+					 style="width: 100%; font-weight: bold;"
+					 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+					<div class="example-element-description"
+						 fxFlex="60">
+						<div *ngFor="let item of expandedElements"
+							 fxLayout="row wrap"
+							 fxLayoutAlign="start center">
+							<div fxFlex='10'
+								 fxFlexOffset="18">
+								<img style="height: 50px; "
+									 src={{item.inventory.specie.profilePicture}} />
+							</div>
+							<div fxFlex='100px'>
+								{{item.inventory.specie.nameEn}}
+							</div>
+							<!-- <div fxFlex="144px">
+								<input style="width: 100%;border: none;text-align: center;"
+									   type="text"
+									   readonly
+									   class="search"
+									   [(ngModel)]="item.quantityRequested" />
+
+							</div> -->
+    <!-- <div fxFlex='75px'
+								 style="text-align: center;">
+								{{item.quantityRequested}}
+							</div>
+							<div *ngIf="element.processingStatusEn == 'pending'"
+								 fxFlex='8'
+								 style="text-align: center;margin-top: 6px;">
+								<img src={{checkQuantityStatus(item.quantityRequested,item.inventory.quantity)}} />
+							</div>
+							<div *ngIf="element.processingStatusEn == 'pending'"
+								 fxFlex='20'>
+								<div>
+									Available Quantity: {{item.inventory.quantity}}
+								</div>
+							</div>
+
+							<div *ngIf="element.processingStatusEn == 'partaillyApproved'"
+								 fxFlex='28'>
+								<div>
+									Approved Quantity: {{item.quantityGiven}}
+								</div>
+							</div>
+						</div>
+					</div>
+					<div fxFlex *ngIf="element.processingStatusEn == 'partaillyApproved' || element.processingStatusEn == 'rejected' || element.processingStatusEn == 'approved' ">
+						<textarea
+						          placeholder="Comments"
+								  style="height: 100px;width: 350px;padding: 10px;"
+								  readonly
+								  class="commentInput">{{element.reasonEn}}
+						 </textarea>
+					</div>
+				</div>
+			</td>
+		</ng-container> -->
+
+
+
+    <!-- <tr mat-header-row
+		*matHeaderRowDef="objectKeys(columnHeader)"></tr>
+	<tr mat-row
+		*matRowDef="let row; columns: objectKeys(columnHeader);"></tr> -->
+
+    <!-- <tr mat-header-row
+		*matHeaderRowDef="objectKeys(columnHeader)"></tr>
+
+	<mat-row *matRowDef="let row; columns: objectKeys(columnHeader);"
+			 matRipple
+			 class="element-row"
+			 [class.expanded]="expandedElement == row"
+			 (click)="expandedElement = row"></mat-row>
+
+	<mat-row *matRowDef="let row; columns: ['expandedDetail'];"
+			 [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"> -->
+
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell
+          *matCellDef="let element"
+          [attr.colspan]="100">
+        <div fxLayout="row wrap"
+             class="example-element-detail"
+             style="width: 100%; font-weight: bold;"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="example-element-description"
+               style="padding:15px"
+               fxFlex="100">
+
+            <table style="width: 100%;"
+                   mat-table
+                   [dataSource]="getDataSource(element[nestedDataKey])"
+                   class="mat-elevation-z8 custom-table-striped">
+
+              <!-- Columns & Data -->
+              <ng-container [matColumnDef]="nestedtableData"
+                            *ngFor="let nestedtableData of objectKeys(nestedColumns)">
+                <th mat-header-cell
+                    *matHeaderCellDef> {{nestedColumns[nestedtableData]}} </th>
+                <td *matCellDef="let element">
+                  <mat-cell *ngIf="columnHeader[nestedtableData] != 'Actions'">
+                    {{element[nestedtableData]}}
+                  </mat-cell>
+                  <mat-cell class="cp"
+                            *ngIf="columnHeader[nestedtableData] == 'Actions'">
+                    <span style="color: #00AFBB"
+                          (click)="openViewBreaksDialog(element)">View Breaks</span>
+                  </mat-cell>
+
+                </td>
+              </ng-container>
+
+              <tr mat-header-row
+                  *matHeaderRowDef="objectKeys(nestedColumns)"></tr>
+              <tr mat-row
+                  *matRowDef="let element; columns: objectKeys(nestedColumns);"
+                  class="example-element-row"
+                  [class.example-expanded-row]="expandedElement === element"
+                  [ngStyle]="{'background': element['highlight']}">
+
+            </table>
+
+
+            <!-- <mat-accordion>
+                    <mat-expansion-panel hideToggle>
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                          <div style="display: flex;font-weight: bolder;">
+                            <div>Staff</div>
+                            <div>Day</div>
+                            <div>Time In</div>
+                            <div>Time Out</div>
+                          </div>
+                          <div style="display: flex;font-weight: bolder;">
+                            <div>mans</div>
+                            <div>monday</div>
+                            <div>23</div>
+                            <div>5</div>
+                          </div>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                    </mat-expansion-panel>
+                  </mat-accordion> -->
+
+            <!-- <div fxFlex="144px">
+
+
+                </div>
+
+                <div fxFlex='75px' style="text-align: center;">
+                  {{item.quantityRequested}}
+                </div>
+
+                <div *ngIf="element.processingStatusEn == 'pending'" fxFlex='8'
+                    style="text-align: center;margin-top: 6px;">
+
+                </div>
+
+                <div *ngIf="element.processingStatusEn == 'pending'" fxFlex='20'>
+
+                </div>
+
+                <div *ngIf="element.processingStatusEn == 'partaillyApproved'" fxFlex='28'>
+                  <div>
+                    Approved Quantity: {{item.quantityGiven}}
+                  </div>
+                </div> -->
+
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row
+        *matHeaderRowDef="objectKeys(columnHeader); sticky: true"></tr>
+    <tr mat-row
+        *matRowDef="let element; columns: objectKeys(columnHeader);"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        [ngStyle]="{'background': element['highlight']}">
+      <!-- {{'background': element['highlight'] == true ? '[ color ]': ''}"}} -->
+    </tr>
+    <!-- <ng-container *ngIf="expandPanel"> -->
+    <ng-container *ngIf="isExpandable">
+      <tr mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="example-detail-row"></tr>
+    </ng-container>
+
+    <!-- </ng-container> -->
+    <!-- </mat-row> -->
+  </table>
+</div>
+
+<!-- <mat-paginator #paginator
+			   [length]="dataSource?.data.length"
+			   [pageIndex]="0"
+			   [pageSize]="50"
+			   [pageSizeOptions]="[25, 50, 100, 250]">
+</mat-paginator> -->
+<div fxLayout="row"
+     fxLayoutAlign="space-between center"
+     style="padding-left: 10px; padding-right: 10px;">
+  <div fxFlex="55"
+       fxFlex.sm="15">
+    <div style="gap: 30px;"
+         class="inline">
+      <p *ngIf="props?.pagination?.count > 0"
+         class="text-small total">
+        <!-- Total Count :
+       <span *ngIf="props?.pagination?.page < perPage">{{props?.pagination?.count}}</span>
+       <span
+             *ngIf="props?.pagination?.page >= perPage">{{perPage*props?.pagination?.page}}</span>/{{props?.pagination?.count}} -->
+        {{getPaginationText()}}
+      </p>
+
+      <p *ngIf="totalAmount != null"
+         class="text-small total">Total Amount : £ {{ totalAmount | number : '1.2-2' }}</p>
+
+      <p *ngIf="selectedTotalAmount != 0 && invoiceTab == 'drafts'"
+      class="text-small total">Selected Total Amount : £ {{ selectedTotalAmount | number : '1.2-2' }}</p>
+    </div>
+
+
+  </div>
+  <div fxFlex="45"
+       fxFlex.sm="85">
+    <app-pagination *ngIf="props?.pagination?.count > 0"
+                    (setPage)="setPage($event)"
+                    perPage="20"
+                    [totalPages]="props?.pagination?.pages"
+                    [currentPage]="props?.pagination?.page"></app-pagination>
+  </div>
+</div>

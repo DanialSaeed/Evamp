@@ -1,0 +1,176 @@
+<div fxLayout="row wrap"
+     class="top-div"
+     fxFlexFill
+     fxLayoutAlign="center none"
+     style="background-image: url(assets/images/Bg_with_plants.png);">
+     <div fxFlex.lg="40"
+          fxFlex.md="50"
+          fxFlex.sm="60">
+          <div>
+               <img class="logoImage"
+                    src="assets/images/logo-green-greener.png">
+          </div>
+          <form action="#"
+                class="form-div">
+
+               <div fxLayout="column"
+                    fxLayoutAlign="space-around center"
+                    class="form-group ">
+                    <div fxFlex
+                         style="margin:20px 10px 0px"
+                         class="bold-text">
+                         {{boldTExt}}
+                    </div>
+                    <div fxFlex="100"
+                         [ngStyle.xs]="{'font-size.px': 20}"
+                         [ngStyle.sm]="{'font-size.px': 25}"
+                         style="margin:10px 0px 10px"
+                         class="bolder-text">
+                         <b>
+                              {{bolderText}}
+                         </b>
+                    </div>
+                    <div fxFlex
+                         style="margin-top: 30px ;"
+                         class="lighter-text">
+                         <span><i [class]='iconClass'></i> {{lighterText}}</span>
+                    </div>
+                    <div fxFlex
+                         class="lighter-text">
+                         {{lighterText2}}
+                    </div>
+               </div>
+
+               <div *ngIf="!gotCode"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="center center"
+                    style="margin-top: 10px;">
+                    <div fxFlex.lg="80"
+                         fxFlex.sm="100">
+                         <mat-form-field appearance="outline"
+                                         style="width: 100%;">
+                              <mat-label>Email</mat-label>
+                              <input matInput
+                                     type="text"
+                                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                     required
+                                     >
+                              <mat-icon matPrefix>
+                                   <img [src]="emailIcon"
+                                        style="margin-bottom: 6px;margin-right: 20px;">
+                              </mat-icon>
+                              <!-- <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">Email is
+                        required</mat-error> -->
+                         </mat-form-field>
+                    </div>
+               </div>
+
+               <div *ngIf="!forgotPassword"
+                    fxLayout="row wrap"
+                    fxLayoutAlign="center center"
+                    style="height: 75px;">
+                    <div fxFlex.lg="80"
+                         fxFlex.sm="100">
+                         <mat-form-field appearance="outline"
+                                         style="width: 100%;">
+                              <mat-label>Password</mat-label>
+                              <input matInput
+                                     class="input-margin"
+                                     type="password"
+                                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                     required
+                                     >
+                              <mat-icon matPrefix>
+                                   <img src="assets/images/ic_key.png"
+                                        style="margin-bottom: 6px;margin-right: 20px;">
+                              </mat-icon>
+                              <!-- <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">Email is
+						  required</mat-error> -->
+                         </mat-form-field>
+                    </div>
+               </div>
+
+               <div *ngIf="!forgotPassword"
+                    class="row wrap"
+                    fxLayoutAlign="end center">
+                    <div fxFlex.lg="30%"
+                         fxFlex.sm="40%">
+                         <a style="font-size: 12px;"
+                            href="#"
+                            (click)="onClickForgot()">Forgot Password?</a>
+                    </div>
+               </div>
+
+               <div *ngIf="!gotCode"
+                    class="row wrap">
+                    <div fxFlex="100%"
+                         fxLayoutAlign="center end">
+                         <button type="submit"
+                                 (click)="onClick()"
+                                 class="btn-custom">{{buttonLabel}}</button>
+                    </div>
+               </div>
+
+               <!--- This will update dom according to forgot password view -->
+
+               <div *ngIf="gotCode"
+                    fxLayout="row wrap"
+                    fxLayoutGap.lg="1px"
+                    fxLayoutGap.sm="4px"
+                    fxLayoutAlign="center center"
+                    style="margin-top: 20px;">
+
+                    <div fxFlex.lg="60"
+                         fxFlex.sm="50">
+                         <mat-form-field appearance="outline"
+                                         style="width: 100%;">
+                              <mat-label>Email</mat-label>
+                              <input matInput
+                                     type="text"
+                                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                     required
+                                      >
+                              <mat-icon matPrefix>
+                                   <img src="assets/images/ic_dialpad.png"
+                                        style="margin-bottom: 6px;margin-right: 20px;">
+                              </mat-icon>
+                              <!-- <mat-error *ngIf="email.invalid && (email.dirty || email.touched)">Email is
+						  required</mat-error> -->
+                         </mat-form-field>
+                    </div>
+               </div>
+               <div *ngIf="gotCode"
+                    class="row wrap">
+                    <div fxFlex="100%"
+                         fxLayoutAlign="center end">
+                         <button type="submit"
+                                 (click)="onClick()"
+                                 class="btn btn-custom">Done</button>
+                    </div>
+               </div>
+               <div *ngIf="gotCode"
+                    fxLayoutAlign="center end"
+                    class="row wrap"
+                    [style.margin-top]="'20px'">
+
+                    <div fxFlex="30%"
+                         fxFlexOffset="25"
+                         fxFlexOffset.xs="10">
+                         <b style="font-size: 10px; color:blue">0:59</b>
+                    </div>
+
+               </div>
+               <div *ngIf="gotCode"
+                    class="row-wrap"
+                    fxLayoutAlign="center center">
+                    <div fxFlex="40%"
+                         fxFlexOffset="25"
+                         fxFlexOffset.xs="10">
+                         <a style="font-size: 12px;"
+                            href="#">Resend code</a>
+                    </div>
+
+               </div>
+          </form>
+     </div>
+</div>

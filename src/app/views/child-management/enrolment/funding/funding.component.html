@@ -1,0 +1,260 @@
+<form [formGroup]="Form"
+      (ngSubmit)="onSubmit()">
+  <ng-container>
+    <mat-card class="card">
+      <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           fxLayoutGap="15px"
+           class="top-heading text-bolder text-color"
+           (click)="check()">
+        <div fxFlex>
+          Funding Type
+        </div>
+
+        <div fxFlex>
+          <div style="display: flex; gap: 15px; place-content: end;font-weight: 600;">
+            <!-- <div class="inline">
+                <button mat-button class="editBtn" (click)="goToEdit()" *ngIf="type == 'view' && editPermit">
+                  <mat-icon class="editIcon">edit</mat-icon>
+                  Edit
+                </button>
+              </div> -->
+            <div class="inline">
+              <div class="tool">
+                <button style="pointer-events: none;"
+                        mat-button
+                        class="btn-custom-form">
+                  {{ ageYear }} yrs {{ ageMonth }} months
+                  <mat-icon class="editIcon">info</mat-icon>
+                </button>
+                <div style="display:none"
+                     class="showToolTip">
+                  {{ ageYear + 1 }} yrs - {{ futureDate1 }} <br>
+                  {{ ageYear + 2 }} yrs - {{ futureDate2 }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           class="row-wrap-margins">
+        <div fxFlex.xl="28"
+             fxFlex.lg="58"
+             fxFlex.md="58"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="col-flex-margins">
+          <mat-form-field>
+            <!-- <mat-label>Title</mat-label> -->
+            <mat-select class="height-40"
+                        formControlName="fundingId">
+              <mat-option [value]=1
+                          selected>Not Funded</mat-option>
+              <mat-option [value]=2>Free 15 hours 2 years old</mat-option>
+              <mat-option [value]=3>Free 15 hours 3/4 years old</mat-option>
+              <mat-option [value]=4>Free 30 hours 3/4 years old</mat-option>
+              <mat-option [value]=6>5+ years old</mat-option>
+              <mat-option [value]=5>Custom Funding</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex.xl="28"
+             fxFlex.lg="20"
+             fxFlex.md="20"
+             fxFlex.sm="45"
+             fxFlex.xs="100"
+             class="col-flex-margins">
+          <mat-checkbox formControlName="stretch"
+                        *ngIf="Form.controls.fundingId.value=='2' || Form.controls.fundingId.value=='3' || Form.controls.fundingId.value=='4'">
+            Stretch this funding</mat-checkbox>
+        </div>
+
+        <div fxFlex.xl="28"
+             fxFlex.lg="20"
+             fxFlex.md="20"
+             fxFlex.sm="45"
+             fxFlex.xs="100">
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             *ngIf="Form.controls['fundingId'].value == 5">
+          <div fxFlex="25"
+               class="custom-text text-gray">
+            Custom Funding
+          </div>
+
+          <div fxFlex.xl="28"
+               fxFlex.lg="32"
+               fxFlex.md="32"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-form-field>
+              <!-- <mat-label>Primary Language</mat-label> -->
+              <input matInput
+                     type="number"
+                     formControlName="selfFinanceHoursPerWeek"
+                     min="0.1"
+                     max="999"
+                     maxlength="3"
+                     (blur)="onBlurEvent($event)"
+                     required>
+              <mat-error *ngIf="Form.get('selfFinanceHoursPerWeek').hasError('max')"> Max Limit is 999</mat-error>
+              <!-- <mat-error *ngIf="getField('id')">{{getErrorMessage('id')}}</mat-error> -->
+            </mat-form-field>
+          </div>
+          <div fxFlex="10"
+               class="custom-text text-gray">
+            hrs
+          </div>
+          <div fxFlex.xl="28"
+               fxFlex.lg="20"
+               fxFlex.md="20"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="col-flex-margins">
+            <mat-checkbox formControlName="stretch">
+              Stretch this funding</mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row"
+           fxLayoutAlign="start center"
+           *ngIf="Form.controls['stretch'].value">
+        <div fxFlex="100"
+             class="custom-text text-gray row-wrap-margins">
+          Selected <span>Stretched</span> Government Funded hours
+          <span style="color: #E2AF2A; margin-left: 10px;">{{StretchedHours}}
+            Hrs/week</span>
+        </div>
+      </div>
+      <!-- <div fxLayout="row"
+           fxLayoutAlign="start center"
+           *ngIf="Form.controls['stretch'].value == true && Form.controls['fundedFinanceHoursPerWeek'].value >0 && Form.controls.fundingId.value=='2' ||
+            Form.controls['stretch'].value == true && Form.controls['fundedFinanceHoursPerWeek'].value >0 && Form.controls.fundingId.value=='3'">
+        <div fxFlex="100"
+             class="custom-text text-gray row-wrap-margins">
+          Selected <span>Stretched</span> Government Funded hours
+          <span style="color: #E2AF2A; margin-left: 10px;">{{StretchedHours}}
+            Hrs/week</span>
+        </div>
+      </div> -->
+      <!-- <div fxLayout="row"
+           fxLayoutAlign="start center"
+           *ngIf="Form.controls['stretch'].value == true && Form.controls['fundedFinanceHoursPerWeek'].value >0 && Form.controls.fundingId.value=='4'">
+        <div fxFlex="100"
+             class="custom-text text-gray row-wrap-margins">
+          Selected <span>Stretched</span> Government Funded hours
+          <span style="color: #E2AF2A; margin-left: 10px;">{{StretchedHours}}
+            Hrs/week</span>
+        </div>
+      </div> -->
+
+      <div fxLayout="row wrap"
+           fxLayoutAlign="space-between center"
+           fxLayoutGap="15px"
+           class="top-heading text-bolder text-color">
+        Funding Period
+      </div>
+
+      <div fxLayout="row"
+           fxLayoutAlign="start center">
+        <div fxFlex="35"
+             class="row-wrap-margins">
+          <mat-form-field (click)="desired.open()">
+            <mat-label>Start Date <span style="color: red">*</span></mat-label>
+            <input matInput
+                   (dateChange)="dateChangeStatic(Form, 'startDate', $event)"
+                   formControlName="matstartDate"
+                   [matDatepicker]="desired">
+            <mat-icon matSuffix>
+              <img [src]="calendar"
+                   style="margin-bottom: 0px;
+                          margin-right: 10px; width: 16px; vertical-align: baseline;
+                           cursor: pointer;">
+            </mat-icon>
+            <mat-datepicker #desired></mat-datepicker>
+            <mat-error *ngIf="getField('matstartDate')">{{getErrorMessage('matstartDate')}}</mat-error>
+          </mat-form-field>
+        </div>
+        <div fxFlex="35"
+             class="row-wrap-margins">
+          <mat-form-field (click)="desired1.open()">
+            <mat-label>End Date </mat-label>
+            <input matInput
+                   (dateChange)="dateChangeStatic(Form, 'endDate', $event)"
+                   formControlName="matendDate"
+                   [matDatepicker]="desired1"
+                   [disabled]="!Form.get('matstartDate').value"
+                   [min]="Form.get('matstartDate').value">
+            <mat-icon matSuffix>
+              <img [src]="calendar"
+                   style="margin-bottom: 0px;
+                          margin-right: 10px; width: 16px; vertical-align: baseline;
+                           cursor: pointer;">
+            </mat-icon>
+            <mat-datepicker #desired1></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row wrap"
+           fxLayoutAlign="start center"
+           fxLayoutGap="15px">
+        <div fxFlex.xl="39"
+             fxFlex.lg="35"
+             fxFlex.md="35"
+             fxFlex.sm="57"
+             fxFlex.xs="100"
+             class="row-margin">
+          <mat-form-field>
+            <mat-label>Funding passcode</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="passCode"
+                   minlength="3"
+                   [required]="isPassCodeRequired"
+                   (change)="checkPassCode()"
+                   maxlength="18" />
+            <mat-error *ngIf="getField('passCode')">{{getErrorMessage('passCode')}}</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- <app-form-foooter (clearEvent)="clearForm()" [footerProps]="footerProps"
+                        (backEvent)="goBack()"></app-form-foooter> -->
+
+      <div fxLayout="row"
+           class="row-wrap-margins mb-30"
+           fxLayoutAlign="start start"
+           fxLayoutGap="10px">
+        <div fxFlex="150px">
+          <button (click)="clearForm()"
+                  type="button"
+                  mat-button
+                  [style.background-color]="'#C1BBB9'"
+                  class="btn-custom-form">
+            Cancel
+          </button>
+          <!-- [disabled]="isCancelDisabled" -->
+        </div>
+        <div fxFlex="150px">
+          <button type="submit"
+                  mat-button
+                  class="btn-custom-form">
+            {{footerProps.buttonLabel}}
+          </button>
+        </div>
+
+      </div>
+
+    </mat-card>
+  </ng-container>
+</form>
+<div>
+  <app-table-component [props]="tableConfigAndProps"
+                       (selectedItem)="actionButtonOutput($event)"></app-table-component>
+</div>

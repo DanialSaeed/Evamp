@@ -1,0 +1,86 @@
+<mat-card class="card">
+  <form [formGroup]="Form"
+        (ngSubmit)="onSubmit()">
+    <div fxLayout="row wrap"
+         fxLayoutAlign="space-between center"
+         fxLayoutGap="15px"
+         class="top-heading text-bolder text-color">
+      {{title}}
+      <div fxLayoutGap="15px">
+        <button mat-button
+                class="editBtn"
+                (click)="goToEdit()"
+                *ngIf="type == 'view' && editPermit">
+          <mat-icon class="editIcon">edit</mat-icon>
+          Edit
+        </button>
+      </div>
+
+    </div>
+    <div fxLayout="row wrap"
+         fxLayoutAlign="start center"
+         fxLayoutGap="15px"
+         class="row-card-margins">
+      <div fxFlex.xl="23"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100"
+           class="text-small text-gray">
+        Name <span style="color: red">*</span>
+        <mat-form-field style="margin-top: 10px;">
+          <input matInput
+                 formControlName="name"
+                 required>
+                 <mat-error *ngIf="getField('name')">{{getErrorMessage('name')}}</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxFlex.xl="20"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100"
+           class="text-small text-gray">
+        Category <span style="color: red">*</span>
+        <mat-form-field style="margin-top: 10px;">
+          <!-- <mat-label>Gender</mat-label> -->
+          <mat-select placeholder="Select Category"
+                      required
+                      formControlName="category">
+            <mat-option *ngFor="let item of additionalItems"
+                        [value]="item.value"> {{item.label}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="getField('category')">{{getErrorMessage('category')}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxFlex.xl="20"
+           fxFlex.lg="25"
+           fxFlex.md="25"
+           fxFlex.sm="45"
+           fxFlex.xs="100"
+           class="text-small text-gray">
+        Amount <span style="color: red">*</span>
+        <mat-form-field style="margin-top: 10px;">
+          <input matInput
+                 class="ml-15"
+                 formControlName="matRate"
+                 (blur)="onBlurEvent($event)"
+                 type="number"
+                 maxlength="999999"
+                 required>
+          <!-- <mat-error *ngIf="getField('gender')">{{getErrorMessage('gender')}}</mat-error> -->
+          <mat-error *ngIf="Form.get('matRate').hasError('max')"> Maximum rate allowed upto 999999
+          </mat-error>
+          <span class="pound-left"
+                matSuffix>£&nbsp;</span>
+                <mat-error *ngIf="getField('matRate')">{{getErrorMessage('matRate')}}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <app-form-foooter *ngIf="type !=='view'"
+                      (clearEvent)="clearForm()"
+                      (backEvent)="goBack()"
+                      [footerProps]="footerProps"></app-form-foooter>
+  </form>
+</mat-card>

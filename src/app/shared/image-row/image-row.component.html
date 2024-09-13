@@ -1,0 +1,26 @@
+<div fxLayout="row wrap"
+     fxLayoutAlign="start center"
+     style="margin-bottom: 20px;">
+
+    <div fxFlex.xs="15"
+         fxFlex="120px"
+         fxFlexOffset="2">
+
+        <img *ngIf="onlyImage"
+             [src]="imageUrl" />
+
+        <ng-container *ngIf="!onlyImage">
+            <file-picker (onFileSelect)="onFileSelect($event)"
+                         (onDeleteFile)="onDeleteFile($event)"
+                         [size]="{width: 100, height: 100}">
+            </file-picker>
+        </ng-container>
+
+    </div>
+
+    <div style="font-weight: bold;"
+         fxFlex>
+        {{label}}
+    </div>
+
+</div>

@@ -1,0 +1,456 @@
+<mat-card class="row-margin-tb card-dark">
+  <form [formGroup]="Form">
+      <mat-card>
+        <div fxLayout="row wrap"
+               fxLayoutAlign="space-between center"
+               fxLayoutGap="10px"
+               >
+               <div fxFlex class="top-heading text-bolder text-color">
+                Ad Hoc Invoice Properties
+               </div>
+
+               <div fxFlex>
+                <button
+                class="header-button edit"
+                (click)="goToEdit()" *ngIf="type == 'view' && editPermit && formDetail?.invoiceStatus == 'Draft'"
+                mat-raised-button> <mat-icon class="editIcon">edit</mat-icon>Edit</button>
+
+                <button
+                *ngIf="isDraft && type == 'view'"
+                class="header-button approve"
+                (click)="confirmInvoiceApprove()"
+                mat-raised-button>Approve Invoice</button>
+               </div>        
+        </div>
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-card-margins">
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="text-small text-gray">
+            Invoice ID
+            <mat-form-field style="margin-top: 10px;">
+              <input matInput
+                     type="text"
+                     formControlName="trackingCode"
+                     readonly
+                     />
+              <!-- <mat-error *ngIf="getField('firstName')">{{getErrorMessage('firstName')}}</mat-error> -->
+          </mat-form-field>
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="23"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               style="gap: 3px;"
+               class="text-small text-gray">
+            Invoice Date <span style="color: red">*</span>
+            <mat-form-field (click)="desired1.open()"
+                            style="margin-top: 10px;">
+              <input matInput
+                     readonly
+                     (dateChange)="dateChangeStatic(Form,'invoiceDate',$event)"
+                     [matDatepicker]="desired1"
+                     formControlName="invoiceDate"
+                     required>
+              <mat-error *ngIf="getField('invoiceDate')">{{getErrorMessage('invoiceDate')}}</mat-error>
+              <mat-icon matSuffix>
+                <img [src]="calendar"
+                     style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+              </mat-icon>
+              <mat-datepicker #desired1></mat-datepicker>
+            </mat-form-field>
+            <!-- <mat-form-field (click)="desired1.open()"
+            style="margin-top: 10px;">
+            <input matInput
+                readonly
+                (dateChange)="dateChange(Form,'date',$event)"
+                [matDatepicker]="desired1"
+                formControlName="invoiceDate"
+                required>
+            <mat-icon matSuffix>
+            <img [src]="calendar"
+                style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+            </mat-icon>
+            <mat-datepicker #desired1></mat-datepicker>
+            </mat-form-field> -->
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="23"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               class="text-small text-gray">
+            Status
+            <mat-form-field style="margin-top: 10px;">
+              <input matInput
+                     type="text"
+                     readonly
+                     formControlName="invoiceStatus"
+                     required />
+              <!-- <mat-error *ngIf="getField('firstName')">{{getErrorMessage('firstName')}}</mat-error> -->
+          </mat-form-field>
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="23"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               style="gap: 3px;"
+               class="text-small text-gray">
+            Due Date <span style="color: red">*</span>
+            <mat-form-field (click)="desired2.open()"
+                            style="margin-top: 10px;">
+              <input matInput
+                     readonly
+                     [disabled]="!Form.get('invoiceDate').value"
+                     (dateChange)="dateChangeStatic(Form,'dueDate',$event)"
+                     [matDatepicker]="desired2"
+                     formControlName="dueDate"
+                     [min]="Form.get('invoiceDate').value"
+                     required>
+              <mat-error *ngIf="getField('dueDate')">{{getErrorMessage('dueDate')}}</mat-error>
+              <mat-icon matSuffix>
+                <img [src]="calendar"
+                     style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+              </mat-icon>
+              <mat-datepicker #desired2></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row wrap"
+          fxLayoutAlign="start center"
+          fxLayoutGap="15px"
+          class="top-heading text-small"  style="font-size:15px;">
+           Invoice To
+        </div>
+
+        <div fxLayout="row wrap"
+             fxLayoutAlign="start center"
+             fxLayoutGap="15px"
+             class="row-card-margins">
+          <div fxFlex.xl="23"
+               fxFlex.lg="23"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               style="gap: 3px;"
+               class="text-small text-gray">
+            Child <span style="color: red">*</span>
+            <!-- <mat-form-field style="margin-top: 10px;">
+              <mat-select formControlName="child">
+                  <mat-option value="mark">Mark</mat-option>
+              </mat-select>
+          </mat-form-field> -->
+          <mat-form-field style="margin-top: 10px;">
+            <input type="text"
+            placeholder="Select Child"
+            aria-label="Number"
+            matInput
+            [formControl]="Form.get('child')"
+            [matAutocomplete]="auto">
+            <mat-autocomplete autoActiveFirstOption (optionSelected)="setChildData()" #auto="matAutocomplete">
+              <mat-option *ngFor="let option of filteredChildrens" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error *ngIf="getField('child')">{{getErrorMessage('child')}}</mat-error>
+          </mat-form-field>
+
+          </div>
+          <div fxFlex.xl="23"
+               fxFlex.lg="23"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               style="gap: 3px;"
+               class="text-small text-gray">
+            Parent/Guardian <span style="color: red">*</span>
+            <mat-form-field style="margin-top: 10px;">
+              <input matInput
+                     type="text"
+                     readonly
+                     formControlName="guardian"
+                     required />
+              <mat-error *ngIf="getField('guardian')">{{getErrorMessage('guardian')}}</mat-error>
+          </mat-form-field>
+          </div>
+          <div fxFlex.xl="20"
+               fxFlex.lg="47"
+               fxFlex.md="25"
+               fxFlex.sm="45"
+               fxFlex.xs="100"
+               style="gap: 3px;"
+               class="text-small text-gray">
+            Address <span style="color: red">*</span>
+            <mat-form-field style="margin-top: 10px;">
+              <input matInput
+                     type="text"
+                     readonly
+                     formControlName="address"
+                     required />
+              <mat-error *ngIf="getField('address')">{{getErrorMessage('address')}}</mat-error>
+              <!-- <mat-error *ngIf="getField('firstName')">{{getErrorMessage('firstName')}}</mat-error> -->
+          </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap"
+          fxLayoutAlign="start center"
+          fxLayoutGap="15px"
+          *ngIf="type != 'view'"
+          class="top-heading text-small" style="font-size:15px;">
+           Add Additional Items
+        </div>
+
+        <div fxLayout="row wrap"
+        fxLayoutAlign="start center"
+        fxLayoutGap="15px"
+        *ngIf="type != 'view'"
+        class="row-card-margins">
+     <div fxFlex.xl="23"
+          fxFlex.lg="23"
+          fxFlex.md="25"
+          fxFlex.sm="45"
+          fxFlex.xs="100"
+          class="text-small text-gray">
+       Select Item
+       <!-- <mat-form-field style="margin-top: 10px;">
+         <mat-select placeholder="Additional Items" (selectionChange)="checkForAmount()" formControlName="item">
+           <mat-option *ngFor="let item of itemOptions" [value]="item">{{ item.label }}</mat-option>
+         </mat-select>
+     </mat-form-field> -->
+
+     <mat-form-field style="margin-top: 10px;">
+      <!-- <mat-label>Select Room</mat-label> -->
+      <input type="text"
+            aria-label="Number"
+            matInput
+            placeholder="Additional Items"
+            [formControl]="Form.get('additionalLabel')"
+            [matAutocomplete]="auto">
+      <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" (optionSelected)="setValue()">
+        <mat-option *ngFor="let option of filteredAdditionalItems" [value]="option.name">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+      <mat-error *ngIf="getField('additionalLabel')">{{getErrorMessage('additionalLabel')}}</mat-error>
+  </mat-form-field>
+     </div>
+     <div fxFlex.xl="23"
+          fxFlex.lg="23"
+          fxFlex.md="25"
+          fxFlex.sm="45"
+          fxFlex.xs="100"
+          class="text-small text-gray">
+       Select Date
+       <mat-form-field (click)="desired3.open()"
+                       style="margin-top: 10px;">
+         <input matInput
+                readonly
+                (dateChange)="dateChangeStatic(Form,'selectDate',$event)"
+                [matDatepicker]="desired3"
+                [max]="maxDate"
+                formControlName="selectDate">
+         <mat-icon matSuffix>
+           <img [src]="calendar"
+                style="margin-bottom: 0px;margin-right: 10px; width: 16px; vertical-align: baseline;cursor: pointer;">
+         </mat-icon>
+         <mat-datepicker #desired3></mat-datepicker>
+       </mat-form-field>
+     </div>
+     <div fxFlex.xl="20"
+          fxFlex.lg="12"
+          fxFlex.md="12"
+          fxFlex.sm="45"
+          fxFlex.xs="100"
+          class="text-small text-gray">
+       Amount
+       <mat-form-field style="margin-top: 10px;">
+         <input matInput
+                class="ml-15"
+                type="number"
+                min="0"
+                maxlength="5"
+                (blur)="onBlurEvent($event)"
+                formControlName="additionalAmount"
+                />
+         <!-- <mat-error *ngIf="getField('firstName')">{{getErrorMessage('firstName')}}</mat-error> -->
+         <span class="pound-left" matSuffix>£&nbsp;</span>
+     </mat-form-field>
+     </div>
+     <div fxFlex.xl="20"
+          fxFlex.lg="12"
+          fxFlex.md="12"
+          fxFlex.sm="45"
+          fxFlex.xs="100"
+          class="text-small text-gray">
+          Quantity
+     <mat-form-field style="margin-top: 10px;">
+       <input matInput
+               type="number"
+               min="0"
+               maxlength="4"
+               oninput="this.value = !!this.value && Math.abs(this.value) >= 1 ? Math.abs(this.value) : null; if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+               formControlName="quantity"
+               />
+       <!-- <mat-error *ngIf="getField('firstName')">{{getErrorMessage('firstName')}}</mat-error> -->
+   </mat-form-field>
+</div>
+
+     <div fxFlex="75px">
+     <button (click)="onAddItem()"
+             [disabled]="isAdditonalFieldsInvalid()"
+             type="button"
+             mat-button
+             style="margin-top: 10px;"
+             class="add-btn">
+       {{ mode == 'add' ? 'Add' : 'Update' }}
+     </button>
+   </div>
+   <div fxFlex="120px">
+     <button (click)="clearAdditionalItem()"
+             type="button"
+             mat-button
+             style="margin-top: 10px;"
+             class="cancel-btn">
+       Cancel
+     </button>
+   </div>
+        </div>
+        <div fxLayout="row wrap"
+              fxLayoutAlign="start center"
+              fxLayoutGap="15px"
+              *ngIf="type != 'view'"
+              class="row-card-margins" style="margin-top: 0;">
+
+              <div fxFlex="47" class="text-small text-gray">
+                Note
+                <mat-form-field style="margin-top: 10px;">
+                  <textarea matInput
+                            [rows]="1"
+                            style="resize: none;height: 60px;"
+                            placeholder="Add note here"
+                            formControlName="comment"
+                            maxlength="200"
+                            >
+                  </textarea>
+              </mat-form-field>
+              </div>
+        </div>
+
+      </mat-card>
+    </form>
+
+    <!-- <app-table-component (selectedItem)="actionButtonOutput($event)"
+                         [props]="tableConfigAndProps"></app-table-component> -->
+
+                         <!-- <div fxLayout="row" fxLayoutAlign="end end">
+                          <div fxFlex="49" fxLayoutAlign="start start">
+                              <div class="text-small" style="color: #687784;margin: 15px 0px; display: flex;">
+                                <p>Total free entitlement hours during period : 54.00</p>
+                              </div>
+                            </div>
+                          <div fxFlex="49" fxLayoutAlign="end end">
+                            <div class="text-small" style="color: #687784;margin: 15px 20px; display: flex;">
+                              <p style="margin-top: 6px;">Sub Total :</p>
+                              <p class="subtotal-box">&euro;{{ bookings[selectedTabIndex]?.subTotal }}</p>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <mat-card class="item-card">
+                        <!-- <div *ngFor="let item of additionalItems" fxLayout="row" fxLayoutAlign="end end" class="item-bar">
+                          <div fxFlex="30">
+                              <div class="text-small" style="color: #687784; margin: 15px 0px 15px -24px; display: flex;">
+                                <p style="min-width: 100px;">Additional item: </p>
+                                <p class="list-item"> {{ item.itemLabel }} </p>
+                              </div>
+                            </div>
+                            <div fxFlex="20">
+                              <div class="text-small" style="color: #687784;margin: 15px 0px; display: flex;">
+                                <p>Quantity: </p>
+                                <p class="list-item"> {{ item.quantity }}</p>
+                              </div>
+                            </div>
+                            <div fxFlex="20">
+                              <div class="text-small" style="color: #687784;margin: 15px 0px; display: flex;">
+                                <p>Price: </p>
+                                <p class="list-item">&euro; {{ item.rate }}</p>
+                              </div>
+                            </div>
+                            <div fxFlex="25" fxLayoutAlign="end end">
+                              <div class="text-small" style="color: #687784; margin: 15px 0px 15px -24px; display: flex;">
+                                  <p class="subtotal-box">&euro;{{ item.rate * item.quantity }}</p>
+                              </div>
+                            </div>
+                        </div> -->
+
+                      <app-table-component (selectedItem)="actionButtonOutput($event)"
+                         [props]="tableConfigAndProps" height="auto"></app-table-component>
+
+                        <div *ngIf="total != 0" fxLayout="row" fxLayoutAlign="center center" class="item-bar">
+                          <div fxFlex="80" fxLayoutAlign="start start" style="margin-left: 26px;">
+                            <!-- <span class="text-small" style="color: #687784;">
+                              Discount:
+                            </span>
+                            <span style="line-height: 18px;" class="list-item"> <strong> {{ formDetail?.invoiceDetails?.discount }}% </strong> </span>
+
+                            <span class="text-small" style="color: #687784;margin-left: 40px;">
+                              Discounted Amount:
+                            </span>
+                            <span style="line-height: 18px;" class="list-item">
+                              <strong>&euro; {{ formDetail?.invoiceDetails?.discountedAmount }}</strong>
+                            </span> -->
+                          </div>
+                          <div fxFlex="20" fxLayoutAlign="end end">
+                            <div class="text-small" style="color: #687784; display: flex;margin-top: 8px;">
+                              <p style="margin-top: 6px;">Total :</p>
+                              <p class="subtotal-box">&#163;{{total | number : '1.2-2'}}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- <div fxLayout="row" fxLayoutAlign="center center" class="item-bar">
+                          <div fxFlex="80" fxLayoutAlign="start start" style="margin-left: 26px;">
+
+                            <span class="text-small" style="color: #687784;">
+                              Amount:
+                            </span>
+                            <span style="line-height: 18px;" class="list-item"> <strong> &euro; {{ formDetail?.invoiceDetails?.amount }} </strong> </span>
+
+                            <span class="text-small" style="color: #687784;margin-left: 40px;">
+                              Discount:
+                            </span>
+                            <span style="line-height: 18px;" class="list-item"> <strong> {{ formDetail?.invoiceDetails?.discount }}% </strong> </span>
+
+                            <span class="text-small" style="color: #687784;margin-left: 40px;">
+                              Discounted Amount:
+                            </span>
+                            <span style="line-height: 18px;" class="list-item">
+                              <strong>&euro; {{ formDetail?.invoiceDetails?.discountedAmount }}</strong>
+                            </span>
+                          </div>
+                          <div fxFlex="20" fxLayoutAlign="end end">
+                            <div class="text-small" style="color: #687784; display: flex;margin-top: 8px;">
+                              <p style="margin-top: 6px;">Net Amount :</p>
+                              <p class="subtotal-box">&euro;{{ formDetail?.invoiceDetails?.amountAfterDiscount }}</p>
+                            </div>
+                          </div>
+                        </div> -->
+                      </mat-card>
+    <mat-card style="border-radius: 0px !important;min-height: 40vh;">
+      <app-form-foooter *ngIf="type != 'view'"
+                        (clearEvent)="clearForm()"
+                        (saveInfoEvent)="onSaveInfo()"
+                        (backEvent)="goBack()"
+                        [footerProps]="footerProps"></app-form-foooter>
+
+    </mat-card>
+  </mat-card>
+
