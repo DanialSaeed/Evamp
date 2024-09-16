@@ -24,4 +24,4 @@ pm2 start --name angular-app "ng serve --host 0.0.0.0 --port 4200"
 # Save the PM2 process list
 pm2 save
 
-echo "Frontend Deployment Completed"
+echo "Frontend Deployment Complete"
