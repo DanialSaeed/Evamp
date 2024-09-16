@@ -2,7 +2,7 @@
 
 echo "Starting Deployment Process"
 
-# Set the NVM directory and install Node.js
+# Set the NVM directory
 export NVM_DIR="/home/ec2-user/.nvm"
 
 # Check if NVM directory exists
@@ -10,10 +10,14 @@ if [ ! -d "$NVM_DIR" ]; then
     echo "NVM not found, installing NVM"
     mkdir -p "$NVM_DIR"
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+    export NVM_DIR="/home/ec2-user/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
     source /home/ec2-user/.bashrc
+else
+    echo "NVM already installed"
 fi
 
-# Check if NVM is properly installed and load it
+# Load NVM
 if [ -s "$NVM_DIR/nvm.sh" ]; then
     echo "Loading NVM"
     . "$NVM_DIR/nvm.sh"
@@ -36,8 +40,8 @@ npm install -g @angular/cli@14 || { echo "Failed to install Angular CLI"; exit 1
 # Navigate to the project directory
 cd /home/ec2-user/Angular_ChildEnr_SDN/ || { echo "Project directory not found"; exit 1; }
 
-# Install project dependencies
-npm install || { echo "npm install failed"; exit 1; }
+# Install project dependencies with --legacy-peer-deps to avoid conflicts
+npm install --legacy-peer-deps || { echo "npm install failed"; exit 1; }
 
 # Install PM2 globally
 npm install -g pm2 || { echo "PM2 installation failed"; exit 1; }
