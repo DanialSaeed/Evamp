@@ -5,12 +5,12 @@ files:
    # destination: /home/ec2-user/backend  # Adjust the destination path as per your requirement
     destination: /home/ec2-user/Angular_ChildEnr_SDN
 hooks:
-  AfterInstall:
-    - location: scripts/server_start.sh
-      timeout: 300
-      runas: root
+  # AfterInstall:
+  #   - location: scripts/server_start.sh
+  #     timeout: 300
+  #     runas: root
   ApplicationStart:
-    - location: scripts/server_end.sh
+    - location: scripts/server_start.sh
       timeout: 300
       runas: root
      
